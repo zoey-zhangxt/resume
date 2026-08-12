@@ -2,15 +2,11 @@
 layout: page
 title: "张秀婷 · Zoey Zhang"
 subtitle: "文史内容教研 / AI 驱动教研工作流"
-show-avatar: true
+show-avatar: false
 ---
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-
 <style>
-  /* ========== intro-header 改造：柔和天空渐变 ========== */
+  /* intro-header 蓝天渐变 */
   .intro-header {
     background: linear-gradient(180deg, #cfe4f5 0%, #e5f0f8 60%, #f5faff 100%) !important;
     position: relative;
@@ -39,7 +35,7 @@ show-avatar: true
     pointer-events: none;
   }
 
-  /* 主标题缩小 + 一行 */
+  /* 标题 */
   .intro-header h1 {
     font-size: 2.2rem !important;
     white-space: nowrap;
@@ -61,21 +57,11 @@ show-avatar: true
     }
   }
 
-  /* ========== 手写体英文点缀 ========== */
-  .handwriting {
-    font-family: 'Caveat', cursive;
-    font-size: 1.8rem;
-    color: #4a90d9;
-    text-align: center;
-    margin: 30px 0 10px;
-    letter-spacing: 1px;
-  }
-
-  /* ========== 主要内容区 ========== */
+  /* 主要内容 */
   .home-tagline {
     font-size: 1em;
     color: #7a8a9a;
-    margin-bottom: 25px;
+    margin: 40px 0 25px;
     letter-spacing: 0.5px;
     text-align: center;
   }
@@ -88,7 +74,7 @@ show-avatar: true
     text-align: center;
   }
 
-  /* ========== 按钮 ========== */
+  /* 按钮 */
   .home-btn {
     display: inline-block;
     padding: 12px 32px;
@@ -124,19 +110,23 @@ show-avatar: true
     box-shadow: 0 6px 20px rgba(74, 144, 217, 0.3);
   }
 
-  /* ========== 玻璃拟态卡片 ========== */
+  /* 三个卡片：grid 三列 */
   .home-cards-wrapper {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 22px;
-    justify-content: center;
     position: relative;
     padding: 20px 0;
-    margin: 30px 0;
+    margin: 60px 0 40px;
+  }
+  @media (max-width: 700px) {
+    .home-cards-wrapper {
+      grid-template-columns: 1fr;
+    }
   }
   .home-card {
     text-align: center;
-    padding: 45px 25px;
+    padding: 45px 20px;
     border-radius: 20px;
     background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(219, 234, 245, 0.4));
     backdrop-filter: blur(10px);
@@ -144,6 +134,7 @@ show-avatar: true
     border: 1px solid rgba(255,255,255,0.6);
     box-shadow: 0 4px 20px rgba(74, 144, 217, 0.08);
     transition: all 0.35s;
+    height: 100%;
   }
   .home-card:hover {
     transform: translateY(-4px);
@@ -151,15 +142,9 @@ show-avatar: true
     background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(219, 234, 245, 0.6));
   }
   .home-card h3 {
-    margin: 0 0 10px 0;
+    margin: 0 0 12px 0;
     color: #2c5282;
     font-weight: 600;
-  }
-  .home-card-subtitle {
-    color: #4a90d9;
-    margin: 0 0 6px 0;
-    font-family: 'Caveat', cursive;
-    font-size: 1.4rem;
   }
   .home-card-desc {
     font-size: 0.88em;
@@ -167,7 +152,7 @@ show-avatar: true
     margin: 0;
   }
 
-  /* ========== 樱花装饰 ========== */
+  /* 樱花装饰 */
   .sakura {
     position: absolute;
     pointer-events: none;
@@ -190,18 +175,6 @@ show-avatar: true
     transform: rotate(45deg);
     opacity: 0.4;
   }
-
-  /* ========== 底部引言 ========== */
-  .home-quote {
-    text-align: center;
-    margin: 80px auto 20px;
-    max-width: 700px;
-    font-family: 'Great Vibes', cursive;
-    font-size: 2rem;
-    color: #6b8daa;
-    line-height: 1.6;
-    padding: 0 20px;
-  }
 </style>
 
 <svg width="0" height="0" style="position:absolute">
@@ -218,8 +191,6 @@ show-avatar: true
     </g>
   </defs>
 </svg>
-
-<p class="handwriting">Hi there, welcome to my little corner ~</p>
 
 <div style="text-align: center; margin-bottom: 40px;">
   <p class="home-tagline">
@@ -238,8 +209,6 @@ show-avatar: true
   </p>
 </div>
 
-<p class="handwriting" style="font-size: 1.5rem; margin-top: 60px;">— Explore my world —</p>
-
 <div class="home-cards-wrapper">
   <svg class="sakura sakura-1" width="45" height="45" viewBox="0 0 40 40">
     <use href="#sakura-flower"/>
@@ -251,31 +220,22 @@ show-avatar: true
     <use href="#sakura-flower"/>
   </svg>
 
-  <a href="{{ '/experience' | relative_url }}" style="flex: 1 1 250px; max-width: 320px; text-decoration: none; color: inherit; position: relative; z-index: 2;">
+  <a href="{{ '/experience' | relative_url }}" style="text-decoration: none; color: inherit; position: relative; z-index: 2;">
     <div class="home-card">
-      <p class="home-card-subtitle">About Me</p>
       <h3>个人经历</h3>
       <p class="home-card-desc">教育背景 · 工作经历 · 奖项</p>
     </div>
   </a>
-  <a href="{{ '/works' | relative_url }}" style="flex: 1 1 250px; max-width: 320px; text-decoration: none; color: inherit; position: relative; z-index: 2;">
+  <a href="{{ '/works' | relative_url }}" style="text-decoration: none; color: inherit; position: relative; z-index: 2;">
     <div class="home-card">
-      <p class="home-card-subtitle">Portfolio</p>
       <h3>作品集</h3>
       <p class="home-card-desc">动画课程 · AI 工作流 · 内容运营</p>
     </div>
   </a>
-  <a href="{{ '/life' | relative_url }}" style="flex: 1 1 250px; max-width: 320px; text-decoration: none; color: inherit; position: relative; z-index: 2;">
+  <a href="{{ '/life' | relative_url }}" style="text-decoration: none; color: inherit; position: relative; z-index: 2;">
     <div class="home-card">
-      <p class="home-card-subtitle">Life Diary</p>
       <h3>我的生活</h3>
       <p class="home-card-desc">阅读 · 随笔 · 生活片段</p>
     </div>
   </a>
 </div>
-
-<p class="home-quote">
-  Slow down, breathe deeply,<br>
-  and appreciate the simple joys<br>
-  that make life so beautiful.
-</p>
