@@ -31,4 +31,213 @@ show-avatar: false
     right: 5%;
     width: 260px;
     height: 80px;
-    background: radial-gradient(ellipse at center, rgba(255,255,255,0.9), transparent
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.9), transparent 70%);
+    filter: blur(15px);
+    pointer-events: none;
+  }
+
+  /* 标题 */
+  .intro-header h1 {
+    font-size: 2.2rem !important;
+    white-space: nowrap;
+    color: #2c5282 !important;
+    position: relative;
+    z-index: 2;
+  }
+  .intro-header h2,
+  .intro-header .subheading {
+    font-size: 1.1rem !important;
+    color: #4a5568 !important;
+    margin-bottom: 0 !important;
+    position: relative;
+    z-index: 2;
+  }
+  @media (max-width: 520px) {
+    .intro-header h1 {
+      font-size: 1.6rem !important;
+      white-space: normal;
+    }
+  }
+
+  /* 主要内容 */
+  .home-tagline {
+    font-size: 1em;
+    color: #7a8a9a;
+    margin: 15px 0 25px;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+  .home-intro {
+    font-size: 1.05em;
+    line-height: 2;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #4a5568;
+    text-align: center;
+  }
+
+  /* 按钮 */
+  .home-btn {
+    display: inline-block;
+    padding: 12px 32px;
+    margin: 0 8px;
+    font-size: 0.95em;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1.5px solid #4a90d9;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .home-btn-primary {
+    background: rgba(74, 144, 217, 0.9);
+    color: white;
+  }
+  .home-btn-primary:hover {
+    background: rgba(74, 144, 217, 1);
+    color: white;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 217, 0.3);
+  }
+  .home-btn-secondary {
+    background: rgba(255, 255, 255, 0.6);
+    color: #4a90d9;
+  }
+  .home-btn-secondary:hover {
+    background: rgba(74, 144, 217, 0.9);
+    color: white;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 217, 0.3);
+  }
+
+  /* 三个卡片：grid 三列 */
+  .home-cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    position: relative;
+    padding: 20px 0;
+    margin: 60px 0 40px;
+  }
+  @media (max-width: 700px) {
+    .home-cards-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
+  .home-card {
+    text-align: center;
+    padding: 45px 20px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(219, 234, 245, 0.4));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 4px 20px rgba(74, 144, 217, 0.08);
+    transition: all 0.35s;
+    height: 100%;
+  }
+  .home-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(74, 144, 217, 0.15);
+    background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(219, 234, 245, 0.6));
+  }
+  .home-card h3 {
+    margin: 0 0 12px 0;
+    color: #2c5282;
+    font-weight: 600;
+  }
+  .home-card-desc {
+    font-size: 0.88em;
+    color: #7a8a9a;
+    margin: 0;
+  }
+
+  /* 樱花装饰 */
+  .sakura {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.6;
+    z-index: 1;
+  }
+  .sakura-1 {
+    top: -25px;
+    right: 6%;
+    transform: rotate(15deg);
+  }
+  .sakura-2 {
+    bottom: -15px;
+    left: 4%;
+    transform: rotate(-20deg);
+  }
+  .sakura-3 {
+    top: 40%;
+    right: -20px;
+    transform: rotate(45deg);
+    opacity: 0.4;
+  }
+</style>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="sakura-flower">
+      <g fill="#f7c9d3" stroke="#e89aad" stroke-width="0.6">
+        <path d="M20,20 Q10,5 20,-5 Q30,5 20,20 Z"/>
+        <g transform="rotate(72 20 20)"><path d="M20,20 Q10,5 20,-5 Q30,5 20,20 Z"/></g>
+        <g transform="rotate(144 20 20)"><path d="M20,20 Q10,5 20,-5 Q30,5 20,20 Z"/></g>
+        <g transform="rotate(216 20 20)"><path d="M20,20 Q10,5 20,-5 Q30,5 20,20 Z"/></g>
+        <g transform="rotate(288 20 20)"><path d="M20,20 Q10,5 20,-5 Q30,5 20,20 Z"/></g>
+      </g>
+      <circle cx="20" cy="20" r="3" fill="#f5a4b7"/>
+    </g>
+  </defs>
+</svg>
+
+<div style="text-align: center; margin-bottom: 40px;">
+  <p class="home-tagline">
+    中国人民大学国学院本硕 · 5 年 K12 教研经验
+  </p>
+
+  <p class="home-intro">
+    国学底蕴 × 教研经验 × AI 实践<br>
+    擅长将复杂知识转化为生动的故事<br>
+    并用 AI 工具重构教研生产流程
+  </p>
+
+  <p style="margin-top: 35px;">
+    <a href="{{ '/assets/files/张秀婷_课程教研_简历.pdf' | relative_url }}" class="home-btn home-btn-primary">查看简历 PDF</a>
+    <a href="mailto:2416848925@qq.com" class="home-btn home-btn-secondary">联系我</a>
+  </p>
+</div>
+
+<div class="home-cards-wrapper">
+  <svg class="sakura sakura-1" width="45" height="45" viewBox="0 0 40 40">
+    <use href="#sakura-flower"/>
+  </svg>
+  <svg class="sakura sakura-2" width="55" height="55" viewBox="0 0 40 40">
+    <use href="#sakura-flower"/>
+  </svg>
+  <svg class="sakura sakura-3" width="35" height="35" viewBox="0 0 40 40">
+    <use href="#sakura-flower"/>
+  </svg>
+
+  <a href="{{ '/experience' | relative_url }}" style="text-decoration: none; color: inherit; position: relative; z-index: 2;">
+    <div class="home-card">
+      <h3>个人经历</h3>
+      <p class="home-card-desc">教育背景 · 工作经历 · 奖项</p>
+    </div>
+  </a>
+  <a href="{{ '/works' | relative_url }}" style="text-decoration: none; color: inherit; position: relative; z-index: 2;">
+    <div class="home-card">
+      <h3>作品集</h3>
+      <p class="home-card-desc">动画课程 · AI 工作流 · 内容运营</p>
+    </div>
+  </a>
+  <a href="{{ '/life' | relative_url }}" style="text-decoration: none; color: inherit; position: relative; z-index: 2;">
+    <div class="home-card">
+      <h3>我的生活</h3>
+      <p class="home-card-desc">阅读 · 随笔 · 生活片段</p>
+    </div>
+  </a>
+</div>
