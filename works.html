@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>作品集 · 张秀婷 Zoey Zhang</title>
+<meta name="description" content="张秀婷的作品集 · 五年文史动画教研 · 一套 AI 协作系统 · 从教研到读者">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌸%3C/text%3E%3C/svg%3E">
+<style>
+:root {
+  --c-primary: #2c5282;
+  --c-primary-light: #4a90d9;
+  --c-bg-soft: #cfe4f5;
+  --c-text: #1e293b;
+  --c-text-soft: #64748b;
+  --c-glass: rgba(255, 255, 255, 0.65);
+  --c-glass-border: rgba(255, 255, 255, 0.85);
+  --shadow-glass: 0 8px 32px rgba(44, 82, 130, 0.08);
+  --shadow-glass-hover: 0 20px 48px rgba(44, 82, 130, 0.18);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+  color: var(--c-text);
+  line-height: 1.75;
+  background:
+    radial-gradient(1200px 500px at 10% -10%, rgba(207, 228, 245, .85), transparent 60%),
+    radial-gradient(900px 400px at 100% 30%, rgba(74, 144, 217, .12), transparent 60%),
+    linear-gradient(180deg, #eaf3fb 0%, #f7fbfe 100%);
+  min-height: 100vh;
+}
+
+/* ========== 顶部导航（不依赖 Beautiful Jekyll） ========== */
+.site-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(74,144,217,.15);
+}
+.site-nav .inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-nav .brand {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--c-primary);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.site-nav .links a {
+  color: var(--c-text-soft);
+  text-decoration: none;
+  margin-left: 24px;
+  font-size: 14px;
+  transition: color .2s;
+}
+.site-nav .links a:hover { color: var(--c-primary); }
+.site-nav .links a.on { color: var(--c-primary); font-weight: 600; }
+
+/* ========== Hub 主区 ========== */
+.hub {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 60px 24px 100px;
+}
+.hub-hero {
+  text-align: center;
+  padding: 40px 20px 60px;
+}
+.hub-hero .lead {
+  font-size: 20px;
+  color: var(--c-text);
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.9;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+.hub-hero .lead strong { color: var(--c-primary); font-weight: 600; }
+
+/* ---------- 三张卡片 ---------- */
+.hub-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.hub-card {
+  display: block;
+  background: var(--c-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-glass);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all .35s cubic-bezier(.2,.8,.2,1);
+  position: relative;
+}
+.hub-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-glass-hover);
+  text-decoration: none;
+  color: inherit;
+}
+.hub-card .cover {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f0f7fd;
+}
+.hub-card .cover img,
+.hub-card .cover svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform .5s;
+}
+.hub-card:hover .cover img,
+.hub-card:hover .cover svg { transform: scale(1.04); }
+
+.hub-card .body {
+  padding: 24px 26px 28px;
+}
+.hub-card .num {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--c-primary-light);
+  letter-spacing: 3px;
+  margin-bottom: 4px;
+}
+.hub-card h3 {
+  margin: 4px 0 12px;
+  font-size: 22px;
+  color: var(--c-primary);
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.hub-card .desc {
+  color: var(--c-text-soft);
+  font-size: 14px;
+  line-height: 1.75;
+  margin: 0 0 18px;
+  min-height: 44px;
+}
+.hub-card .tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.hub-card .tags span {
+  padding: 3px 10px;
+  background: rgba(74, 144, 217, .1);
+  color: var(--c-primary);
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid rgba(74, 144, 217, .18);
+}
+.hub-card .arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--c-primary);
+  font-size: 14px;
+  font-weight: 500;
+}
+.hub-card .arrow::after {
+  content: "→";
+  transition: transform .3s;
+}
+.hub-card:hover .arrow::after { transform: translateX(4px); }
+
+/* 樱花装饰 */
+.sakura {
+  position: absolute;
+  pointer-events: none;
+  opacity: .7;
+}
+.sakura.s1 { right: 18px; top: 240px; }
+.sakura.s2 { left: 20px; bottom: 40px; }
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 900px) {
+  .hub-cards { grid-template-columns: 1fr; gap: 20px; }
+  .hub-hero .lead { font-size: 17px; }
+  .hub { padding: 40px 20px 80px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html" class="brand">张秀婷 · Zoey Zhang</a>
+    <div class="links">
+      <a href="index.html">首页</a>
+      <a href="experience.html">个人经历</a>
+      <a href="works.html" class="on">作品集</a>
+      <a href="life.html">我的生活</a>
+    </div>
+  </div>
+</nav>
+
+<main class="hub">
+  <section class="hub-hero">
+    <p class="lead">从一份大纲、一集分集资料，到一套让 AI 可协作的<br>教研系统，再到面向读者的内容表达。</p>
+  </section>
+
+  <section class="hub-cards">
+    <!-- 卡片 1：知识教研 -->
+    <a class="hub-card" href="works-teaching.html">
+      <div class="cover">
+        <img src="works/img/cover-teaching.svg" alt="知识教研封面">
+      </div>
+      <div class="body">
+        <div class="num">01</div>
+        <h3>知识教研</h3>
+        <p class="desc">从 12 集完整 SKU 到经典单集深挖——展示教研的核心判断力。</p>
+        <div class="tags">
+          <span>大纲框架</span>
+          <span>分集资料</span>
+          <span>史实辨析</span>
+        </div>
+        <span class="arrow">走进作品</span>
+      </div>
+    </a>
+
+    <!-- 卡片 2：AI 协作 -->
+    <a class="hub-card" href="works-ai.html">
+      <div class="cover">
+        <img src="works/img/cover-ai.svg" alt="AI 协作封面">
+      </div>
+      <div class="body">
+        <div class="num">02</div>
+        <h3>AI 协作</h3>
+        <p class="desc">把教研流程改造成 AI 可协作的系统——方法论、案例、制品三层落地。</p>
+        <div class="tags">
+          <span>方法论长文</span>
+          <span>6 SOP</span>
+          <span>11 SKILL</span>
+        </div>
+        <span class="arrow">走进作品</span>
+      </div>
+    </a>
+
+    <!-- 卡片 3：内容运营 -->
+    <a class="hub-card" href="works-content.html">
+      <div class="cover">
+        <img src="works/img/cover-content.svg" alt="内容运营封面">
+      </div>
+      <div class="body">
+        <div class="num">03</div>
+        <h3>内容运营</h3>
+        <p class="desc">从教研到读者——把内容判断转译成可以被更多人读懂的表达。</p>
+        <div class="tags">
+          <span>小红书</span>
+          <span>凤凰网</span>
+          <span>个人实践</span>
+        </div>
+        <span class="arrow">走进作品</span>
+      </div>
+    </a>
+  </section>
+</main>
+
+</body>
+</html>
