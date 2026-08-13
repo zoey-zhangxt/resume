@@ -6,7 +6,556 @@
 <title>知识教研 · 作品集 · 张秀婷</title>
 <meta name="description" content="知识教研作品集 · 上下五千年秦汉时期 12 集 · 三国演义火烧赤壁经典单集">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌸%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="works/works-shared.css">
+<style>
+/* ========== 作品集子页共用样式 ========== */
+:root {
+  --c-primary: #2c5282;
+  --c-primary-light: #4a90d9;
+  --c-bg-soft: #cfe4f5;
+  --c-text: #1e293b;
+  --c-text-soft: #64748b;
+  --c-glass: rgba(255, 255, 255, 0.65);
+  --c-glass-border: rgba(255, 255, 255, 0.85);
+  --shadow-glass: 0 8px 32px rgba(44, 82, 130, 0.08);
+  --shadow-glass-hover: 0 12px 40px rgba(44, 82, 130, 0.15);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+  color: var(--c-text);
+  line-height: 1.75;
+  background:
+    radial-gradient(1200px 500px at 10% -10%, rgba(207, 228, 245, .85), transparent 60%),
+    radial-gradient(900px 400px at 100% 30%, rgba(74, 144, 217, .12), transparent 60%),
+    linear-gradient(180deg, #eaf3fb 0%, #f7fbfe 100%);
+  min-height: 100vh;
+}
+
+/* ---------- 顶部导航 ---------- */
+.site-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(74,144,217,.15);
+}
+.site-nav .inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-nav .brand {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--c-primary);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.site-nav .links a {
+  color: var(--c-text-soft);
+  text-decoration: none;
+  margin-left: 24px;
+  font-size: 14px;
+  transition: color .2s;
+}
+.site-nav .links a:hover { color: var(--c-primary); }
+.site-nav .links a.on { color: var(--c-primary); font-weight: 600; }
+
+/* ---------- 主容器 ---------- */
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 24px 100px;
+}
+
+/* ---------- 面包屑 & 页面标题 ---------- */
+.crumb {
+  color: var(--c-text-soft);
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+.crumb a { color: var(--c-primary); text-decoration: none; }
+.crumb a:hover { color: var(--c-primary-light); }
+
+.page-head {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+}
+.page-head .num {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  color: var(--c-primary-light);
+  letter-spacing: 3px;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.page-head h1 {
+  margin: 0 0 12px;
+  font-size: 34px;
+  color: var(--c-primary);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+.page-head .sub {
+  color: var(--c-text-soft);
+  font-size: 16px;
+  line-height: 1.85;
+  margin: 0;
+  max-width: 700px;
+}
+
+/* ---------- 玻璃拟态卡片 ---------- */
+.glass-card {
+  background: var(--c-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 20px;
+  padding: 30px 32px;
+  box-shadow: var(--shadow-glass);
+  transition: all .3s;
+  margin-bottom: 24px;
+}
+.glass-card:hover {
+  box-shadow: var(--shadow-glass-hover);
+  transform: translateY(-3px);
+}
+
+/* ---------- 项目卡 ---------- */
+.project-card .p-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.project-card .p-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--c-primary);
+  margin: 0;
+}
+.project-card .p-meta {
+  color: var(--c-text-soft);
+  font-size: 13px;
+  margin: 6px 0 0;
+}
+.tag-group { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag {
+  display: inline-block;
+  padding: 3px 12px;
+  background: rgba(74, 144, 217, .1);
+  color: var(--c-primary);
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid rgba(74, 144, 217, .18);
+}
+.tag.stage { background: rgba(255, 255, 255, .6); color: var(--c-text-soft); }
+.project-card .p-desc {
+  color: var(--c-text);
+  font-size: 15px;
+  line-height: 1.9;
+  margin: 10px 0 22px;
+}
+
+/* ---------- 药丸按钮 ---------- */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all .25s;
+  border: 1px solid transparent;
+  font-family: inherit;
+  cursor: pointer;
+}
+.btn-pill.primary { background: var(--c-primary); color: #fff; }
+.btn-pill.primary:hover { background: #1e3a5f; color: #fff; text-decoration: none; }
+.btn-pill.ghost {
+  background: rgba(255, 255, 255, .6);
+  color: var(--c-primary);
+  border: 1px solid rgba(74, 144, 217, .3);
+}
+.btn-pill.ghost:hover { background: var(--c-primary-light); color: #fff; text-decoration: none; }
+
+/* ---------- 高亮徽章按钮（分集资料） ---------- */
+.ep-showcase {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 24px;
+  border-top: 1px dashed rgba(74, 144, 217, .25);
+}
+.ep-showcase-title {
+  display: inline-block;
+  padding: 5px 16px;
+  background: linear-gradient(135deg, var(--c-primary), var(--c-primary-light));
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 12px 0 8px;
+  letter-spacing: 2px;
+  border-radius: 999px;
+  grid-column: 1 / -1;
+  width: fit-content;
+  box-shadow: 0 3px 10px rgba(44, 82, 130, .18);
+}
+.ep-card {
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(74, 144, 217, .08), rgba(255, 255, 255, .5));
+  border: 1px solid rgba(74, 144, 217, .2);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all .3s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ep-card:hover {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(44, 82, 130, .18);
+  text-decoration: none;
+}
+.ep-card:hover .ep-tag,
+.ep-card:hover .ep-name,
+.ep-card:hover .ep-desc { color: #fff; }
+.ep-tag {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--c-primary-light);
+  letter-spacing: 2px;
+  transition: color .3s;
+}
+.ep-name {
+  font-size: 17px;
+  color: var(--c-primary);
+  font-weight: 700;
+  transition: color .3s;
+}
+.ep-desc {
+  font-size: 13px;
+  color: var(--c-text-soft);
+  line-height: 1.7;
+  transition: color .3s;
+}
+
+/* ---------- 方法论宣言卡 ---------- */
+.manifesto {
+  padding: 44px 48px;
+  background:
+    linear-gradient(135deg, rgba(74, 144, 217, .14), rgba(207, 228, 245, .5)),
+    var(--c-glass);
+  border-radius: 24px;
+  margin-bottom: 32px;
+  border: 1px solid var(--c-glass-border);
+}
+.manifesto .m-label {
+  color: var(--c-primary-light);
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.manifesto .m-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--c-primary);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+.manifesto .m-title .sub {
+  font-size: 15px;
+  color: var(--c-text-soft);
+  font-weight: 400;
+  display: block;
+  margin-top: 6px;
+}
+.manifesto .m-quotes {
+  color: var(--c-text);
+  font-size: 15px;
+  line-height: 2;
+  margin: 20px 0 24px;
+  padding-left: 18px;
+  border-left: 3px solid var(--c-primary-light);
+}
+.manifesto .m-meta {
+  color: var(--c-text-soft);
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* ---------- 案例时间轴 ---------- */
+.case-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.case-step {
+  padding: 22px 20px;
+  background: var(--c-glass);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-glass);
+}
+.case-step .step-num {
+  font-size: 12px;
+  color: var(--c-primary-light);
+  font-family: "Georgia", serif;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.case-step h4 {
+  color: var(--c-primary);
+  font-size: 17px;
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+.case-step ul {
+  padding-left: 18px;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.85;
+}
+.case-step ul li { margin: 4px 0; }
+
+/* 数据条 */
+.data-strip {
+  display: flex;
+  justify-content: space-around;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, rgba(44, 82, 130, .92), rgba(74, 144, 217, .92));
+  border-radius: 16px;
+  color: #fff;
+  margin-bottom: 24px;
+}
+.data-item { text-align: center; }
+.data-item .n { font-size: 26px; font-weight: 700; letter-spacing: 1px; }
+.data-item .l { font-size: 12px; opacity: .85; margin-top: 2px; }
+
+/* ---------- Tab 与列表 ---------- */
+.tab-row { display: flex; gap: 12px; margin-bottom: 20px; }
+.tab-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .6);
+  border: 1px solid rgba(74, 144, 217, .25);
+  color: var(--c-primary);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all .25s;
+  font-family: inherit;
+}
+.tab-btn.active {
+  background: var(--c-primary);
+  color: #fff;
+  border-color: var(--c-primary);
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.list-item {
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid rgba(255, 255, 255, .8);
+  border-radius: 12px;
+  transition: all .25s;
+  position: relative;
+}
+.list-item:hover { background: rgba(255, 255, 255, .85); transform: translateX(3px); }
+.list-item .n {
+  font-weight: 600;
+  color: var(--c-primary);
+  font-size: 14.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.list-item .n .status {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: normal;
+  background: rgba(46, 160, 67, .12);
+  color: #2ea043;
+}
+.list-item .n a {
+  color: var(--c-primary);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--c-primary-light);
+}
+.list-item .n a:hover { color: var(--c-primary-light); }
+.list-item .d {
+  color: var(--c-text-soft);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* 已上线的可点击 SOP 卡片 —— 更醒目 */
+.list-item.clickable {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding-right: 44px;
+  background: linear-gradient(135deg, rgba(74, 144, 217, .12), rgba(255, 255, 255, .7));
+  border: 1px solid rgba(74, 144, 217, .35);
+  cursor: pointer;
+}
+.list-item.clickable::after {
+  content: "→";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--c-primary-light);
+  font-size: 18px;
+  font-weight: 700;
+  transition: all .3s;
+}
+.list-item.clickable:hover {
+  background: linear-gradient(135deg, rgba(74, 144, 217, .22), rgba(207, 228, 245, .55));
+  border-color: var(--c-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(44, 82, 130, .12);
+  text-decoration: none;
+}
+.list-item.clickable:hover::after {
+  color: var(--c-primary);
+  right: 14px;
+}
+.list-item.clickable .n { color: var(--c-primary); }
+.list-item.clickable .n .status {
+  background: rgba(46, 160, 67, .18);
+  color: #2ea043;
+  border: 1px solid rgba(46, 160, 67, .3);
+  font-weight: 500;
+}
+
+/* ---------- 画廊 ---------- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.gallery-item {
+  background: var(--c-glass);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-glass);
+  transition: all .3s;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.gallery-item:hover {
+  box-shadow: var(--shadow-glass-hover);
+  transform: translateY(-3px);
+  text-decoration: none;
+}
+.gallery-item .thumb {
+  aspect-ratio: 4 / 3;
+  background: #f8fafc;
+  overflow: hidden;
+}
+.gallery-item .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-item .cap {
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: var(--c-text);
+  border-top: 1px solid rgba(74, 144, 217, .12);
+}
+
+/* ---------- 内容运营指标 ---------- */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.metric-card {
+  padding: 28px 26px;
+  background: var(--c-glass);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-glass);
+}
+.metric-card .m-plat {
+  font-size: 13px;
+  color: var(--c-text-soft);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.metric-card .m-num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--c-primary);
+  margin-bottom: 6px;
+}
+.metric-card .m-desc {
+  color: var(--c-text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(15, 23, 42, .88);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  cursor: zoom-out;
+}
+.lightbox.on { display: flex; }
+.lightbox img { max-width: 92%; max-height: 92%; box-shadow: 0 20px 60px rgba(0,0,0,.5); border-radius: 6px; }
+
+/* ---------- 段落间副标题 ---------- */
+.sub-h {
+  color: var(--c-primary);
+  font-size: 20px;
+  margin: 44px 0 18px;
+  font-weight: 700;
+  padding-left: 12px;
+  border-left: 4px solid var(--c-primary-light);
+}
+
+/* ---------- 移动端 ---------- */
+@media (max-width: 900px) {
+  .case-timeline { grid-template-columns: 1fr 1fr; }
+  .list-grid { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: 1fr 1fr; }
+  .metric-grid { grid-template-columns: 1fr; }
+  .data-strip { flex-wrap: wrap; gap: 12px; padding: 16px; }
+  .data-item { flex: 1 0 40%; }
+  .page-head h1 { font-size: 26px; }
+  .manifesto { padding: 28px 24px; }
+  .manifesto .m-title { font-size: 20px; }
+  .ep-showcase { grid-template-columns: 1fr; }
+}
+
+</style>
 </head>
 <body>
 
@@ -28,7 +577,7 @@
   <header class="page-head">
     <div class="num">01</div>
     <h1>知识教研</h1>
-    <p class="sub">侧重知识内容的深度教研——把史料吃透、把选择讲清楚，再交给动画视频演绎，让课程既经得起推敲，又好看好听。</p>
+    <p class="sub">一手深度教研，校准知识点；一手画面设计，提高呈现效果——让知识生动有趣地讲给孩子。</p>
   </header>
 
   <!-- 项目 1 · 上下五千年 · 秦汉时期 -->
@@ -81,12 +630,86 @@
       </div>
     </div>
     <p class="p-desc">
-      围绕"火烧赤壁"完成一集教研深度稿，重点处理《三国演义》文学演绎与《三国志》史实之间的分寸——哪些情节可以保留戏剧张力，哪些细节需要标注"演义虚构"，让内容既有吸引力又经得起推敲。教研主稿之外还配有"七星坛"、"赤壁之战"两份支撑资料，图文互证。
+      主导《三国演义》项目的教研工作，包括原典研读、知识讲解、交互题设计等环节。以下以「火烧赤壁」一集的教研主稿，以及其中「七星坛」「赤壁之战」两个问题的支撑资料，作为示意呈现。
     </p>
     <div class="btn-row">
       <a class="btn-pill primary" href="works/html/三国演义-火烧赤壁-教研稿.html" target="_blank">查看教研主稿 →</a>
       <a class="btn-pill ghost" href="works/html/三国演义-七星坛资料.html" target="_blank">七星坛资料</a>
       <a class="btn-pill ghost" href="works/html/三国演义-赤壁之战资料.html" target="_blank">赤壁之战资料</a>
+    </div>
+  </article>
+
+  <!-- 项目 3 · 初高中语文 · 洋葱学园 -->
+  <article class="glass-card project-card">
+    <div class="p-head">
+      <div>
+        <h2 class="p-title">初高中语文 · 同步及方法课教研</h2>
+        <p class="p-meta">角色：教研 · 初高中语文 · 洋葱学园</p>
+      </div>
+      <div class="tag-group">
+        <span class="tag stage">洋葱学园</span>
+        <span class="tag">方法课</span>
+        <span class="tag">同步课</span>
+        <span class="tag">跨学段</span>
+      </div>
+    </div>
+    <p class="p-desc">
+      初高中语文动画视频课程的教研设计——知识教研，撰写教研稿和课程逐字稿；画面设计，包括画面排布、动效设计等。以下飞书云文档中包含逐字稿、画面设计稿、视频成片三类产出，点击卡片可直接查看。
+    </p>
+
+    <!-- 方法课 -->
+    <div class="ep-showcase">
+      <div class="ep-showcase-title">方法课</div>
+      <a class="ep-card" href="https://my.feishu.cn/docx/AdOydOP4lodm2axggKocV2vfnmd" target="_blank" rel="noopener">
+        <div class="ep-tag">METHOD 01</div>
+        <div class="ep-name">古人是怎么记录时间和方位的？</div>
+        <div class="ep-desc">文史通识 · 方法课 · 查看飞书文档 ↗</div>
+      </a>
+      <a class="ep-card" href="https://my.feishu.cn/docx/IXXWdqF1rofqeXxIlPTc1NtSnhD" target="_blank" rel="noopener">
+        <div class="ep-tag">METHOD 02</div>
+        <div class="ep-name">文言虚词锦囊「因」</div>
+        <div class="ep-desc">文言虚词专题 · 方法课 · 查看飞书文档 ↗</div>
+      </a>
+    </div>
+
+    <!-- 同步课 -->
+    <div class="ep-showcase">
+      <div class="ep-showcase-title">同步课</div>
+      <a class="ep-card" href="https://my.feishu.cn/docx/NZdmdPc6Pol6b6xyPDUcS1tLn7b" target="_blank" rel="noopener">
+        <div class="ep-tag">SYNC 01</div>
+        <div class="ep-name">《六国论》</div>
+        <div class="ep-desc">高中语文课本篇目 · 同步课 · 查看飞书文档 ↗</div>
+      </a>
+      <a class="ep-card" href="https://my.feishu.cn/docx/RGZtdDbYWohRqVxtfvFcyJoenPx" target="_blank" rel="noopener">
+        <div class="ep-tag">SYNC 02</div>
+        <div class="ep-name">《烛之武退秦师》</div>
+        <div class="ep-desc">高中语文课本篇目 · 同步课 · 查看飞书文档 ↗</div>
+      </a>
+      <a class="ep-card" href="https://my.feishu.cn/docx/N9I1ddXX1oyBxixhS6NcyUM2nsb" target="_blank" rel="noopener">
+        <div class="ep-tag">SYNC 03</div>
+        <div class="ep-name">《项脊轩志》</div>
+        <div class="ep-desc">高中语文课本篇目 · 同步课 · 查看飞书文档 ↗</div>
+      </a>
+      <a class="ep-card" href="https://my.feishu.cn/docx/LgEvdZSLho5kOixaISocP3zmnEe" target="_blank" rel="noopener">
+        <div class="ep-tag">SYNC 04</div>
+        <div class="ep-name">《孔雀东南飞》</div>
+        <div class="ep-desc">高中语文课本篇目 · 同步课 · 查看飞书文档 ↗</div>
+      </a>
+    </div>
+
+    <!-- 跨学段课程 -->
+    <div class="ep-showcase">
+      <div class="ep-showcase-title">跨学段课程</div>
+      <a class="ep-card" href="https://my.feishu.cn/docx/TsgxddHNUoniFMxnUuMciF1rnUh" target="_blank" rel="noopener">
+        <div class="ep-tag">CROSS 01</div>
+        <div class="ep-name">小学语文 · 名著阅读</div>
+        <div class="ep-desc">小学语文 · 跨学段 · 查看飞书文档 ↗</div>
+      </a>
+      <a class="ep-card" href="https://my.feishu.cn/docx/KCcNdcqPZozQ4Kx5Kh2cVSX6nQf" target="_blank" rel="noopener">
+        <div class="ep-tag">CROSS 02</div>
+        <div class="ep-name">小学语文 ·《送元二使安西》</div>
+        <div class="ep-desc">小学语文 · 跨学段 · 查看飞书文档 ↗</div>
+      </a>
     </div>
   </article>
 
