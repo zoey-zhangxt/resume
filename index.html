@@ -1,243 +1,463 @@
----
-layout: page
-title: "张秀婷 · Zoey Zhang"
-subtitle: "文史内容教研 / AI 驱动教研工作流"
-show-avatar: false
----
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>张秀婷 · Zoey Zhang | 个人网站</title>
+<meta name="description" content="张秀婷的个人网站 · 文史内容教研 · AI 驱动教研工作流">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌸%3C/text%3E%3C/svg%3E">
 <style>
-  /* intro-header 蓝天渐变 */
-  .intro-header {
-    background: linear-gradient(180deg, #cfe4f5 0%, #e5f0f8 60%, #f5faff 100%) !important;
-    padding: 55px 0 25px !important;
-    position: relative;
-    overflow: hidden;
-  }
-  .intro-header::before {
-    content: "";
-    position: absolute;
-    top: 20%;
-    left: -50px;
-    width: 220px;
-    height: 60px;
-    background: radial-gradient(ellipse at center, rgba(255,255,255,0.85), transparent 70%);
-    filter: blur(10px);
-    pointer-events: none;
-  }
-  .intro-header::after {
-    content: "";
-    position: absolute;
-    top: 55%;
-    right: 5%;
-    width: 260px;
-    height: 80px;
-    background: radial-gradient(ellipse at center, rgba(255,255,255,0.9), transparent 70%);
-    filter: blur(15px);
-    pointer-events: none;
-  }
+:root {
+  --c-primary: #2c5282;
+  --c-primary-light: #4a90d9;
+  --c-primary-dark: #1e3a5f;
+  --c-bg-soft: #cfe4f5;
+  --c-text: #1e293b;
+  --c-text-soft: #64748b;
+  --c-glass: rgba(255, 255, 255, 0.6);
+  --c-glass-border: rgba(255, 255, 255, 0.85);
+  --shadow-glass: 0 8px 32px rgba(44, 82, 130, 0.08);
+  --shadow-glass-hover: 0 20px 50px rgba(44, 82, 130, 0.16);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+  color: var(--c-text);
+  line-height: 1.7;
+  min-height: 100vh;
+  background:
+    radial-gradient(1400px 700px at 15% -5%, rgba(207, 228, 245, .9), transparent 65%),
+    radial-gradient(1100px 500px at 100% 20%, rgba(74, 144, 217, .18), transparent 65%),
+    radial-gradient(900px 400px at 30% 90%, rgba(207, 228, 245, .4), transparent 60%),
+    linear-gradient(180deg, #d6e8f6 0%, #eaf3fb 40%, #f4f9fd 100%);
+}
 
-  /* 标题 */
-  .intro-header h1 {
-    font-size: 2.2rem !important;
-    white-space: nowrap;
-    color: #2c5282 !important;
-    position: relative;
-    z-index: 2;
-  }
-  .intro-header h2,
-  .intro-header .subheading {
-    font-size: 1.1rem !important;
-    color: #4a5568 !important;
-    margin-bottom: 0 !important;
-    position: relative;
-    z-index: 2;
-  }
-  @media (max-width: 520px) {
-    .intro-header h1 {
-      font-size: 1.6rem !important;
-      white-space: normal;
-    }
-  }
+/* ---------- 顶部导航 ---------- */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(74, 144, 217, 0.1);
+}
+.site-nav .inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-nav .brand {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--c-primary);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.site-nav .links a {
+  color: var(--c-text-soft);
+  text-decoration: none;
+  margin-left: 28px;
+  font-size: 14.5px;
+  transition: color .2s;
+  position: relative;
+}
+.site-nav .links a:hover { color: var(--c-primary); }
+.site-nav .links a.on {
+  color: var(--c-primary);
+  font-weight: 600;
+}
+.site-nav .links a.on::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 2px;
+  background: var(--c-primary);
+  border-radius: 2px;
+}
 
-  /* 主要内容 */
-  .home-tagline {
-    font-size: 1em;
-    color: #7a8a9a;
-    margin: 15px 0 25px;
-    letter-spacing: 0.5px;
-    text-align: center;
-  }
-  .home-intro {
-    font-size: 1.05em;
-    line-height: 2;
-    max-width: 600px;
-    margin: 0 auto;
-    color: #4a5568;
-    text-align: center;
-  }
+/* ---------- Hero 主区 ---------- */
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 130px 32px 80px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 60px;
+  width: 100%;
+  align-items: center;
+}
 
-  /* 按钮 */
-  .home-btn {
-    display: inline-block;
-    padding: 12px 32px;
-    margin: 0 8px;
-    font-size: 0.95em;
-    border-radius: 30px;
-    text-decoration: none;
-    transition: all 0.3s;
-    border: 1.5px solid #4a90d9;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-  }
-  .home-btn-primary {
-    background: rgba(74, 144, 217, 0.9);
-    color: white;
-  }
-  .home-btn-primary:hover {
-    background: rgba(74, 144, 217, 1);
-    color: white;
-    text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(74, 144, 217, 0.3);
-  }
-  .home-btn-secondary {
-    background: rgba(255, 255, 255, 0.6);
-    color: #4a90d9;
-  }
-  .home-btn-secondary:hover {
-    background: rgba(74, 144, 217, 0.9);
-    color: white;
-    text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(74, 144, 217, 0.3);
-  }
+/* ---------- 左侧：介绍 ---------- */
+.hero-left { position: relative; }
 
-  /* 三个卡片：grid 三列 */
-  .home-cards-wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-    position: relative;
-    padding: 20px 0;
-    margin: 60px 0 40px;
-  }
-  @media (max-width: 700px) {
-    .home-cards-wrapper {
-      grid-template-columns: 1fr;
-    }
-  }
-  .home-card {
-    text-align: center;
-    padding: 45px 20px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(219, 234, 245, 0.4));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.6);
-    box-shadow: 0 4px 20px rgba(74, 144, 217, 0.08);
-    transition: all 0.35s;
-    height: 100%;
-  }
-  .home-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(74, 144, 217, 0.15);
-    background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(219, 234, 245, 0.6));
-  }
-  .home-card h3 {
-    margin: 0 0 12px 0;
-    color: #2c5282;
-    font-weight: 600;
-  }
-  .home-card-desc {
-    font-size: 0.88em;
-    color: #7a8a9a;
-    margin: 0;
-  }
+.hi-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(74, 144, 217, 0.2);
+  color: var(--c-primary);
+  font-size: 13px;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  letter-spacing: 2px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+.hi-label .wave { font-family: "PingFang SC", sans-serif; font-style: normal; }
 
-  /* 樱花装饰 */
-  .sakura {
-    position: absolute;
-    pointer-events: none;
-    opacity: 0.6;
-    z-index: 1;
+.hero-title {
+  font-size: 44px;
+  font-weight: 700;
+  color: var(--c-primary);
+  margin: 0 0 6px;
+  letter-spacing: 1.5px;
+  line-height: 1.2;
+}
+.hero-title .en {
+  color: var(--c-primary-light);
+  font-family: "Georgia", serif;
+  font-weight: 600;
+}
+
+.hero-role {
+  font-size: 17px;
+  color: var(--c-text-soft);
+  margin: 0 0 32px;
+  letter-spacing: 0.5px;
+}
+
+/* 头像 + 教育经历行 */
+.profile-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 26px;
+  padding: 20px 22px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  box-shadow: var(--shadow-glass);
+}
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #cfe4f5, #a4c9e8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 22px rgba(44, 82, 130, .18);
+}
+.avatar img, .avatar svg {
+  width: 100%; height: 100%; display: block;
+  object-fit: cover;
+}
+.profile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.profile-text .p-line1 {
+  color: var(--c-primary);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+.profile-text .p-line2 {
+  color: var(--c-primary);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.5px;
+  padding-left: 32px;
+  position: relative;
+}
+.profile-text .p-line2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 20px;
+  height: 2px;
+  background: var(--c-primary-light);
+  border-radius: 2px;
+}
+
+/* 一句自我介绍 */
+.bio-quote {
+  position: relative;
+  padding: 6px 0 6px 20px;
+  border-left: 3px solid var(--c-primary-light);
+  color: var(--c-text);
+  margin: 0 0 28px;
+  font-size: 15px;
+  line-height: 1.85;
+}
+.bio-quote .accent {
+  color: var(--c-primary);
+  font-weight: 600;
+}
+
+/* 按钮行 */
+.cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all .3s;
+  border: 1px solid transparent;
+}
+.btn.primary {
+  background: linear-gradient(135deg, var(--c-primary), var(--c-primary-light));
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(44, 82, 130, .25);
+}
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(44, 82, 130, .35);
+}
+.btn.ghost {
+  background: rgba(255, 255, 255, 0.65);
+  color: var(--c-primary);
+  border: 1px solid rgba(74, 144, 217, .3);
+  backdrop-filter: blur(8px);
+}
+.btn.ghost:hover {
+  background: var(--c-primary);
+  color: #fff;
+  border-color: var(--c-primary);
+}
+
+/* ---------- 右侧：三张入口卡 ---------- */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.entry-card {
+  display: block;
+  padding: 22px 26px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: all .35s cubic-bezier(.2,.8,.2,1);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  overflow: hidden;
+}
+.entry-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(74, 144, 217, 0), rgba(74, 144, 217, .08));
+  opacity: 0;
+  transition: opacity .35s;
+  pointer-events: none;
+}
+.entry-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glass-hover);
+  border-color: rgba(74, 144, 217, 0.35);
+  text-decoration: none;
+  color: inherit;
+}
+.entry-card:hover::before { opacity: 1; }
+
+/* 错落感：每张卡片微微不同缩进 */
+.entry-card.c1 { margin-right: 24px; }
+.entry-card.c2 { margin-left: 12px; margin-right: 12px; }
+.entry-card.c3 { margin-left: 24px; }
+
+.entry-card .card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.entry-card .num {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--c-primary-light);
+  letter-spacing: 3px;
+}
+.entry-card .arrow {
+  color: var(--c-primary);
+  font-size: 20px;
+  font-weight: 600;
+  transition: transform .3s;
+}
+.entry-card:hover .arrow { transform: translateX(6px); }
+
+.entry-card .title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--c-primary);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+.entry-card .desc {
+  color: var(--c-text-soft);
+  font-size: 13.5px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------- 樱花装饰 ---------- */
+.sakura {
+  position: fixed;
+  pointer-events: none;
+  opacity: .45;
+  font-size: 24px;
+  z-index: 0;
+}
+.sakura.s1 { top: 18%; right: 6%; transform: rotate(15deg); font-size: 20px; }
+.sakura.s2 { bottom: 12%; left: 8%; transform: rotate(-25deg); font-size: 18px; }
+.sakura.s3 { top: 55%; right: 45%; transform: rotate(45deg); font-size: 14px; opacity: .3; }
+
+/* ---------- 底部签名条（可选） ---------- */
+.footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--c-text-soft);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.footer .heart { color: #e57373; }
+
+/* ---------- 移动端 ---------- */
+@media (max-width: 900px) {
+  .hero { padding: 100px 20px 40px; align-items: flex-start; }
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero-title { font-size: 34px; }
+  .entry-card.c1, .entry-card.c2, .entry-card.c3 {
+    margin-left: 0; margin-right: 0;
   }
-  .sakura-1 {
-    top: -25px;
-    right: 6%;
-    transform: rotate(15deg);
-  }
-  .sakura-2 {
-    bottom: -15px;
-    left: 4%;
-    transform: rotate(-20deg);
-  }
-  .sakura-3 {
-    top: 40%;
-    right: -20px;
-    transform: rotate(45deg);
-    opacity: 0.4;
-  }
+  .site-nav .inner { padding: 12px 20px; }
+  .site-nav .links a { margin-left: 18px; font-size: 13px; }
+  .site-nav .brand { font-size: 14px; letter-spacing: 0; }
+}
+@media (max-width: 500px) {
+  .site-nav .brand { display: none; }
+  .site-nav .links a { margin-left: 12px; }
+}
 </style>
+</head>
+<body>
 
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <g id="sakura-flower">
-      <g fill="#f7c9d3" stroke="#e89aad" stroke-width="0.6">
-        <path d="M20,20 Q10,5 20,-5 Q30,5 20,20 Z"/>
-        <g transform="rotate(72 20 20)"><path d="M20,20 Q10,5 20,-5 Q30,5 20,20 Z"/></g>
-        <g transform="rotate(144 20 20)"><path d="M20,20 Q10,5 20,-5 Q30,5 20,20 Z"/></g>
-        <g transform="rotate(216 20 20)"><path d="M20,20 Q10,5 20,-5 Q30,5 20,20 Z"/></g>
-        <g transform="rotate(288 20 20)"><path d="M20,20 Q10,5 20,-5 Q30,5 20,20 Z"/></g>
-      </g>
-      <circle cx="20" cy="20" r="3" fill="#f5a4b7"/>
-    </g>
-  </defs>
-</svg>
+<!-- 樱花装饰（fixed 定位，不占布局） -->
+<span class="sakura s1">🌸</span>
+<span class="sakura s2">🌸</span>
+<span class="sakura s3">🌸</span>
 
-<div style="text-align: center; margin-bottom: 40px;">
-  <p class="home-tagline">
-    中国人民大学国学院本硕 · 5 年 K12 教研经验
-  </p>
-
-  <p class="home-intro">
-    国学底蕴 × 教研经验 × AI 实践<br>
-    擅长将复杂知识转化为生动的故事<br>
-    并用 AI 工具重构教研生产流程
-  </p>
-
-  <p style="margin-top: 35px;">
-    <a href="{{ '/assets/files/张秀婷_课程教研_简历.pdf' | relative_url }}" class="home-btn home-btn-primary">查看简历 PDF</a>
-    <a href="mailto:2416848925@qq.com" class="home-btn home-btn-secondary">联系我</a>
-  </p>
-</div>
-
-<div class="home-cards-wrapper">
-  <svg class="sakura sakura-1" width="45" height="45" viewBox="0 0 40 40">
-    <use href="#sakura-flower"/>
-  </svg>
-  <svg class="sakura sakura-2" width="55" height="55" viewBox="0 0 40 40">
-    <use href="#sakura-flower"/>
-  </svg>
-  <svg class="sakura sakura-3" width="35" height="35" viewBox="0 0 40 40">
-    <use href="#sakura-flower"/>
-  </svg>
-
-  <a href="{{ '/experience' | relative_url }}" style="text-decoration: none; color: inherit; position: relative; z-index: 2;">
-    <div class="home-card">
-      <h3>个人经历</h3>
-      <p class="home-card-desc">教育背景 · 工作经历 · 奖项</p>
+<!-- 顶部导航 -->
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html" class="brand">张秀婷 · Zoey Zhang</a>
+    <div class="links">
+      <a href="index.html" class="on">首页</a>
+      <a href="experience.html">个人经历</a>
+      <a href="works.html">作品集</a>
+      <a href="life.html">我的生活</a>
     </div>
-  </a>
-  <a href="{{ '/works' | relative_url }}" style="text-decoration: none; color: inherit; position: relative; z-index: 2;">
-    <div class="home-card">
-      <h3>作品集</h3>
-      <p class="home-card-desc">动画课程 · AI 工作流 · 内容运营</p>
-    </div>
-  </a>
-  <a href="{{ '/life' | relative_url }}" style="text-decoration: none; color: inherit; position: relative; z-index: 2;">
-    <div class="home-card">
-      <h3>我的生活</h3>
-      <p class="home-card-desc">阅读 · 随笔 · 生活片段</p>
-    </div>
-  </a>
-</div>
+  </div>
+</nav>
+
+<!-- Hero 主区 -->
+<main class="hero">
+  <div class="hero-inner">
+
+    <!-- 左侧：介绍 -->
+    <section class="hero-left">
+      <span class="hi-label"><span class="wave">👋</span> Hi, I'm</span>
+      <h1 class="hero-title">张秀婷 · <span class="en">Zoey Zhang</span></h1>
+      <p class="hero-role">文史内容教研 · AI 驱动教研工作流</p>
+
+      <div class="profile-row">
+        <div class="avatar">
+          <img src="assets/avatar.jpg" alt="张秀婷 Zoey Zhang">
+        </div>
+        <div class="profile-text">
+          <p class="p-line1">中国人民大学国学院本硕</p>
+          <p class="p-line2">5 年 K12 内容教研经验</p>
+        </div>
+      </div>
+
+      <div class="bio-quote">
+        <span class="accent">国学底蕴 × 教研经验 × AI 实践</span><br>
+        擅长将复杂知识转化为生动的故事，<br>
+        并用 AI 工具重构教研生产流程。
+      </div>
+
+      <div class="cta-row">
+        <a href="assets/resume.pdf" target="_blank" class="btn primary">📄 查看简历 PDF</a>
+        <a href="mailto:2416848925@qq.com" class="btn ghost">✉ 联系我</a>
+      </div>
+    </section>
+
+    <!-- 右侧：三张入口卡（错落） -->
+    <aside class="hero-right">
+      <a href="experience.html" class="entry-card c1">
+        <div class="card-top">
+          <span class="num">01</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="title">个人经历</div>
+        <p class="desc">教育背景 · 工作履历 · 奖项与荣誉</p>
+      </a>
+
+      <a href="works.html" class="entry-card c2">
+        <div class="card-top">
+          <span class="num">02</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="title">作品集</div>
+        <p class="desc">动画课程教研 · AI 工作流 · 内容运营</p>
+      </a>
+
+      <a href="life.html" class="entry-card c3">
+        <div class="card-top">
+          <span class="num">03</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="title">我的生活</div>
+        <p class="desc">阅读 · 随笔 · 生活片段</p>
+      </a>
+    </aside>
+
+  </div>
+</main>
+
+<footer class="footer">
+  © 2026 张秀婷 · Zoey Zhang · Made with <span class="heart">♥</span>
+</footer>
+
+</body>
+</html>

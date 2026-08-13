@@ -1,391 +1,705 @@
----
-layout: page
-title: "个人经历"
-subtitle: "学习与工作轨迹"
-show-avatar: false
----
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>个人经历 · 张秀婷 Zoey Zhang</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌸%3C/text%3E%3C/svg%3E">
 <style>
-  /* 头部蓝色渐变 */
-  .intro-header {
-    background: linear-gradient(180deg, #cfe4f5 0%, #e5f0f8 60%, #f5faff 100%) !important;
-    padding: 55px 0 25px !important;
-    position: relative;
-    overflow: hidden;
-  }
-  .intro-header h1 {
-    font-size: 2.2rem !important;
-    color: #2c5282 !important;
-  }
-  .intro-header h2,
-  .intro-header .subheading {
-    font-size: 1.05rem !important;
-    color: #4a5568 !important;
-    margin-bottom: 0 !important;
-  }
+:root {
+  --c-primary: #2c5282;
+  --c-primary-light: #4a90d9;
+  --c-primary-dark: #1e3a5f;
+  --c-bg-soft: #cfe4f5;
+  --c-text: #1e293b;
+  --c-text-soft: #64748b;
+  --c-text-muted: #94a3b8;
+  --c-glass: rgba(255, 255, 255, 0.62);
+  --c-glass-border: rgba(255, 255, 255, 0.85);
+  --shadow-glass: 0 8px 32px rgba(44, 82, 130, 0.08);
+  --shadow-glass-hover: 0 14px 44px rgba(44, 82, 130, 0.14);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+  color: var(--c-text);
+  line-height: 1.75;
+  background:
+    radial-gradient(1400px 700px at 15% -5%, rgba(207, 228, 245, .9), transparent 65%),
+    radial-gradient(1100px 500px at 100% 15%, rgba(74, 144, 217, .16), transparent 65%),
+    radial-gradient(900px 500px at 20% 85%, rgba(207, 228, 245, .35), transparent 60%),
+    linear-gradient(180deg, #d6e8f6 0%, #eaf3fb 40%, #f4f9fd 100%);
+  min-height: 100vh;
+}
 
-  /* 板块 */
-  .exp-section { margin: 55px 0; }
-  .exp-section-title {
-    font-size: 1.5rem;
-    color: #2c5282;
-    margin-bottom: 25px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #cfe4f5;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .exp-section-title .icon { font-size: 1.3rem; }
+/* ---------- 顶部导航 ---------- */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(74, 144, 217, 0.1);
+}
+.site-nav .inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-nav .brand {
+  font-size: 16px; font-weight: 700;
+  color: var(--c-primary);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.site-nav .links a {
+  color: var(--c-text-soft);
+  text-decoration: none;
+  margin-left: 28px;
+  font-size: 14.5px;
+  transition: color .2s;
+  position: relative;
+}
+.site-nav .links a:hover { color: var(--c-primary); }
+.site-nav .links a.on { color: var(--c-primary); font-weight: 600; }
+.site-nav .links a.on::after {
+  content: ""; position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 2px; background: var(--c-primary);
+  border-radius: 2px;
+}
 
-  /* 教育表 */
-  .edu-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(219, 234, 245, 0.3));
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid rgba(219, 234, 245, 0.6);
-  }
-  .edu-table td {
-    padding: 14px 20px;
-    border-bottom: 1px solid rgba(219, 234, 245, 0.5);
-    color: #4a5568;
-    vertical-align: middle;
-  }
-  .edu-table tr:last-child td { border-bottom: none; }
-  .edu-table td.date {
-    color: #7a8a9a;
-    font-size: 0.9em;
-    white-space: nowrap;
-    width: 180px;
-  }
-  .edu-table td.school {
-    font-weight: 600;
-    color: #2c5282;
-  }
-  .edu-courses {
-    margin-top: 15px;
-    color: #7a8a9a;
-    font-size: 0.9em;
-    line-height: 1.8;
-  }
-  .edu-courses strong { color: #4a5568; }
+/* ---------- 页面主区 ---------- */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 110px 32px 80px;
+}
 
-  /* 工作卡片 */
-  .work-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(219, 234, 245, 0.35));
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 16px;
-    padding: 28px 32px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(219, 234, 245, 0.6);
-    box-shadow: 0 3px 15px rgba(74, 144, 217, 0.06);
-    transition: box-shadow 0.3s;
-  }
-  .work-card:hover { box-shadow: 0 6px 25px rgba(74, 144, 217, 0.12); }
-  .work-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 6px;
-  }
-  .work-company {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: #2c5282;
-    margin: 0;
-  }
-  .work-time {
-    color: #7a8a9a;
-    font-size: 0.9em;
-    white-space: nowrap;
-  }
-  .work-role {
-    color: #4a90d9;
-    font-size: 0.98em;
-    margin-bottom: 14px;
-  }
-  .work-duty {
-    color: #4a5568;
-    line-height: 1.75;
-    margin-bottom: 14px;
-    padding: 12px 16px;
-    background: rgba(207, 228, 245, 0.25);
-    border-left: 3px solid #a8cae8;
-    border-radius: 4px;
-  }
-  .work-duty strong { color: #2c5282; }
-  .work-highlights {
-    margin: 0;
-    padding-left: 20px;
-    color: #4a5568;
-    line-height: 1.9;
-  }
-  .work-highlights li { margin-bottom: 6px; }
-  .work-highlights strong { color: #2c5282; }
+/* ---------- 页面头部 ---------- */
+.page-head {
+  padding: 30px 8px 40px;
+}
+.page-head .num {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  color: var(--c-primary-light);
+  letter-spacing: 3px;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.page-head h1 {
+  margin: 4px 0 14px;
+  font-size: 42px;
+  color: var(--c-primary);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.page-head .sub {
+  color: var(--c-text-soft);
+  font-size: 16px;
+  line-height: 1.85;
+  max-width: 720px;
+  margin: 0;
+}
 
-  /* 实习卡片 */
-  .intern-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  @media (max-width: 700px) {
-    .intern-grid { grid-template-columns: 1fr; }
-  }
-  .intern-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(219, 234, 245, 0.3));
-    border-radius: 12px;
-    padding: 20px;
-    border: 1px solid rgba(219, 234, 245, 0.5);
-  }
-  .intern-card h4 {
-    margin: 0 0 4px 0;
-    color: #2c5282;
-    font-size: 1rem;
-  }
-  .intern-card .intern-time {
-    color: #7a8a9a;
-    font-size: 0.85em;
-    margin-bottom: 8px;
-  }
-  .intern-card p {
-    margin: 0;
-    color: #4a5568;
-    font-size: 0.9em;
-    line-height: 1.65;
-  }
+/* ---------- 错落分栏主区 ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: 35% 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.col-left { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 88px; }
+.col-right { display: flex; flex-direction: column; gap: 24px; }
 
-  /* 校内 */
-  .campus-item {
-    background: rgba(255, 255, 255, 0.5);
-    border-left: 3px solid #4a90d9;
-    padding: 12px 20px;
-    margin-bottom: 12px;
-    border-radius: 4px;
-  }
-  .campus-item strong { color: #2c5282; }
-  .campus-item .time {
-    color: #7a8a9a;
-    font-size: 0.88em;
-    margin-left: 8px;
-  }
-  .campus-item p {
-    margin: 6px 0 0 0;
-    color: #4a5568;
-    font-size: 0.92em;
-    line-height: 1.7;
-  }
+/* ---------- 玻璃卡片 ---------- */
+.card {
+  background: var(--c-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 20px;
+  padding: 26px 28px;
+  box-shadow: var(--shadow-glass);
+  transition: box-shadow .3s;
+}
+.card:hover { box-shadow: var(--shadow-glass-hover); }
 
-  /* 奖项 */
-  .award-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-  @media (max-width: 700px) {
-    .award-grid { grid-template-columns: 1fr; }
-  }
-  .award-item {
-    background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(219, 234, 245, 0.25));
-    padding: 14px 18px;
-    border-radius: 10px;
-    border: 1px solid rgba(219, 234, 245, 0.5);
-    color: #4a5568;
-    font-size: 0.95em;
-    line-height: 1.6;
-  }
-  .award-item.highlight {
-    background: linear-gradient(135deg, rgba(247, 201, 211, 0.3), rgba(255,255,255,0.6));
-    border-color: rgba(247, 201, 211, 0.6);
-  }
-  .award-item strong { color: #2c5282; }
-  .award-item .badge {
-    color: #d97b8f;
-    font-size: 0.85em;
-    margin-left: 6px;
-  }
+/* 卡片标题 */
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--c-primary);
+  letter-spacing: 1px;
+}
+.card-title .dot {
+  width: 8px; height: 8px;
+  background: var(--c-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.card-title .en {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--c-primary-light);
+  font-weight: 400;
+  margin-left: auto;
+  letter-spacing: 2px;
+}
 
-  /* 自我评价 */
-  .self-eval {
-    background: linear-gradient(135deg, rgba(207, 228, 245, 0.25), rgba(255,255,255,0.6));
-    padding: 25px 30px;
-    border-radius: 16px;
-    border: 1px solid rgba(219, 234, 245, 0.6);
-  }
-  .self-eval-item {
-    margin-bottom: 16px;
-    color: #4a5568;
-    line-height: 1.8;
-  }
-  .self-eval-item:last-child { margin-bottom: 0; }
-  .self-eval-item strong {
-    color: #2c5282;
-    display: inline-block;
-    margin-right: 6px;
-  }
+/* ---------- 教育背景 · 时间轴 ---------- */
+.edu-item {
+  position: relative;
+  padding: 12px 0 12px 22px;
+  border-left: 2px solid rgba(74, 144, 217, .22);
+}
+.edu-item:last-child { padding-bottom: 4px; }
+.edu-item::before {
+  content: "";
+  position: absolute;
+  left: -6px; top: 18px;
+  width: 10px; height: 10px;
+  background: var(--c-primary);
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--c-primary-light);
+}
+.edu-item .year {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  color: var(--c-primary-light);
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+.edu-item .school {
+  color: var(--c-primary);
+  font-weight: 600;
+  font-size: 14.5px;
+  margin-bottom: 2px;
+}
+.edu-item .major {
+  color: var(--c-text-soft);
+  font-size: 13px;
+}
+
+/* ---------- 奖项列表 ---------- */
+.award-list { display: flex; flex-direction: column; gap: 12px; }
+.award-item {
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.55);
+  border-left: 3px solid #ddb15d;
+  border-radius: 6px;
+}
+.award-item .a-title {
+  color: var(--c-text);
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.award-item .a-level {
+  color: #b18641;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- 校内实践 ---------- */
+.club-list { display: flex; flex-direction: column; gap: 14px; }
+.club-item .c-role {
+  color: var(--c-primary);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.club-item .c-time {
+  color: var(--c-text-muted);
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.club-item .c-desc {
+  color: var(--c-text-soft);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* ---------- 工作经历 · 大卡 ---------- */
+.job-card {
+  padding: 28px 32px;
+}
+.job-item {
+  padding: 22px 0;
+  border-top: 1px dashed rgba(74, 144, 217, .22);
+}
+.job-item:first-child {
+  padding-top: 4px;
+  border-top: none;
+}
+.job-item:last-child { padding-bottom: 4px; }
+
+.job-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.job-head .company {
+  color: var(--c-primary);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+.job-head .role {
+  color: var(--c-text-soft);
+  font-size: 14px;
+}
+.job-head .time {
+  padding: 4px 12px;
+  background: rgba(74, 144, 217, .12);
+  color: var(--c-primary);
+  border-radius: 999px;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12.5px;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+.job-head .time.current {
+  background: var(--c-primary);
+  color: #fff;
+}
+
+.job-highlights {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.job-highlights .h-tag {
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid rgba(74, 144, 217, .2);
+  color: var(--c-primary);
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.job-desc {
+  color: var(--c-text);
+  font-size: 14px;
+  line-height: 1.9;
+}
+.job-desc ul { margin: 4px 0 0; padding-left: 18px; }
+.job-desc ul li { margin: 6px 0; }
+.job-desc .sec-h {
+  color: var(--c-primary);
+  font-weight: 600;
+  margin: 10px 0 4px;
+  font-size: 14px;
+}
+
+/* ---------- 实习经历 ---------- */
+.intern-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.intern-item {
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, .5);
+  border: 1px solid rgba(255, 255, 255, .8);
+  border-radius: 12px;
+}
+.intern-item .i-org {
+  color: var(--c-primary);
+  font-weight: 600;
+  font-size: 13.5px;
+  margin-bottom: 2px;
+}
+.intern-item .i-role {
+  color: var(--c-text-soft);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.intern-item .i-time {
+  color: var(--c-text-muted);
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 11.5px;
+  margin-bottom: 8px;
+}
+.intern-item .i-desc {
+  color: var(--c-text-soft);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+/* ---------- 底部自评 ---------- */
+.evaluation {
+  margin-top: 40px;
+  padding: 36px 40px;
+  background:
+    linear-gradient(135deg, rgba(74, 144, 217, .1), rgba(207, 228, 245, .4)),
+    var(--c-glass);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-glass);
+}
+.evaluation .ev-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.evaluation .ev-title h2 {
+  margin: 0;
+  font-size: 22px;
+  color: var(--c-primary);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.evaluation .ev-title .en {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  color: var(--c-primary-light);
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+.eval-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.eval-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, .55);
+  border-radius: 12px;
+}
+.eval-item .ev-num {
+  color: var(--c-primary-light);
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 26px;
+}
+.eval-item .ev-text {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--c-text);
+}
+
+/* ---------- 樱花装饰 ---------- */
+.sakura {
+  position: fixed;
+  pointer-events: none;
+  opacity: .35;
+  z-index: 0;
+}
+.sakura.s1 { top: 15%; right: 5%; transform: rotate(15deg); font-size: 20px; }
+.sakura.s2 { bottom: 8%; left: 5%; transform: rotate(-30deg); font-size: 18px; }
+
+/* ---------- 底部页脚 ---------- */
+.footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--c-text-soft);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.footer .heart { color: #e57373; }
+
+/* ---------- 移动端 ---------- */
+@media (max-width: 900px) {
+  .page { padding: 90px 20px 40px; }
+  .grid { grid-template-columns: 1fr; gap: 20px; }
+  .col-left { position: static; }
+  .page-head h1 { font-size: 32px; }
+  .intern-grid { grid-template-columns: 1fr; }
+  .eval-grid { grid-template-columns: 1fr; }
+  .site-nav .inner { padding: 12px 20px; }
+  .site-nav .links a { margin-left: 18px; font-size: 13px; }
+  .evaluation { padding: 24px 22px; }
+}
+@media (max-width: 500px) {
+  .site-nav .brand { display: none; }
+  .site-nav .links a { margin-left: 12px; }
+  .job-card { padding: 22px 22px; }
+}
 </style>
+</head>
+<body>
 
-<section class="exp-section">
-  <h2 class="exp-section-title"><span class="icon">📚</span> 教育背景</h2>
-  <table class="edu-table">
-    <tr>
-      <td class="date">2018.9 – 2020.7</td>
-      <td class="school">中国人民大学 · 国学院</td>
-      <td>中国古代文学 · 硕士</td>
-    </tr>
-    <tr>
-      <td class="date">2014.9 – 2018.7</td>
-      <td class="school">中国人民大学 · 国学院</td>
-      <td>中国古代文学 · 本科（新闻学辅修）</td>
-    </tr>
-    <tr>
-      <td class="date">2019.3 – 2019.6</td>
-      <td class="school">韩国国立釜山大学</td>
-      <td>国际关系 · 交换学习</td>
-    </tr>
-  </table>
-  <p class="edu-courses">
-    <strong>核心课程：</strong>文字学、文献学、中国通史、中国文学史、《红楼梦》研读、《论语》研读、新闻理论、传播理论
-  </p>
-</section>
+<span class="sakura s1">🌸</span>
+<span class="sakura s2">🌸</span>
 
-<section class="exp-section">
-  <h2 class="exp-section-title"><span class="icon">💼</span> 工作经历</h2>
-
-  <div class="work-card">
-    <div class="work-header">
-      <p class="work-company">北京猿力未来科技（猿辅导）</p>
-      <span class="work-time">2025.6 – 至今</span>
-    </div>
-    <p class="work-role">文史百科动画视频课程内容教研</p>
-    <div class="work-duty">
-      <strong>核心职责：</strong>文史主题动画视频课程的大纲策划、知识教研、全流程质量把控；主导 AI 深度嵌入教研链路的系统化实践。
-    </div>
-    <ul class="work-highlights">
-      <li>主导《三国演义》《上下五千年》等文史动画课程的大纲策划与教研，覆盖时代特征、课程主线、交互题设计等全维度</li>
-      <li>主导「上下五千年」项目文档体系搭建：<strong>6 份 SOP + 11 个 AI SKILL</strong>，将教研工作固化为可复用协作规范</li>
-      <li>独立设计并落地「生活丰荣小助手」小程序，获公司 <strong>AI 大赛优胜奖</strong></li>
-      <li>牵头组内 AI 成果分享与技能培训，推动教研全链路的 AI 化改造</li>
-    </ul>
-  </div>
-
-  <div class="work-card">
-    <div class="work-header">
-      <p class="work-company">北京光合新知（洋葱学园）</p>
-      <span class="work-time">2022.5 – 2025.6</span>
-    </div>
-    <p class="work-role">中学语文动画视频课程设计师</p>
-    <div class="work-duty">
-      <strong>核心职责：</strong>中学语文同步课与高考总复习动画视频课程的<strong>体系搭建、知识教研、脚本撰写、画面设计、制作跟进</strong>；主导新媒体运营与合作项目。
-    </div>
-    <ul class="work-highlights">
-      <li>发起并设计「文言知识闯关」「文言虚词小课堂」系列课程，用闯关和故事化叙事降低文言学习脑压</li>
-      <li>参与高中语文总复习项目立项，搭建「纸质文案 + 视频 + 附录 + 音频」四位一体课程体系</li>
-      <li>独立完成 10 到 15 分钟微课脚本设计与画面设计，跨学段跨学科输出</li>
-      <li>从 0 到 1 搭建「洋葱文心讲语文」小红书账号，<strong>半年粉丝 6400+</strong>，打造《乡土中国》系列爆款</li>
-      <li>负责人民网人民智课合作项目，设计中小学课堂互动活动</li>
-    </ul>
-  </div>
-
-  <div class="work-card">
-    <div class="work-header">
-      <p class="work-company">北京粉笔蓝天科技</p>
-      <span class="work-time">2020.7 – 2022.5</span>
-    </div>
-    <p class="work-role">公考申论及面试讲师</p>
-    <div class="work-duty">
-      <strong>核心职责：</strong>公考申论与面试科目的教研、授课与课程设计；承担公司市场品牌策划工作。
-    </div>
-    <ul class="work-highlights">
-      <li>申论 + 面试双科目教研与授课，撰写教案、模拟卷及题目解析</li>
-      <li>面试线下小班授课，<strong>累计 100+ 小时，好评率 99%</strong></li>
-      <li>设计 1 小时独立引流课，从共情导入、讲练结合等角度打磨课程环节</li>
-      <li>策划公司<strong>线上年会、六周年</strong>等品牌活动，全流程主导创意到落地</li>
-    </ul>
-  </div>
-</section>
-
-<section class="exp-section">
-  <h2 class="exp-section-title"><span class="icon">🌱</span> 实习经历</h2>
-  <div class="intern-grid">
-    <div class="intern-card">
-      <h4>腾讯视频</h4>
-      <p class="intern-time">2018.11 – 2019.2 · 活动运营实习生</p>
-      <p>组织 20+ 场 VIP 观影团、明星生日会等会员福利活动；完成腾讯、优酷、爱奇艺三方竞品分析报告。</p>
-    </div>
-    <div class="intern-card">
-      <h4>乐学在线教育</h4>
-      <p class="intern-time">2017.9 – 2018.3 · 高中历史教师</p>
-      <p>担任「王者历史」等课程主讲教师，负责直播与录播授课；参与设计「借题发挥」「涅槃之光」等新课程产品。</p>
-    </div>
-    <div class="intern-card">
-      <h4>凤凰网</h4>
-      <p class="intern-time">2017.6 – 2017.8 · 内容运营实习生</p>
-      <p>独立完成时评、书评创作，<strong>7 篇文章在凤凰评论刊载，合计阅读量 10w+</strong>；负责微信、微博等新媒体矩阵运营。</p>
+<!-- 顶部导航 -->
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html" class="brand">张秀婷 · Zoey Zhang</a>
+    <div class="links">
+      <a href="index.html">首页</a>
+      <a href="experience.html" class="on">个人经历</a>
+      <a href="works.html">作品集</a>
+      <a href="life.html">我的生活</a>
     </div>
   </div>
-</section>
+</nav>
 
-<section class="exp-section">
-  <h2 class="exp-section-title"><span class="icon">🎯</span> 校内实践</h2>
-  <div class="campus-item">
-    <strong>中国人民大学国学院辩论队队长</strong><span class="time">2015.9 – 2017.7</span>
-    <p>参与校内外辩论赛事，多次荣获最佳辩手奖；组织筹备校园辩论赛并担任评委，逻辑思维、语言表达、统筹协作能力突出。</p>
-  </div>
-  <div class="campus-item">
-    <strong>中国人民大学国学院分团委学生会副主席</strong><span class="time">2016.7 – 2017.7</span>
-    <p>筹备学院毕业典礼、迎新晚会等活动；任期内推进学生会部门重组与职能划分，推行学生会工作内容档案化管理。</p>
-  </div>
-</section>
+<main class="page">
 
-<section class="exp-section">
-  <h2 class="exp-section-title"><span class="icon">🏆</span> 奖项荣誉</h2>
-  <div class="award-grid">
-    <div class="award-item highlight">
-      <strong>AI 大赛优胜奖</strong><span class="badge">2025</span><br>
-      「生活丰荣小助手」小程序
-    </div>
-    <div class="award-item">
-      <strong>中国高校校报好新闻奖</strong> · 言论类一等奖
-    </div>
-    <div class="award-item">
-      <strong>中国大学生新闻评论大赛</strong> · 铜奖
-    </div>
-    <div class="award-item">
-      <strong>学术活动季学术论文大赛</strong> · 三等奖<br>
-      《孟荀人性观的比较及其统一性》
-    </div>
-    <div class="award-item">
-      <strong>创新杯学术科技作品竞赛</strong> · 三等奖
-    </div>
-    <div class="award-item">
-      <strong>大学生创新实践计划</strong> · 北京市级
-    </div>
-  </div>
-</section>
+  <!-- 页面头部 -->
+  <header class="page-head">
+    <div class="num">CHAPTER 01</div>
+    <h1>个人经历</h1>
+    <p class="sub">中国人民大学国学院本硕 · 5 年 K12 内容教研 · 从公考申论到中小学语文，再到儿童文史动画课程。</p>
+  </header>
 
-<section class="exp-section">
-  <h2 class="exp-section-title"><span class="icon">✍️</span> 自我评价</h2>
-  <div class="self-eval">
-    <p class="self-eval-item">
-      <strong>专业底色 ·</strong>国学院本硕，扎实的古典文学与文献学训练，能从原典出发做知识教研。
-    </p>
-    <p class="self-eval-item">
-      <strong>教研经验 ·</strong>5 年 K12 内容教研经验，覆盖公考、高中语文、文史动画三个赛道；擅长把复杂知识转化为生动的故事。
-    </p>
-    <p class="self-eval-item">
-      <strong>AI 实践 ·</strong>熟练使用 Cursor、Claude Code、Codex 等工具，主导过完整教研工作流的 AI 化改造，有 SOP、SKILL 等系统沉淀。
-    </p>
-    <p class="self-eval-item">
-      <strong>思考习惯 ·</strong>保持阅读、听播客、写作的习惯，文字功底强，理性思维，擅长把新任务快速拆解成可执行路径。
-    </p>
-    <p class="self-eval-item">
-      <strong>协作方式 ·</strong>责任感强，沟通表达顺畅；在辩论队和学生会锻炼出的表达和统筹能力，在跨部门协作中被反复验证。
-    </p>
+  <!-- 主区：错落分栏 -->
+  <div class="grid">
+
+    <!-- 左栏：教育 / 奖项 / 校内 -->
+    <aside class="col-left">
+
+      <!-- 教育背景 -->
+      <div class="card">
+        <h3 class="card-title"><span class="dot"></span>教育背景<span class="en">EDUCATION</span></h3>
+        <div class="edu-item">
+          <div class="year">2018.9 — 2020.7</div>
+          <div class="school">中国人民大学 · 硕士</div>
+          <div class="major">中国古代文学</div>
+        </div>
+        <div class="edu-item">
+          <div class="year">2019.3 — 2019.6</div>
+          <div class="school">韩国国立釜山大学 · 交换</div>
+          <div class="major">国际关系研究</div>
+        </div>
+        <div class="edu-item">
+          <div class="year">2014.9 — 2018.7</div>
+          <div class="school">中国人民大学 · 本科</div>
+          <div class="major">中国古代文学 · 辅修新闻学</div>
+        </div>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px dashed rgba(74,144,217,.2);color:var(--c-text-soft);font-size:12.5px;line-height:1.7;">
+          主修：文字学 · 文献学 · 中国通史 · 中国文学史 · 《红楼梦》《论语》研读 —— 国学底蕴深厚。
+        </div>
+      </div>
+
+      <!-- 奖项荣誉 -->
+      <div class="card">
+        <h3 class="card-title"><span class="dot"></span>奖项荣誉<span class="en">AWARDS</span></h3>
+        <div class="award-list">
+          <div class="award-item">
+            <div class="a-title">中国高校校报好新闻奖</div>
+            <div class="a-level">言论类一等奖 ·「12 万或多缴税」谣言的背后</div>
+          </div>
+          <div class="award-item">
+            <div class="a-title">中国大学生新闻评论大赛</div>
+            <div class="a-level">铜奖 ·《战狼 2》消费主旋律？</div>
+          </div>
+          <div class="award-item">
+            <div class="a-title">大学生创新实践计划</div>
+            <div class="a-level">北京市级 · 相亲角中的中国相亲文化</div>
+          </div>
+          <div class="award-item">
+            <div class="a-title">学术活动季学术论文大赛</div>
+            <div class="a-level">三等奖 · 孟荀人性观的比较及其统一性</div>
+          </div>
+          <div class="award-item">
+            <div class="a-title">创新杯学术科技作品竞赛</div>
+            <div class="a-level">三等奖 · 文创产品电商化营销</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 校内实践 -->
+      <div class="card">
+        <h3 class="card-title"><span class="dot"></span>校内实践<span class="en">CAMPUS</span></h3>
+        <div class="club-list">
+          <div class="club-item">
+            <div class="c-role">国学院辩论队 · 队长</div>
+            <div class="c-time">2015.9 — 2017.7</div>
+            <div class="c-desc">多次荣获最佳辩手奖 · 组织校园辩论赛 · 逻辑思维与语言表达突出</div>
+          </div>
+          <div class="club-item">
+            <div class="c-role">国学院分团委学生会 · 副主席</div>
+            <div class="c-time">2016.7 — 2017.7</div>
+            <div class="c-desc">筹备毕业典礼、迎新晚会 · 推进学生会部门重组与档案化管理</div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- 右栏：工作经历（大）+ 实习经历 -->
+    <div class="col-right">
+
+      <!-- 工作经历大卡 -->
+      <div class="card job-card">
+        <h3 class="card-title"><span class="dot"></span>工作经历<span class="en">EXPERIENCE</span></h3>
+
+        <!-- 工作 1 · 猿辅导（当前） -->
+        <div class="job-item">
+          <div class="job-head">
+            <div>
+              <div class="company">猿辅导（猿力未来北京科技）</div>
+              <div class="role">文史百科动画视频课程 · 内容教研</div>
+            </div>
+            <span class="time current">2025.6 — 至今</span>
+          </div>
+          <div class="job-highlights">
+            <span class="h-tag">大纲策划</span>
+            <span class="h-tag">知识教研</span>
+            <span class="h-tag">AI 工作流</span>
+            <span class="h-tag">SOP × SKILL 体系</span>
+          </div>
+          <div class="job-desc">
+            <div class="sec-h">动画视频课程教研主导</div>
+            <ul>
+              <li>负责《三国演义》《上下五千年》等文史主题课程的大纲策划 · 确定时代特征与课程主线 · 选定 12 集核心内容 · 设计交互题、人物卡、典故卡、时间轴等产品功能</li>
+              <li>各主题分集知识教研 · 涵盖原典研读、史料考证、知识点校准、服化道细节 · 撰写课程教研稿 · 设计交互题</li>
+              <li>跟进制作全流程 · 与编剧、美术、导演、动画、剪辑、音效等多部门协作 · 把控内容准确性与课程质量</li>
+            </ul>
+            <div class="sec-h">AI 内容协作与创新产品</div>
+            <ul>
+              <li>熟练使用 Cursor、Claude Code、Codex 等 AI 工具 · 将 AI 深度嵌入教研与内容生产链路</li>
+              <li>主导「上下五千年」项目文档体系搭建 · 6 份 SOP + 11 个 AI Skill · 教研全链路固化为可复用协作规范</li>
+              <li>「生活丰荣小助手」小程序 · 独立设计并落地 · 公司 AI 大赛优胜奖</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 工作 2 · 洋葱学园 -->
+        <div class="job-item">
+          <div class="job-head">
+            <div>
+              <div class="company">洋葱学园（北京光合新知科技）</div>
+              <div class="role">中学语文动画视频课程 · 课程设计师</div>
+            </div>
+            <span class="time">2022.5 — 2025.6</span>
+          </div>
+          <div class="job-highlights">
+            <span class="h-tag">同步课体系</span>
+            <span class="h-tag">脚本撰写</span>
+            <span class="h-tag">画面设计</span>
+            <span class="h-tag">新媒体运营</span>
+          </div>
+          <div class="job-desc">
+            <ul>
+              <li>发起「文言知识闯关」「文言虚词小课堂」系列课程设计 · 创新闯关模式与勋章激励 · 降低学习脑压提升趣味性</li>
+              <li>参与高中语文总复习立项 · 搭建「纸质文案 + 视频 + 附录 + 音频」的课程体系</li>
+              <li>课程内容教研 + 脚本撰写（10-15 分钟微课）· 语言流畅生动、逻辑清晰、深入浅出</li>
+              <li>画面设计 + 动效设计 + 音乐选择 · 对接原画/动画/剪辑 · 跟进全流程</li>
+              <li>0 到 1 搭建「洋葱文心讲语文」小红书账号 · 半年 6400+ 粉丝 · 打造《乡土中国》系列爆款</li>
+              <li>跨学段撰写脚本 · 小学古诗文诵读 · 名著阅读 · 中学地理等</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 工作 3 · 粉笔 -->
+        <div class="job-item">
+          <div class="job-head">
+            <div>
+              <div class="company">粉笔（北京粉笔蓝天科技）</div>
+              <div class="role">公考申论及面试 · 讲师</div>
+            </div>
+            <span class="time">2020.7 — 2022.5</span>
+          </div>
+          <div class="job-highlights">
+            <span class="h-tag">申论教研</span>
+            <span class="h-tag">面试授课</span>
+            <span class="h-tag">品牌策划</span>
+          </div>
+          <div class="job-desc">
+            <ul>
+              <li>申论 & 面试科目深度教研 · 撰写教案与题目解析 · 设计模拟试卷</li>
+              <li>线上直播 + 视频录播授课 · 面试小班授课累计 100+ 小时 · 好评率超 99%</li>
+              <li>策划公司线上年会、六周年活动等 · 撰写宣传文案与视频脚本 · 全流程跟进拍摄剪辑</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 实习经历 -->
+      <div class="card">
+        <h3 class="card-title"><span class="dot"></span>实习经历<span class="en">INTERNSHIP</span></h3>
+        <div class="intern-grid">
+          <div class="intern-item">
+            <div class="i-org">腾讯视频</div>
+            <div class="i-role">活动运营实习生</div>
+            <div class="i-time">2018.11 — 2019.2</div>
+            <div class="i-desc">VIP 观影团、明星生日会 20+ 场 · 竞品分析 · 电影板块海报设计</div>
+          </div>
+          <div class="intern-item">
+            <div class="i-org">乐学在线教育</div>
+            <div class="i-role">高中历史教师</div>
+            <div class="i-time">2017.9 — 2018.3</div>
+            <div class="i-desc">《王者历史》主讲 · 直播 + 录播 · 参与「借题发挥」「涅槃之光」课程设计</div>
+          </div>
+          <div class="intern-item">
+            <div class="i-org">凤凰网</div>
+            <div class="i-role">内容运营实习生</div>
+            <div class="i-time">2017.6 — 2017.8</div>
+            <div class="i-desc">时评与书评创作 · 7 篇刊发凤凰评论平台 · 阅读量合计 10w+</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-</section>
+
+  <!-- 底部自评 -->
+  <section class="evaluation">
+    <div class="ev-title">
+      <h2>自我评价</h2>
+      <span class="en">ABOUT ME</span>
+    </div>
+    <div class="eval-grid">
+      <div class="eval-item">
+        <div class="ev-num">01</div>
+        <div class="ev-text">中国古代文学专业出身，专业底蕴扎实 · 毕业后一直从事教研教学工作，教研能力全面。</div>
+      </div>
+      <div class="eval-item">
+        <div class="ev-num">02</div>
+        <div class="ev-text">保持阅读、听播客、思考及写作的习惯 · 文字功底强 · 有自己的思考和判断 · 创新性强。</div>
+      </div>
+      <div class="eval-item">
+        <div class="ev-num">03</div>
+        <div class="ev-text">理性思维擅长分析 · 学习能力和执行力强 · 面对新任务能快速拆解出推进方法与步骤。</div>
+      </div>
+      <div class="eval-item">
+        <div class="ev-num">04</div>
+        <div class="ev-text">超强责任感 · 做事认真负责 · 团队协作与沟通表达能力强。</div>
+      </div>
+      <div class="eval-item" style="grid-column:1/-1;">
+        <div class="ev-num">05</div>
+        <div class="ev-text">是个有野心的人，希望保持优秀并不断成长；也是个有趣的人，能发现生活的乐趣和美好。</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  © 2026 张秀婷 · Zoey Zhang · Made with <span class="heart">♥</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>我的生活 · 张秀婷 Zoey Zhang</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌸%3C/text%3E%3C/svg%3E">
+<style>
+:root {
+  --c-primary: #2c5282;
+  --c-primary-light: #4a90d9;
+  --c-primary-dark: #1e3a5f;
+  --c-accent: #f8b6cf;
+  --c-text: #1e293b;
+  --c-text-soft: #64748b;
+  --c-text-muted: #94a3b8;
+  --c-glass: rgba(255, 255, 255, 0.62);
+  --c-glass-border: rgba(255, 255, 255, 0.85);
+  --shadow-glass: 0 8px 32px rgba(44, 82, 130, 0.08);
+  --shadow-glass-hover: 0 14px 44px rgba(44, 82, 130, 0.14);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+  color: var(--c-text);
+  line-height: 1.75;
+  background:
+    radial-gradient(1400px 700px at 15% -5%, rgba(207, 228, 245, .9), transparent 65%),
+    radial-gradient(1100px 500px at 100% 15%, rgba(74, 144, 217, .16), transparent 65%),
+    radial-gradient(900px 500px at 20% 85%, rgba(248, 182, 207, .18), transparent 60%),
+    linear-gradient(180deg, #d6e8f6 0%, #eaf3fb 40%, #f4f9fd 100%);
+  min-height: 100vh;
+}
+
+/* 顶部导航 */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(74, 144, 217, 0.1);
+}
+.site-nav .inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 16px 32px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.site-nav .brand {
+  font-size: 16px; font-weight: 700;
+  color: var(--c-primary); text-decoration: none; letter-spacing: 1px;
+}
+.site-nav .links a {
+  color: var(--c-text-soft); text-decoration: none;
+  margin-left: 28px; font-size: 14.5px;
+  transition: color .2s; position: relative;
+}
+.site-nav .links a:hover { color: var(--c-primary); }
+.site-nav .links a.on { color: var(--c-primary); font-weight: 600; }
+.site-nav .links a.on::after {
+  content: ""; position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 2px; background: var(--c-primary); border-radius: 2px;
+}
+
+/* 页面主区 */
+.page { max-width: 1200px; margin: 0 auto; padding: 110px 32px 80px; }
+
+/* ---------- Hero 性格介绍 ---------- */
+.hero-life {
+  padding: 40px 40px 44px;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, rgba(248, 182, 207, .15), rgba(207, 228, 245, .5)), var(--c-glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  overflow: hidden;
+}
+.hero-life::before {
+  content: "🌸";
+  position: absolute;
+  right: 40px; top: -30px;
+  font-size: 180px;
+  opacity: 0.1;
+  transform: rotate(20deg);
+  pointer-events: none;
+}
+.hero-life .num {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  color: var(--c-primary-light);
+  letter-spacing: 3px;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.hero-life h1 {
+  margin: 4px 0 22px;
+  font-size: 42px;
+  color: var(--c-primary);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.persona-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: 1px solid;
+}
+.tag-pill.entj {
+  background: linear-gradient(135deg, var(--c-primary), var(--c-primary-light));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(44, 82, 130, .25);
+}
+.tag-pill.e {
+  background: rgba(255, 255, 255, .65);
+  color: var(--c-primary);
+  border-color: rgba(74, 144, 217, .3);
+}
+.tag-pill.j {
+  background: linear-gradient(135deg, rgba(255, 255, 255, .7), rgba(207, 228, 245, .5));
+  color: var(--c-primary);
+  border-color: rgba(74, 144, 217, .3);
+}
+.tag-pill.energy {
+  background: linear-gradient(135deg, rgba(248, 182, 207, .3), rgba(248, 182, 207, .12));
+  color: #c85a8e;
+  border-color: rgba(232, 148, 178, .35);
+}
+.persona-desc {
+  color: var(--c-text);
+  font-size: 16px;
+  line-height: 1.95;
+  max-width: 720px;
+  position: relative;
+  z-index: 1;
+}
+.persona-desc .em {
+  color: var(--c-primary);
+  font-weight: 600;
+  background: linear-gradient(180deg, transparent 60%, rgba(74, 144, 217, .15) 60%);
+  padding: 0 3px;
+}
+
+/* ---------- 章节标题 ---------- */
+.section-h {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 50px 8px 24px;
+}
+.section-h h2 {
+  margin: 0;
+  font-size: 26px;
+  color: var(--c-primary);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.section-h .en {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  color: var(--c-primary-light);
+  font-size: 13px;
+  letter-spacing: 3px;
+}
+.section-h .dot {
+  width: 8px; height: 8px;
+  background: var(--c-primary);
+  border-radius: 50%;
+}
+
+/* ---------- 4 象限卡片 ---------- */
+.media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.mc {
+  background: var(--c-glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 20px;
+  padding: 24px 26px;
+  box-shadow: var(--shadow-glass);
+  transition: box-shadow .3s;
+  display: flex;
+  flex-direction: column;
+}
+.mc:hover { box-shadow: var(--shadow-glass-hover); }
+.mc-head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.mc-head .icon { font-size: 22px; }
+.mc-head .title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--c-primary);
+  letter-spacing: 1px;
+}
+.mc-head .en {
+  margin-left: auto;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  color: var(--c-primary-light);
+  font-size: 11.5px;
+  letter-spacing: 2px;
+}
+.mc .sub {
+  color: var(--c-text-soft);
+  font-size: 13px;
+  margin: -8px 0 14px;
+  line-height: 1.7;
+}
+
+/* 图片网格通用 */
+.img-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.img-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+.thumb {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, .85);
+  transition: all .3s;
+  background: #f0f7fd;
+}
+.thumb.wide { aspect-ratio: 4/3; }
+.thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s;
+}
+.thumb:hover img { transform: scale(1.06); }
+
+/* 单张大图（用于阅读、话剧等常规裁切） */
+.single-thumb {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, .85);
+}
+.single-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.single-thumb:hover img { transform: scale(1.06); }
+
+/* 播客专用：长条竖图，显示更多内容 · 裁切位置往下 */
+.podcast-thumb {
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, .85);
+  background: #f0f7fd;
+}
+.podcast-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transition: transform .5s;
+}
+.podcast-thumb:hover img { transform: scale(1.03); }
+
+/* 随笔列表 */
+.essay-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.essay-item {
+  display: block;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid rgba(255, 255, 255, .85);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all .3s;
+  position: relative;
+}
+.essay-item:hover {
+  background: rgba(74, 144, 217, .1);
+  border-color: rgba(74, 144, 217, .3);
+  transform: translateX(3px);
+  text-decoration: none;
+}
+.essay-item .e-plat {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--c-primary-light);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+.essay-item .e-title {
+  color: var(--c-primary);
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+.essay-item .e-tail {
+  color: var(--c-text-soft);
+  font-size: 12.5px;
+}
+.essay-item::after {
+  content: "↗";
+  position: absolute;
+  right: 18px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--c-primary-light);
+  font-size: 16px;
+  transition: transform .3s;
+}
+.essay-item:hover::after { transform: translate(4px, -50%); color: var(--c-primary); }
+
+/* ---------- 旅行摄影轮播 ---------- */
+.travel-wrap {
+  position: relative;
+  padding: 24px 26px;
+  background: var(--c-glass);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-glass);
+}
+.travel-count {
+  color: var(--c-text-soft);
+  font-size: 13px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.travel-count .cur {
+  color: var(--c-primary);
+  font-weight: 600;
+  font-family: "Georgia", serif;
+  font-style: italic;
+}
+.carousel {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.carousel::-webkit-scrollbar { display: none; }
+.carousel .slide {
+  flex: 0 0 auto;
+  width: calc(25% - 11px);
+  aspect-ratio: 4/3;
+  scroll-snap-align: start;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f0f7fd;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, .85);
+  transition: transform .3s;
+}
+.carousel .slide img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s;
+}
+.carousel .slide:hover img { transform: scale(1.04); }
+
+/* 左右箭头按钮 */
+.arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px; height: 48px;
+  background: rgba(255, 255, 255, .9);
+  border: 1px solid rgba(74, 144, 217, .2);
+  color: var(--c-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  z-index: 5;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px rgba(44, 82, 130, .15);
+}
+.arrow-btn:hover {
+  background: var(--c-primary);
+  color: #fff;
+  transform: translateY(-50%) scale(1.08);
+}
+.arrow-btn.prev { left: 8px; }
+.arrow-btn.next { right: 8px; }
+
+/* 缩略图导航 */
+.thumb-nav {
+  display: flex;
+  gap: 6px;
+  margin-top: 16px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+.thumb-nav::-webkit-scrollbar { height: 4px; }
+.thumb-nav::-webkit-scrollbar-thumb { background: rgba(74, 144, 217, .25); border-radius: 2px; }
+.thumb-nav .tn-item {
+  flex: 0 0 auto;
+  width: 60px;
+  height: 45px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: all .25s;
+  border: 2px solid transparent;
+}
+.thumb-nav .tn-item img { width: 100%; height: 100%; object-fit: cover; }
+.thumb-nav .tn-item.on { opacity: 1; border-color: var(--c-primary); }
+.thumb-nav .tn-item:hover { opacity: 1; }
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(15, 23, 42, .92);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  cursor: zoom-out;
+}
+.lightbox.on { display: flex; }
+.lightbox img { max-width: 92%; max-height: 92%; box-shadow: 0 20px 60px rgba(0,0,0,.5); border-radius: 8px; }
+
+/* 樱花装饰 */
+.sakura { position: fixed; pointer-events: none; opacity: .35; z-index: 0; }
+.sakura.s1 { top: 12%; right: 4%; transform: rotate(15deg); font-size: 22px; }
+.sakura.s2 { bottom: 15%; left: 4%; transform: rotate(-30deg); font-size: 18px; }
+
+/* 页脚 */
+.footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--c-text-soft);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.footer .heart { color: #e57373; }
+
+/* 移动端 */
+@media (max-width: 900px) {
+  .page { padding: 90px 20px 40px; }
+  .hero-life { padding: 26px 22px; }
+  .hero-life h1 { font-size: 30px; }
+  .media-grid { grid-template-columns: 1fr; }
+  .carousel .slide { width: calc(50% - 7px); }
+  .site-nav .inner { padding: 12px 20px; }
+  .site-nav .links a { margin-left: 18px; font-size: 13px; }
+  .arrow-btn { width: 40px; height: 40px; font-size: 16px; }
+}
+@media (max-width: 500px) {
+  .site-nav .brand { display: none; }
+  .site-nav .links a { margin-left: 12px; }
+}
+</style>
+</head>
+<body>
+
+<span class="sakura s1">🌸</span>
+<span class="sakura s2">🌸</span>
+
+<!-- 顶部导航 -->
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html" class="brand">张秀婷 · Zoey Zhang</a>
+    <div class="links">
+      <a href="index.html">首页</a>
+      <a href="experience.html">个人经历</a>
+      <a href="works.html">作品集</a>
+      <a href="life.html" class="on">我的生活</a>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+
+  <!-- Hero 性格介绍 -->
+  <section class="hero-life">
+    <div class="num">CHAPTER 03</div>
+    <h1>我的生活</h1>
+    <div class="persona-tags">
+      <span class="tag-pill entj">🎯 ENTJ</span>
+      <span class="tag-pill e">💫 90% 浓度的 E 人</span>
+      <span class="tag-pill j">📋 大 J 人 · 出门做十几页 PDF 攻略</span>
+      <span class="tag-pill energy">⚡ 活力满满 · 高精力人群</span>
+    </div>
+    <p class="persona-desc">
+      喜欢 <span class="em">阅读</span>、<span class="em">播客</span>、<span class="em">话剧</span> 与 <span class="em">写作</span>，也热爱 <span class="em">旅行</span> 与 <span class="em">摄影</span> —— 在充电与探索之间来回切换，是我保持精力充沛的方式。
+    </p>
+  </section>
+
+  <!-- 阅读 / 播客 / 随笔 / 话剧 -->
+  <div class="section-h">
+    <span class="dot"></span>
+    <h2>阅读 · 播客 · 随笔 · 话剧</h2>
+    <span class="en">DAILY INPUT</span>
+  </div>
+
+  <div class="media-grid">
+
+    <!-- 阅读 -->
+    <div class="mc">
+      <div class="mc-head">
+        <span class="icon">📖</span>
+        <span class="title">阅读</span>
+        <span class="en">READING</span>
+      </div>
+      <p class="sub">纸书、电子书都翻，读到好书会做笔记标记。</p>
+      <div class="img-2col">
+        <div class="thumb" onclick="openLB('assets/life-media/reading-1.jpg')">
+          <img src="assets/life-media/reading-1.jpg" alt="阅读记录" loading="lazy">
+        </div>
+        <div class="thumb" onclick="openLB('assets/life-media/reading-2.jpg')">
+          <img src="assets/life-media/reading-2.jpg" alt="阅读记录" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- 播客 -->
+    <div class="mc">
+      <div class="mc-head">
+        <span class="icon">🎧</span>
+        <span class="title">播客</span>
+        <span class="en">PODCAST</span>
+      </div>
+      <p class="sub">通勤 / 家务时间几乎都在听，从文史、社科到当下议题都听。</p>
+      <div class="podcast-thumb" onclick="openLB('assets/life-media/podcast.jpg')">
+        <img src="assets/life-media/podcast.jpg" alt="播客订阅" loading="lazy">
+      </div>
+    </div>
+
+    <!-- 随笔 -->
+    <div class="mc">
+      <div class="mc-head">
+        <span class="icon">✍️</span>
+        <span class="title">随笔</span>
+        <span class="en">WRITING</span>
+      </div>
+      <p class="sub">有想法就写下来，两篇代表作：</p>
+      <div class="essay-list">
+        <a class="essay-item" href="https://mp.weixin.qq.com/s/cO0qDFw4K-cp1fz5tHwDJA" target="_blank" rel="noopener">
+          <div class="e-plat">微信公众号</div>
+          <div class="e-title">不够聪明的羽生结弦</div>
+          <div class="e-tail">关于天赋、努力与"聪明"的一点思考</div>
+        </a>
+        <a class="essay-item" href="http://xhslink.cn/o/7tFoEGX5hmA" target="_blank" rel="noopener">
+          <div class="e-plat">小红书</div>
+          <div class="e-title">我是我所是</div>
+          <div class="e-tail">自我认同与自我接纳的随笔</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 话剧 -->
+    <div class="mc">
+      <div class="mc-head">
+        <span class="icon">🎭</span>
+        <span class="title">话剧</span>
+        <span class="en">THEATER</span>
+      </div>
+      <p class="sub">看过的话剧，是给自己充电的方式之一。</p>
+      <div class="img-3col">
+        <div class="thumb" onclick="openLB('assets/life-media/theater-1.jpg')">
+          <img src="assets/life-media/theater-1.jpg" alt="话剧" loading="lazy">
+        </div>
+        <div class="thumb" onclick="openLB('assets/life-media/theater-2.jpg')">
+          <img src="assets/life-media/theater-2.jpg" alt="话剧" loading="lazy">
+        </div>
+        <div class="thumb" onclick="openLB('assets/life-media/theater-3.jpg')">
+          <img src="assets/life-media/theater-3.jpg" alt="话剧" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 旅行 / 摄影 -->
+  <div class="section-h">
+    <span class="dot"></span>
+    <h2>旅行 · 摄影</h2>
+    <span class="en">TRAVEL &amp; PHOTOGRAPHY</span>
+  </div>
+
+  <div class="travel-wrap">
+    <div class="travel-count">
+      <span>「大 J 人」的日常 · 出门必做的十几页 PDF 攻略，换来的都是这些画面。</span>
+      <span><span class="cur" id="curIdx">01</span> / <span id="totalIdx">20</span></span>
+    </div>
+
+    <button class="arrow-btn prev" onclick="slide(-1)" aria-label="上一张">‹</button>
+    <button class="arrow-btn next" onclick="slide(1)" aria-label="下一张">›</button>
+
+    <div class="carousel" id="carousel">
+      <!-- 20 张幻灯片 -->
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-01.jpg" alt="旅行 01" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-02.jpg" alt="旅行 02" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-03.jpg" alt="旅行 03" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-04.jpg" alt="旅行 04" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-05.jpg" alt="旅行 05" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-06.jpg" alt="旅行 06" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-07.jpg" alt="旅行 07" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-08.jpg" alt="旅行 08" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-09.jpg" alt="旅行 09" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-10.jpg" alt="旅行 10" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-11.jpg" alt="旅行 11" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-12.jpg" alt="旅行 12" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-13.jpg" alt="旅行 13" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-14.jpg" alt="旅行 14" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-15.jpg" alt="旅行 15" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-16.jpg" alt="旅行 16" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-17.jpg" alt="旅行 17" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-18.jpg" alt="旅行 18" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-19.jpg" alt="旅行 19" loading="lazy"></div>
+      <div class="slide" onclick="openLB(this.querySelector('img').src)"><img src="assets/life-travel/travel-20.jpg" alt="旅行 20" loading="lazy"></div>
+    </div>
+
+    <!-- 缩略图导航 -->
+    <div class="thumb-nav" id="thumbNav"></div>
+  </div>
+
+</main>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('on')">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer class="footer">
+  © 2026 张秀婷 · Zoey Zhang · Made with <span class="heart">♥</span>
+</footer>
+
+<script>
+// Lightbox
+function openLB(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('on');
+}
+
+// 轮播控制
+const carousel = document.getElementById('carousel');
+const slides = carousel.querySelectorAll('.slide');
+const curIdx = document.getElementById('curIdx');
+const total = slides.length;
+document.getElementById('totalIdx').textContent = String(total).padStart(2, '0');
+
+function slide(dir) {
+  const slideW = slides[0].offsetWidth + 14;  // 宽 + gap
+  carousel.scrollBy({ left: dir * slideW, behavior: 'smooth' });
+}
+
+// 更新当前索引
+function updateCurIdx() {
+  const scrollLeft = carousel.scrollLeft;
+  const slideW = slides[0].offsetWidth + 14;
+  const idx = Math.min(total - 1, Math.round(scrollLeft / slideW));
+  curIdx.textContent = String(idx + 1).padStart(2, '0');
+  // 更新缩略图高亮
+  document.querySelectorAll('.thumb-nav .tn-item').forEach((t, i) => {
+    t.classList.toggle('on', i === idx);
+  });
+}
+carousel.addEventListener('scroll', updateCurIdx);
+
+// 生成缩略图导航
+const thumbNav = document.getElementById('thumbNav');
+slides.forEach((s, i) => {
+  const t = document.createElement('div');
+  t.className = 'tn-item' + (i === 0 ? ' on' : '');
+  t.innerHTML = `<img src="${s.querySelector('img').src}" alt="">`;
+  t.onclick = () => {
+    const slideW = slides[0].offsetWidth + 14;
+    carousel.scrollTo({ left: i * slideW, behavior: 'smooth' });
+  };
+  thumbNav.appendChild(t);
+});
+
+// 键盘左右方向键
+document.addEventListener('keydown', (e) => {
+  if (document.getElementById('lightbox').classList.contains('on')) {
+    if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('on');
+    return;
+  }
+  if (e.key === 'ArrowLeft') slide(-1);
+  if (e.key === 'ArrowRight') slide(1);
+});
+</script>
+
+</body>
+</html>
