@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>内容版本演进复盘 SOP</title>
+<style>
+:root {
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --text: #2c2c2c;
+  --text-soft: #555;
+  --text-muted: #888;
+  --accent: #b8743e;
+  --accent-soft: #f4ece2;
+  --accent-strong: #9a5e2e;
+  --border: #e6e2da;
+  --border-strong: #c8c0b4;
+  --code-bg: #f7f3ec;
+  --code-border: #e6dfd3;
+  --code-text: #3a2c20;
+  --code-keyword: #9a5e2e;
+  --code-string: #4a6f3d;
+  --code-comment: #9a8e80;
+  --code-fn: #2a5a8a;
+  --code-num: #7a3e8a;
+  --table-stripe: #faf7f2;
+  --shadow: 0 2px 12px rgba(60, 50, 40, 0.06);
+  --max-w: 880px;
+  --sidebar-w: 280px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg); color: var(--text);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN",
+               -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 15.5px; line-height: 1.75;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+}
+
+.layout { display: flex; min-height: 100vh; }
+
+aside.toc {
+  width: var(--sidebar-w); flex-shrink: 0;
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  padding: 36px 22px 36px 28px;
+  border-right: 1px solid var(--border); background: var(--surface);
+  font-size: 13.5px; line-height: 1.6;
+}
+aside.toc .toc-title {
+  font-size: 12px; letter-spacing: 0.12em; color: var(--text-muted);
+  text-transform: uppercase; margin-bottom: 14px; font-weight: 600;
+}
+aside.toc ul { list-style: none; padding: 0; margin: 0; }
+aside.toc > .toc > ul > li { margin: 6px 0; }
+aside.toc ul ul { padding-left: 14px; margin: 4px 0; font-size: 12.5px; }
+aside.toc ul ul ul { display: none; }
+aside.toc a {
+  color: var(--text-soft); text-decoration: none; display: block;
+  padding: 3px 8px; border-radius: 4px; border-left: 2px solid transparent;
+  transition: all 0.15s ease;
+}
+aside.toc a:hover {
+  color: var(--accent); background: var(--accent-soft);
+  border-left-color: var(--accent);
+}
+
+main {
+  flex: 1; padding: 56px 32px 96px;
+  display: flex; justify-content: center;
+}
+.content { max-width: var(--max-w); width: 100%; }
+
+h1 { font-size: 30px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.01em; color: #1a1a1a; }
+h2 { font-size: 22px; font-weight: 700; margin: 56px 0 18px; padding-bottom: 10px; border-bottom: 2px solid var(--border-strong); color: #1a1a1a; letter-spacing: -0.005em; }
+h3 { font-size: 18px; font-weight: 700; margin: 36px 0 14px; color: #2a2a2a; }
+h4 { font-size: 17px; font-weight: 700; margin: 28px 0 12px; color: var(--accent); letter-spacing: -0.005em; }
+h5 { font-size: 15px; font-weight: 700; margin: 20px 0 10px; color: var(--text); }
+
+p { margin: 0 0 14px; }
+
+a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); }
+a:hover { border-bottom-style: solid; }
+
+strong { color: #1a1a1a; font-weight: 600; }
+em { font-style: normal; color: var(--accent); font-weight: 500; }
+
+ul, ol { margin: 0 0 16px; padding-left: 26px; }
+li { margin: 6px 0; }
+li > p { margin: 4px 0; }
+
+blockquote {
+  margin: 18px 0; padding: 14px 20px;
+  background: var(--accent-soft); border-left: 4px solid var(--accent);
+  border-radius: 4px 8px 8px 4px; color: #5a4530;
+}
+blockquote p { margin: 6px 0; }
+blockquote > p:first-child { margin-top: 0; }
+blockquote > p:last-child { margin-bottom: 0; }
+
+code {
+  background: var(--code-bg); color: var(--code-keyword);
+  padding: 2px 7px; border-radius: 4px;
+  font-family: "SF Mono", "Menlo", "Monaco", "Consolas", "Courier New", monospace;
+  font-size: 13px; border: 1px solid var(--code-border);
+}
+
+.code-block { position: relative; margin: 16px 0; }
+
+.copy-btn {
+  position: absolute; top: 10px; right: 10px;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 10px; background: rgba(255, 255, 255, 0.9);
+  color: var(--text-soft); border: 1px solid var(--code-border);
+  border-radius: 6px; font-size: 12px; cursor: pointer;
+  font-family: inherit; transition: all 0.15s ease;
+  z-index: 2; opacity: 0.65;
+}
+.copy-btn:hover { background: white; color: var(--accent); border-color: var(--accent); opacity: 1; }
+.copy-btn.copied { color: #4a8a3d; border-color: #b5d4a8; background: #f0f7ec; opacity: 1; }
+.copy-btn svg { display: block; }
+.copy-label { line-height: 1; }
+
+pre {
+  background: var(--code-bg); color: var(--code-text);
+  padding: 16px 20px; padding-right: 80px;
+  border-radius: 8px; border: 1px solid var(--code-border);
+  overflow-x: auto; margin: 0;
+  line-height: 1.65; font-size: 13px;
+}
+pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; border: none; }
+
+.codehilite { background: transparent; }
+.codehilite .k, .codehilite .kd, .codehilite .kc { color: var(--code-keyword); font-weight: 600; }
+.codehilite .s, .codehilite .s1, .codehilite .s2, .codehilite .sb { color: var(--code-string); }
+.codehilite .c, .codehilite .c1, .codehilite .cm { color: var(--code-comment); font-style: italic; }
+.codehilite .nb, .codehilite .nv, .codehilite .nf { color: var(--code-fn); }
+.codehilite .o, .codehilite .ow { color: var(--accent-strong); }
+.codehilite .m, .codehilite .mi, .codehilite .mf { color: var(--code-num); }
+.codehilite .err { color: #b03030; }
+
+table {
+  border-collapse: collapse; width: 100%; margin: 18px 0;
+  font-size: 14px; background: var(--surface);
+  box-shadow: var(--shadow); border-radius: 8px; overflow: hidden;
+}
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+th {
+  background: #f0ebe2; font-weight: 600; color: #3a2c20;
+  border-bottom: 2px solid var(--border-strong); font-size: 13.5px;
+}
+tr:nth-child(even) { background: var(--table-stripe); }
+tr:last-child td { border-bottom: none; }
+
+hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+input[type="checkbox"] { margin-right: 8px; transform: scale(1.05); }
+
+/* 流程图 */
+.flowchart {
+  display: flex; align-items: stretch; gap: 6px;
+  margin: 28px 0; padding: 22px 18px;
+  background: linear-gradient(135deg, #fefcf8 0%, #faf6ee 100%);
+  border: 1px solid var(--border); border-radius: 12px;
+  box-shadow: var(--shadow); overflow-x: auto;
+}
+.flowchart .step {
+  flex: 1 1 0; min-width: 142px; padding: 14px;
+  background: #ffffff; border: 1.5px solid var(--border-strong); border-radius: 10px;
+  display: flex; flex-direction: column; font-size: 12.5px; line-height: 1.55;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.flowchart .step:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(184, 116, 62, 0.12); }
+.flowchart .step.highlight {
+  border-color: var(--accent); background: var(--accent-soft);
+  box-shadow: 0 4px 18px rgba(184, 116, 62, 0.15);
+}
+.flowchart .step-label {
+  font-size: 11px; letter-spacing: 0.08em; color: var(--text-muted);
+  margin-bottom: 6px; font-weight: 600;
+}
+.flowchart .step.highlight .step-label { color: var(--accent-strong); }
+.flowchart .step-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
+.flowchart .step-desc { color: var(--text-soft); font-size: 12px; line-height: 1.5; margin-top: auto; }
+.flowchart .arrow {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); font-size: 22px; font-weight: bold;
+  flex-shrink: 0; padding: 0 2px;
+}
+
+/* 打印 */
+@media print {
+  aside.toc { display: none; }
+  main { padding: 24px 32px; }
+  .content { max-width: 100%; }
+  pre { box-shadow: none; }
+  table { box-shadow: none; border: 1px solid #ddd; }
+  h2 { page-break-after: avoid; }
+  pre, table, blockquote, .flowchart { page-break-inside: avoid; }
+  .copy-btn { display: none; }
+  pre { padding-right: 20px; }
+  body { font-size: 12px; }
+  h1 { font-size: 22px; }
+  h2 { font-size: 17px; }
+  h3 { font-size: 14px; }
+  h4 { font-size: 13px; }
+}
+
+@media (max-width: 1100px) {
+  .layout { flex-direction: column; }
+  aside.toc { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); }
+  main { padding: 32px 16px; }
+  .flowchart { flex-direction: column; }
+  .flowchart .arrow { transform: rotate(90deg); padding: 4px 0; }
+}
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:9999;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(74,144,217,.2);padding:10px 20px;font-family:-apple-system,BlinkMacSystemFont,\"PingFang SC\",\"Microsoft YaHei\",sans-serif;font-size:14px;"><a href="../../works.html" style="color:#2c5282;text-decoration:none;font-weight:500;">← 返回作品集</a><span style="color:#94a3b8;margin:0 10px;">·</span><span style="color:#64748b;">张秀婷 · Zoey Zhang</span></div>
+<div class="layout">
+  <aside class="toc">
+    <div class="toc-title">目录</div>
+    <div class="toc">
+<ul>
+<li><a href="#sop_1">一、这份 SOP 解决什么问题</a></li>
+<li><a href="#_1">二、整体流程速览</a></li>
+<li><a href="#5">三、5 条核心原则（不变量）</a></li>
+<li><a href="#_2">四、流程详解（按时间线）</a><ul>
+<li><a href="#1-commit">阶段 1：日常阶段 —— commit 规范</a></li>
+<li><a href="#2-tag">阶段 2：定稿一刻 —— 打 tag</a></li>
+<li><a href="#3-ai">阶段 3：复盘阶段 —— 三段式 AI 对话</a></li>
+<li><a href="#4-md">阶段 4：收口阶段 —— 沉淀复盘 md + 更新对应规范文档</a></li>
+<li><a href="#5_1">阶段 5：整理阶段 —— 文件归位</a></li>
+</ul>
+</li>
+<li><a href="#prompt">五、常用 Prompt 模板速查</a><ul>
+<li><a href="#p1">P1｜评估判断密度</a></li>
+<li><a href="#p2">P2｜精细对比</a></li>
+<li><a href="#p3">P3｜沉淀规律</a></li>
+<li><a href="#p4-md">P4｜生成复盘 md</a></li>
+<li><a href="#p5">P5｜穿越回完整态查证某个判断（事后任何时候）</a></li>
+</ul>
+</li>
+<li><a href="#git">六、常用 Git 命令速查</a></li>
+<li><a href="#_3">七、常见坑与对策</a></li>
+<li><a href="#sop_2">八、把这份 SOP 用起来的第一步</a></li>
+<li><a href="#sop_3">附：本 SOP 的演进</a></li>
+</ul>
+</div>
+
+  </aside>
+  <main>
+    <div class="content">
+      <h1 id="sop">内容版本演进复盘 SOP</h1>
+<blockquote style="border-left-color:#b3261e;background:#fff3f0;">
+<p><strong>2026-07-17 说明</strong>：本 HTML 为历史展示版，部分示例仍保留旧版本号和“精选过程稿”口径。AI 调用复盘流程时，以同目录 <code>内容版本演进复盘-SOP.md</code> 的最新规则为准：0.0 至【终稿】过程版本完整保留，不再按旧口径删除过程稿。</p>
+</blockquote>
+<blockquote>
+<p><strong>一句话定位</strong>：把每一份教研产出（大纲、单集教研、交互题等）从初稿到定稿的“修改判断”，用 git + Cursor 系统化地榨出可复用的教研规律，沉淀成团队资产。</p>
+<p><strong>首次落地案例</strong>：E5 大禹治水交互题（见 <code>SKU1-史前与夏商周/交互题/复盘/E5大禹治水-版本演进复盘.md</code>）</p>
+<p><strong>适用范围</strong>：大纲、单集教研、交互题等所有需要多轮迭代的内容产出。下文以 E5 交互题为例，但流程对所有内容类型同样适用。</p>
+</blockquote>
+<hr />
+<h2 id="sop_1">一、这份 SOP 解决什么问题</h2>
+<p>我们每一份内容产出（大纲、单集教研、交互题等）都会经历“AI 基于 skill 生成 → 人工微调 → 组内讨论 → 专家审核”多轮迭代，每次修改背后都有一次“教研判断”。如果这些判断只留在脑子里，下一份内容还得重新踩坑。</p>
+<p>这份 SOP 把这些藏在版本差异里的判断<strong>系统性地挖出来</strong>，沉淀成：</p>
+<ul>
+<li>一份<strong>每个产出的复盘 md</strong>（教研判断档案，可作为新人培训材料）</li>
+<li>一批<strong>可加进对应规范文档的规律条目</strong>（❌反例 → ✅正例 格式）——交互题进《AI 出题手册》、单集教研进《分集资料规则补充》、大纲进对应规范文档，依此类推</li>
+<li>一套<strong>可复用的工作习惯</strong>（commit 规范、tag 规范、文件归位规范）</li>
+</ul>
+<blockquote>
+<p><strong>关于“对应规范文档”</strong>：每种内容类型有自己对应的规范文档——交互题对应《AI 出题手册》，单集教研对应《分集资料规则补充》，大纲目前在沉淀对应规范。复盘提炼出的规律，写入哪个文档由内容类型决定，不是统一写入“出题手册”。</p>
+</blockquote>
+<hr />
+<h2 id="_1">二、整体流程速览</h2>
+
+<div class="flowchart">
+  <div class="step">
+    <div class="step-label">阶段 1 · 日常</div>
+    <div class="step-title">改稿即 commit</div>
+    <div class="step-desc">每个判断节点 commit；message 标注修改来源 + 内容</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="step">
+    <div class="step-label">阶段 2 · 定稿一刻</div>
+    <div class="step-title">打 tag 锚定</div>
+    <div class="step-desc">给清理动作买保险，0 成本买"永远反悔的权利"</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="step highlight">
+    <div class="step-label">阶段 3 · 复盘</div>
+    <div class="step-title">三段式 AI 对话</div>
+    <div class="step-desc">1) 评估判断密度<br>2) 精细对比<br>3) 沉淀规律</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="step">
+    <div class="step-label">阶段 4 · 收口</div>
+    <div class="step-title">沉淀复盘 md</div>
+    <div class="step-desc">生成复盘文档；同步更新对应规范文档</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="step">
+    <div class="step-label">阶段 5 · 整理</div>
+    <div class="step-title">文件归位</div>
+    <div class="step-desc">终稿入终稿目录；精选过程稿留下；复盘 md 入复盘目录</div>
+  </div>
+</div>
+
+
+<hr />
+<h2 id="5">三、5 条核心原则（不变量）</h2>
+<ol>
+<li><strong>commit 节奏 = 判断节奏</strong>——有判断才 commit，没有判断的微调可以攒一起</li>
+<li><strong>「评估」和「精细对比」必须分两次 prompt</strong>——让 AI 一步到位会被回摆动作淹没</li>
+<li><strong>删之前必先打 tag</strong>——0 成本买“永远反悔的权利”</li>
+<li><strong>复盘 md 是终极交付物</strong>——比规律本身更值钱的是“判断链路”</li>
+<li><strong>整理只动工作区，不动 git 历史</strong>——git 历史是只增不减的时间机器</li>
+</ol>
+<hr />
+<h2 id="_2">四、流程详解（按时间线）</h2>
+<h3 id="1-commit">阶段 1：日常阶段 —— commit 规范</h3>
+<blockquote>
+<p><strong>目的</strong>：让 git 历史里的每个 commit 都对应一次真正的“教研判断”，为后续复盘提供清晰的版本节点。</p>
+</blockquote>
+<h4 id="11-commit">1.1 什么时候 commit</h4>
+<blockquote>
+<p>下方示例以交互题为例，其他内容类型（大纲、单集教研等）同理——把“集名”换成对应内容标识即可。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>修改类型</th>
+<th>要不要 commit</th>
+<th>commit message 示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 基于 skill 生成一版</td>
+<td>✅ 必</td>
+<td><code>E5 交互题 v2.0｜AI 基于 skill 重生成</code></td>
+</tr>
+<tr>
+<td>改错字 / 调措辞</td>
+<td>❌ 攒一起</td>
+<td>——</td>
+</tr>
+<tr>
+<td>调整结构 / 改考查点 / 改章节</td>
+<td>✅ 必</td>
+<td><code>E5 交互题 v2.1｜人工调整：Q3 题型改为连线</code></td>
+</tr>
+<tr>
+<td>组内讨论后修改</td>
+<td>✅ 必</td>
+<td><code>E7 单集教研 v3.0｜组内讨论后：第二幕推翻重做</code></td>
+</tr>
+<tr>
+<td>专家审核后修改</td>
+<td>✅ 必</td>
+<td><code>E5 交互题 v4.0｜专家审核后：Q1 选项简化</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="12-commit-message">1.2 commit message 格式</h4>
+<div class="code-block"><button class="copy-btn" data-code="{产出标识} v{版本号}｜{修改来源}：{修改内容简述}" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>{产出标识} v{版本号}｜{修改来源}：{修改内容简述}
+</code></pre></div></div>
+
+<ul>
+<li><strong>产出标识</strong>：能让人一眼看出是哪份内容的哪个类型，如 <code>E5 交互题</code> / <code>E7 单集教研</code> / <code>秦汉时期 大纲</code></li>
+<li><strong>修改来源</strong>统一用这几个词：<code>AI 基于 skill 生成</code> / <code>人工调整</code> / <code>组内讨论后</code> / <code>专家审核后</code> / <code>品控反馈后</code></li>
+<li><strong>修改内容</strong>写关键判断，比如 “Q3 题型改为连线”、“第二幕推翻重做”，不要写 “改了一些字”</li>
+</ul>
+<h4 id="13">1.3 文件命名规范</h4>
+<div class="code-block"><button class="copy-btn" data-code="{产出标识}-{版本号}.md" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>{产出标识}-{版本号}.md
+</code></pre></div></div>
+
+<p>各类型示例：</p>
+<table>
+<thead>
+<tr>
+<th>内容类型</th>
+<th>命名示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>大纲</td>
+<td><code>秦汉时期-大纲2.0.md</code></td>
+</tr>
+<tr>
+<td>单集教研</td>
+<td><code>E7武帝大一统-分集资料2.0.md</code></td>
+</tr>
+<tr>
+<td>交互题</td>
+<td><code>E5 大禹治水-交互题2.0.md</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>同时存在多版时，建议用文件名标版本号；不必为了“管理整洁”过早删除中间版本——定稿后会统一整理。</p>
+</blockquote>
+<hr />
+<h3 id="2-tag">阶段 2：定稿一刻 —— 打 tag</h3>
+<blockquote>
+<p><strong>目的</strong>：在做任何“清理动作”前，给 git 历史打一个时间锚点，相当于把“完整版本档案”那一刻拍照存档。</p>
+</blockquote>
+<h4 id="21">2.1 命令</h4>
+<div class="code-block"><button class="copy-btn" data-code="git tag {产出标识}-完整版本档案-{YYYYMMDD}" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>git<span class="w"> </span>tag<span class="w"> </span><span class="o">{</span>产出标识<span class="o">}</span>-完整版本档案-<span class="o">{</span>YYYYMMDD<span class="o">}</span>
+</code></pre></div></div>
+
+<p>各类型示例：</p>
+<div class="code-block"><button class="copy-btn" data-code="git tag E5-交互题-完整版本档案-20260601
+git tag E7-单集教研-完整版本档案-20260601
+git tag 秦汉时期-大纲-完整版本档案-20260601" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>git<span class="w"> </span>tag<span class="w"> </span>E5-交互题-完整版本档案-20260601
+git<span class="w"> </span>tag<span class="w"> </span>E7-单集教研-完整版本档案-20260601
+git<span class="w"> </span>tag<span class="w"> </span>秦汉时期-大纲-完整版本档案-20260601
+</code></pre></div></div>
+
+<h4 id="22-tag">2.2 把 tag 推到远端（让团队能用）</h4>
+<div class="code-block"><button class="copy-btn" data-code="git push origin {产出标识}-完整版本档案-{YYYYMMDD}" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span><span class="o">{</span>产出标识<span class="o">}</span>-完整版本档案-<span class="o">{</span>YYYYMMDD<span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+<p><strong>为什么必须做</strong>：后面要删冗余过程稿。万一删错、或者某天想穿越回完整态查证某个判断，有 tag 就能 <code>git checkout {tag名}</code> 一键复活，没有就要靠 commit hash 翻历史。</p>
+<p>0 成本的保险，没有理由不做。</p>
+</blockquote>
+<hr />
+<h3 id="3-ai">阶段 3：复盘阶段 —— 三段式 AI 对话</h3>
+<blockquote>
+<p><strong>核心原则</strong>：「评估」与「精细对比」必须分开。一次 prompt 试图同时做两件事，AI 会被淹没在回摆动作里。</p>
+</blockquote>
+<h4 id="step-1-ai">Step 1：让 AI 评估「判断密度」</h4>
+<p><strong>目的</strong>：从全部历史版本里，挑出真正值得做精细对比的 3-4 版。</p>
+<p><strong>prompt 模板</strong>（直接复制使用，替换 <code>{产出标识}</code> 和 <code>{相关路径}</code>）：</p>
+<div class="code-block"><button class="copy-btn" data-code="我想对比 {产出标识，如 &quot;E5 大禹治水交互题&quot; / &quot;E7 武帝大一统单集教研&quot;} 的全部历史版本，沉淀教研规律。
+
+请你：
+1. 用 git log --all --oneline -- &quot;{相关文件或文件夹路径}&quot; 找出所有相关 commit
+2. 用 git show &lt;commit&gt;:&lt;filepath&gt; 把每个版本的内容取出来
+3. 按&quot;判断密度&quot;评估每一版——判断密度 = 该版相比上一版新增的、可追溯的、带理由的设计判断数量
+4. 推荐保留 3-4 版作为后续精细对比的核心版本，并说明每版的不可替代性
+
+输出格式：
+- 版本时间线表格（版本号 / commit / 日期 / 文件位置 / 行数 / 修改性质）
+- 判断密度评分表（每版按维度打分）
+- 推荐保留的 N 版及理由" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>我想对比 {产出标识，如 &quot;E5 大禹治水交互题&quot; / &quot;E7 武帝大一统单集教研&quot;} 的全部历史版本，沉淀教研规律。
+
+请你：
+1. 用 git log --all --oneline -- &quot;{相关文件或文件夹路径}&quot; 找出所有相关 commit
+2. 用 git show &lt;commit&gt;:&lt;filepath&gt; 把每个版本的内容取出来
+3. 按&quot;判断密度&quot;评估每一版——判断密度 = 该版相比上一版新增的、可追溯的、带理由的设计判断数量
+4. 推荐保留 3-4 版作为后续精细对比的核心版本，并说明每版的不可替代性
+
+输出格式：
+- 版本时间线表格（版本号 / commit / 日期 / 文件位置 / 行数 / 修改性质）
+- 判断密度评分表（每版按维度打分）
+- 推荐保留的 N 版及理由
+</code></pre></div></div>
+
+<p><strong>注意事项</strong>：
+- 不要让 AI 直接做精细对比——这一步只让它评估“哪几版值得对比”
+- AI 的判断会基于 commit message——所以阶段 1 的 commit 规范有多用心，这一步质量就有多高</p>
+<h4 id="step-2-ai">Step 2：人工敲定（不是 AI 决定）</h4>
+<p><strong>目的</strong>：AI 的评估是“算出来的”，但“该保留哪几版”是教研判断，必须人来拍板。</p>
+<p><strong>操作</strong>：看完 AI 输出的评估表后，<strong>直接回复你最终决定保留的版本号</strong>，例如：</p>
+<div class="code-block"><button class="copy-btn" data-code="就保留 v0、v3.0、v4.0、终稿 这 4 版。" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>就保留 v0、v3.0、v4.0、终稿 这 4 版。
+</code></pre></div></div>
+
+<h4 id="step-3-ai">Step 3：让 AI 基于敲定版做「精细对比」</h4>
+<p><strong>目的</strong>：每处修改的教研判断，逐条挖出来。</p>
+<p><strong>prompt 模板</strong>：</p>
+<div class="code-block"><button class="copy-btn" data-code="只针对我敲定的 {版本列表} 这 N 版，重新做精细对比。
+
+要求：
+1. 按&quot;题号 → 跃迁次数&quot;组织（如 v0 → v3.0 是第 1 次跃迁，v3.0 → v4.0 是第 2 次……）
+2. 每次跃迁里的每处修改，用以下三段格式分析：
+   - 修改：从 X 改为 Y
+   - 教研意图：为什么改（要能解释清楚教学价值的提升）
+   - 适用场景：这条判断未来在什么类型的考查点上可以复用
+
+不要再分析未敲定的版本，专注于这 N 版的演进。" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>只针对我敲定的 {版本列表} 这 N 版，重新做精细对比。
+
+要求：
+1. 按&quot;题号 → 跃迁次数&quot;组织（如 v0 → v3.0 是第 1 次跃迁，v3.0 → v4.0 是第 2 次……）
+2. 每次跃迁里的每处修改，用以下三段格式分析：
+   - 修改：从 X 改为 Y
+   - 教研意图：为什么改（要能解释清楚教学价值的提升）
+   - 适用场景：这条判断未来在什么类型的考查点上可以复用
+
+不要再分析未敲定的版本，专注于这 N 版的演进。
+</code></pre></div></div>
+
+<h4 id="step-4-ai">Step 4：让 AI 沉淀「可复用规律」</h4>
+<p><strong>目的</strong>：把“修改判断”提炼成可以加进对应规范文档的、与现有原则不重复的新条目。</p>
+<blockquote>
+<p>注意：写入哪份规范文档<strong>由内容类型决定</strong>——交互题进《AI 出题手册》、单集教研进《分集资料规则补充》、大纲进对应规范，不要统一写进“出题手册”。</p>
+</blockquote>
+<p><strong>prompt 模板</strong>：</p>
+<div class="code-block"><button class="copy-btn" data-code="基于刚才推出的修改规律，整理成 3-5 条可以加进对应规范文档的具体条目。
+
+不同内容类型对应的规范文档示例：
+- 交互题 → @02-交互题/上下五千年交互-AI出题手册.md
+- 单集教研 → @SKU{N}-{时期}/单集教研内容/{对应规则补充}.md
+- 大纲 → 对应大纲规范文档（沉淀中）
+
+要求：
+1. 先快速读一下现有规范文档，确保新条目与已有原则不重复
+2. 每条用&quot;❌ 反例 → ✅ 正例&quot;格式
+3. 反例和正例都用本次复盘中真实出现过的内容，不要编造
+4. 每条标注&quot;建议放在第几章 / 紧跟原则几之后&quot;
+5. 先在对话框里给我看候选，等我确认后再写入文档" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>基于刚才推出的修改规律，整理成 3-5 条可以加进对应规范文档的具体条目。
+
+不同内容类型对应的规范文档示例：
+- 交互题 → @02-交互题/上下五千年交互-AI出题手册.md
+- 单集教研 → @SKU{N}-{时期}/单集教研内容/{对应规则补充}.md
+- 大纲 → 对应大纲规范文档（沉淀中）
+
+要求：
+1. 先快速读一下现有规范文档，确保新条目与已有原则不重复
+2. 每条用&quot;❌ 反例 → ✅ 正例&quot;格式
+3. 反例和正例都用本次复盘中真实出现过的内容，不要编造
+4. 每条标注&quot;建议放在第几章 / 紧跟原则几之后&quot;
+5. 先在对话框里给我看候选，等我确认后再写入文档
+</code></pre></div></div>
+
+<p><strong>注意事项</strong>：
+- 强烈建议加“<strong>先给我看候选、等我确认后再改文档</strong>”——AI 直接动规范文档容易把不该加的也加进去
+- 规范文档新增条目应同步在 commit message 写明：“{规范文档名} 新增原则 N：{标题}，来源 {产出标识} 复盘”</p>
+<hr />
+<h3 id="4-md">阶段 4：收口阶段 —— 沉淀复盘 md + 更新对应规范文档</h3>
+<blockquote>
+<p><strong>目的</strong>：把整个复盘过程的产出固化为可被反复引用的资产。</p>
+</blockquote>
+<h4 id="41-ai-md">4.1 让 AI 生成「复盘 md」</h4>
+<p><strong>prompt 模板</strong>：</p>
+<div class="code-block"><button class="copy-btn" data-code="帮我把以上整个复盘对话整理成一份 md 文档，放在该内容产出对应的&quot;复盘&quot;目录下，
+命名为 &quot;{产出标识}-版本演进复盘.md&quot;。如果&quot;复盘&quot;目录不存在，先新建一个。
+
+具体路径示例：
+- 交互题 → SKU{N}-{时期}/交互题/复盘/
+- 单集教研 → SKU{N}-{时期}/单集教研内容/复盘/
+- 大纲 → SKU{N}-{时期}/大纲策划/复盘/
+
+要求保留：
+1. 版本时间线表格
+2. 判断密度评估表
+3. 敲定的 N 版精细对比（按章节/题号 + 跃迁次数组织）
+4. 提炼的 N 条规律（❌反例 → ✅正例 格式）
+5. 末尾附一节&quot;后续可复用清单&quot;——简述这些规律在什么场景下复用
+
+不要省略关键判断的细节，这份文档会作为团队培训材料。" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>帮我把以上整个复盘对话整理成一份 md 文档，放在该内容产出对应的&quot;复盘&quot;目录下，
+命名为 &quot;{产出标识}-版本演进复盘.md&quot;。如果&quot;复盘&quot;目录不存在，先新建一个。
+
+具体路径示例：
+- 交互题 → SKU{N}-{时期}/交互题/复盘/
+- 单集教研 → SKU{N}-{时期}/单集教研内容/复盘/
+- 大纲 → SKU{N}-{时期}/大纲策划/复盘/
+
+要求保留：
+1. 版本时间线表格
+2. 判断密度评估表
+3. 敲定的 N 版精细对比（按章节/题号 + 跃迁次数组织）
+4. 提炼的 N 条规律（❌反例 → ✅正例 格式）
+5. 末尾附一节&quot;后续可复用清单&quot;——简述这些规律在什么场景下复用
+
+不要省略关键判断的细节，这份文档会作为团队培训材料。
+</code></pre></div></div>
+
+<h4 id="42">4.2 更新对应规范文档</h4>
+<p>确认 AI 给出的条目无误后：</p>
+<div class="code-block"><button class="copy-btn" data-code="确认 {条目列表} 这 N 条加入对应规范文档，按你建议的位置插入。
+插入后再读一遍文档，确保新旧条目衔接自然、没有概念冲突。" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>确认 {条目列表} 这 N 条加入对应规范文档，按你建议的位置插入。
+插入后再读一遍文档，确保新旧条目衔接自然、没有概念冲突。
+</code></pre></div></div>
+
+<h4 id="43-commit">4.3 commit 收口</h4>
+<div class="code-block"><button class="copy-btn" data-code="git add .
+git commit -m &quot;{产出标识} 复盘归档：新增复盘 md，{规范文档名}新增原则 N-M&quot;" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;{产出标识} 复盘归档：新增复盘 md，{规范文档名}新增原则 N-M&quot;</span>
+</code></pre></div></div>
+
+<hr />
+<h3 id="5_1">阶段 5：整理阶段 —— 文件归位</h3>
+<blockquote>
+<p><strong>目的</strong>：保持工作区清晰，但精选过程稿留作“未来可直接 @ 的素材”。</p>
+</blockquote>
+<h4 id="51">5.1 归位规则</h4>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>归位文件夹</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>终稿</td>
+<td>对应内容类型的“终稿”目录</td>
+<td>最终版本</td>
+</tr>
+<tr>
+<td>精选过程稿（敲定要保留的）</td>
+<td>对应内容类型的“过程稿”目录</td>
+<td>后续培训 / 参考会直接 @</td>
+</tr>
+<tr>
+<td>复盘 md</td>
+<td>对应内容类型的“复盘”目录（如不存在则新建）</td>
+<td>与原始过程稿分离，便于复盘和培训独立查阅</td>
+</tr>
+<tr>
+<td>辅助文档（如交互题的考查点、教研内容的素材清单等）</td>
+<td>对应内容类型的“过程稿”目录</td>
+<td>已是惯例</td>
+</tr>
+<tr>
+<td>其他过程稿</td>
+<td><strong>删除</strong></td>
+<td>git 历史里还在，需要时用 git show 取</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>关于“复盘”目录的位置（当前设想，待团队讨论）</strong>：在每个内容类型的大文件夹下新建一个“复盘”子目录，把对应类型的复盘 md 都放进去。这样做的好处是把“判断档案”与原始过程稿分开——团队复盘 / 培训时去“复盘/”目录就够，不会被中间版本干扰。</p>
+<p>具体路径示例：
+- 交互题：<code>SKU{N}-{时期}/交互题/{终稿|过程稿|复盘}/</code>
+- 单集教研：<code>SKU{N}-{时期}/单集教研内容/{过程稿|复盘}/</code>（终稿可能直接在内容根目录）
+- 大纲：<code>SKU{N}-{时期}/大纲策划/{过程稿|复盘}/</code></p>
+<p>具体目录结构按本项目实际惯例走，定稿后再统一。</p>
+</blockquote>
+<h4 id="52">5.2 操作步骤（以交互题为例，其他类型按实际路径调整）</h4>
+<div class="code-block"><button class="copy-btn" data-code="# Step 1：把终稿移到终稿文件夹（如果还在过程稿里）
+mv &quot;{当前路径}/{产出标识}-定稿{日期}.md&quot; \
+   &quot;{对应终稿目录}/&quot;
+
+# Step 2：删除非精选的过程稿
+rm &quot;{对应过程稿目录}/{产出标识}-{要删的版本号}.md&quot;
+
+# Step 3：确认精选过程稿和复盘 md 都在 过程稿目录 下
+ls &quot;{对应过程稿目录}/&quot; | grep {产出标识}
+
+# Step 4：commit 整理动作
+git add .
+git commit -m &quot;{产出标识} 定稿后整理：终稿移入终稿目录，保留精选过程稿 {v1/v3} 和复盘 md，删除冗余过程稿 {v2/v4/v5}。完整历史见 tag {产出标识}-完整版本档案-{日期}&quot;
+
+# Step 5：推送
+git push" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code><span class="c1"># Step 1：把终稿移到终稿文件夹（如果还在过程稿里）</span>
+mv<span class="w"> </span><span class="s2">&quot;{当前路径}/{产出标识}-定稿{日期}.md&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="s2">&quot;{对应终稿目录}/&quot;</span>
+
+<span class="c1"># Step 2：删除非精选的过程稿</span>
+rm<span class="w"> </span><span class="s2">&quot;{对应过程稿目录}/{产出标识}-{要删的版本号}.md&quot;</span>
+
+<span class="c1"># Step 3：确认精选过程稿和复盘 md 都在 过程稿目录 下</span>
+ls<span class="w"> </span><span class="s2">&quot;{对应过程稿目录}/&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="o">{</span>产出标识<span class="o">}</span>
+
+<span class="c1"># Step 4：commit 整理动作</span>
+git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;{产出标识} 定稿后整理：终稿移入终稿目录，保留精选过程稿 {v1/v3} 和复盘 md，删除冗余过程稿 {v2/v4/v5}。完整历史见 tag {产出标识}-完整版本档案-{日期}&quot;</span>
+
+<span class="c1"># Step 5：推送</span>
+git<span class="w"> </span>push
+</code></pre></div></div>
+
+<h4 id="53">5.3 检查清单（整理完做一遍）</h4>
+<ul>
+<li>[ ] 终稿在对应“终稿”目录下</li>
+<li>[ ] 精选过程稿（2-3 版）在对应“过程稿”目录下</li>
+<li>[ ] 复盘 md 在对应“复盘”目录下，命名为 <code>{产出标识}-版本演进复盘.md</code></li>
+<li>[ ] 辅助文档（考查点、素材清单等）保留在对应“过程稿”目录下</li>
+<li>[ ] 其他冗余过程稿已删除</li>
+<li>[ ] tag 已打且已 push</li>
+<li>[ ] 整理动作已 commit 且 push</li>
+<li>[ ] 对应规范文档新增条目已 commit</li>
+</ul>
+<hr />
+<h2 id="prompt">五、常用 Prompt 模板速查</h2>
+<blockquote>
+<p>复制即用，记得替换 <code>{占位符}</code>。</p>
+</blockquote>
+<h3 id="p1">P1｜评估判断密度</h3>
+<div class="code-block"><button class="copy-btn" data-code="我想对比 {产出标识} 的全部历史版本。
+请你用 git log 找出全部相关 commit，按&quot;判断密度&quot;评估每版，
+推荐保留 3-4 版作为后续精细对比的核心版本，说明每版不可替代性。" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>我想对比 {产出标识} 的全部历史版本。
+请你用 git log 找出全部相关 commit，按&quot;判断密度&quot;评估每版，
+推荐保留 3-4 版作为后续精细对比的核心版本，说明每版不可替代性。
+</code></pre></div></div>
+
+<h3 id="p2">P2｜精细对比</h3>
+<div class="code-block"><button class="copy-btn" data-code="只针对 {版本列表} 这 N 版，按&quot;章节/题号 → 跃迁次数&quot;组织，
+每处修改用&quot;修改 → 教研意图 → 适用场景&quot;三段格式分析。" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>只针对 {版本列表} 这 N 版，按&quot;章节/题号 → 跃迁次数&quot;组织，
+每处修改用&quot;修改 → 教研意图 → 适用场景&quot;三段格式分析。
+</code></pre></div></div>
+
+<h3 id="p3">P3｜沉淀规律</h3>
+<div class="code-block"><button class="copy-btn" data-code="把上述规律整理成 3-5 条可加进对应规范文档的条目。
+每条用&quot;❌反例 → ✅正例&quot;格式，反例正例来自本次复盘真实出现过的内容。
+先给我看候选，等我确认后再写入文档。" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>把上述规律整理成 3-5 条可加进对应规范文档的条目。
+每条用&quot;❌反例 → ✅正例&quot;格式，反例正例来自本次复盘真实出现过的内容。
+先给我看候选，等我确认后再写入文档。
+</code></pre></div></div>
+
+<h3 id="p4-md">P4｜生成复盘 md</h3>
+<div class="code-block"><button class="copy-btn" data-code="把以上对话整理成 {产出标识}-版本演进复盘.md，放在对应&quot;复盘&quot;目录下（不存在则新建）。
+保留：版本时间线、判断密度评估、精细对比、规律条目、后续可复用清单。" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>把以上对话整理成 {产出标识}-版本演进复盘.md，放在对应&quot;复盘&quot;目录下（不存在则新建）。
+保留：版本时间线、判断密度评估、精细对比、规律条目、后续可复用清单。
+</code></pre></div></div>
+
+<h3 id="p5">P5｜穿越回完整态查证某个判断（事后任何时候）</h3>
+<div class="code-block"><button class="copy-btn" data-code="请 git checkout 到 tag {产出标识}-完整版本档案-{日期}，
+取出 {版本号} 的内容，告诉我 {具体问题}。
+查完恢复到 main 分支。" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code>请 git checkout 到 tag {产出标识}-完整版本档案-{日期}，
+取出 {版本号} 的内容，告诉我 {具体问题}。
+查完恢复到 main 分支。
+</code></pre></div></div>
+
+<hr />
+<h2 id="git">六、常用 Git 命令速查</h2>
+<div class="code-block"><button class="copy-btn" data-code="# 查看某文件夹下所有 commit
+git log --all --oneline -- &quot;{文件夹路径}&quot;
+
+# 查看某 commit 改了哪些文件
+git show --stat {commit_hash}
+
+# 取出历史某版本的文件内容
+git show {commit_hash}:&quot;{文件路径}&quot;
+
+# 打 tag
+git tag {tag_名}
+git push origin {tag_名}
+
+# 列出所有 tag
+git tag
+
+# 穿越回某 tag 那一刻（看完记得回 main）
+git checkout {tag_名}
+git checkout main
+
+# 找一个被删的文件最后存在于哪个 commit
+git log --all --diff-filter=D -- &quot;{文件路径}&quot;" onclick="copyCode(this)" type="button" aria-label="复制"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 1.5h7a.5.5 0 0 1 .5.5v1h1V2A1.5 1.5 0 0 0 11 .5H4A1.5 1.5 0 0 0 2.5 2v9A1.5 1.5 0 0 0 4 12.5h1v-1H4a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z"/><path d="M5.5 4A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16h7a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 4h-7zm0 1h7a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5z"/></svg><span class="copy-label">复制</span></button><div class="codehilite"><pre><span></span><code><span class="c1"># 查看某文件夹下所有 commit</span>
+git<span class="w"> </span>log<span class="w"> </span>--all<span class="w"> </span>--oneline<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;{文件夹路径}&quot;</span>
+
+<span class="c1"># 查看某 commit 改了哪些文件</span>
+git<span class="w"> </span>show<span class="w"> </span>--stat<span class="w"> </span><span class="o">{</span>commit_hash<span class="o">}</span>
+
+<span class="c1"># 取出历史某版本的文件内容</span>
+git<span class="w"> </span>show<span class="w"> </span><span class="o">{</span>commit_hash<span class="o">}</span>:<span class="s2">&quot;{文件路径}&quot;</span>
+
+<span class="c1"># 打 tag</span>
+git<span class="w"> </span>tag<span class="w"> </span><span class="o">{</span>tag_名<span class="o">}</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span><span class="o">{</span>tag_名<span class="o">}</span>
+
+<span class="c1"># 列出所有 tag</span>
+git<span class="w"> </span>tag
+
+<span class="c1"># 穿越回某 tag 那一刻（看完记得回 main）</span>
+git<span class="w"> </span>checkout<span class="w"> </span><span class="o">{</span>tag_名<span class="o">}</span>
+git<span class="w"> </span>checkout<span class="w"> </span>main
+
+<span class="c1"># 找一个被删的文件最后存在于哪个 commit</span>
+git<span class="w"> </span>log<span class="w"> </span>--all<span class="w"> </span>--diff-filter<span class="o">=</span>D<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;{文件路径}&quot;</span>
+</code></pre></div></div>
+
+<hr />
+<h2 id="_3">七、常见坑与对策</h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>表现</th>
+<th>对策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>commit 太碎</td>
+<td>每改个字都 commit，复盘时 AI 被淹没</td>
+<td>按“判断节奏”commit，不是“键盘节奏”</td>
+</tr>
+<tr>
+<td>commit message 太简</td>
+<td>“更新文件” “改了下”</td>
+<td>强制用统一格式：<code>{产出标识} v{号}｜{来源}：{内容}</code></td>
+</tr>
+<tr>
+<td>一次 prompt 让 AI 做完所有事</td>
+<td>输出又长又散，关键判断被回摆动作稀释</td>
+<td>严格分 3 段：评估 → 对比 → 沉淀</td>
+</tr>
+<tr>
+<td>删之前没打 tag</td>
+<td>删完后悔，要翻 commit hash 才能找回</td>
+<td>形成肌肉记忆——“删之前先 tag”</td>
+</tr>
+<tr>
+<td>AI 自动改规范文档</td>
+<td>加进去不合适的条目</td>
+<td>prompt 里加“先给我看候选，确认后再改”</td>
+</tr>
+<tr>
+<td>复盘 md 写得太摘要</td>
+<td>失去“判断链路”的细节，培训价值降低</td>
+<td>prompt 里强调“不要省略关键判断细节”</td>
+</tr>
+<tr>
+<td>整理时用 <code>git show &gt; file.md</code> 写回工作区</td>
+<td>文件断开 commit 历史链</td>
+<td>走“工作区中本来留下来的留下、本来没有的不补”——靠 git 历史和 tag 兜底</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="sop_2">八、把这份 SOP 用起来的第一步</h2>
+<p>下次要交付任何内容产出（如某 SKU 大纲、某集单集教研、某集交互题等）的定稿时：</p>
+<ol>
+<li>先在对话框里贴这份 SOP 给 Cursor，让它对照流程帮你跑</li>
+<li>跑完后对照“检查清单”过一遍</li>
+<li>跑顺一次后，把这份 SOP 同步给团队</li>
+</ol>
+<p>跑通 2-3 个产出后，每次复盘时间会压缩到 30 分钟内，但沉淀下来的“教研判断档案”会越来越厚，最终会比任何外部 SOP 都贴合我们项目自己的成长曲线。</p>
+<hr />
+<h2 id="sop_3">附：本 SOP 的演进</h2>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>日期</th>
+<th>修改</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.0</td>
+<td>2026-06-01</td>
+<td>初版（聚焦交互题）</td>
+<td>基于 E5 大禹治水交互题首次实战提炼</td>
+</tr>
+<tr>
+<td>v1.1</td>
+<td>2026-06-01</td>
+<td>通用化处理：扩展到大纲、单集教研、交互题三类内容，路径与术语去硬编码</td>
+<td>通用化复盘需求</td>
+</tr>
+<tr>
+<td>v1.2</td>
+<td>2026-06-02</td>
+<td>范围聚焦（剔除剧本，项目不涉及）；明确“复盘 md → 复盘/ 子目录”；术语与引号格式精修</td>
+<td>汇报前精修</td>
+</tr>
+</tbody>
+</table>
+    </div>
+  </main>
+</div>
+<script>
+function copyCode(btn) {
+  const code = btn.getAttribute('data-code');
+  if (!code) return;
+  const reset = () => { btn.classList.remove('copied'); btn.querySelector('.copy-label').textContent = '复制'; };
+  const success = () => { btn.classList.add('copied'); btn.querySelector('.copy-label').textContent = '已复制'; setTimeout(reset, 1800); };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(code).then(success).catch(() => fallback());
+  } else { fallback(); }
+  function fallback() {
+    const ta = document.createElement('textarea');
+    ta.value = code; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); success(); }
+    catch (e) { btn.querySelector('.copy-label').textContent = '复制失败'; setTimeout(reset, 1800); }
+    document.body.removeChild(ta);
+  }
+}
+</script>
+</body>
+</html>

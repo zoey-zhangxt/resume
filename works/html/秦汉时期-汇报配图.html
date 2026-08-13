@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>秦汉时期·大纲框架汇报 · 配图</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+    background: #f5f2ec;
+    color: #2c2c2c;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .slide {
+    width: 100%;
+    min-height: 100vh;
+    padding: 60px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fdfbf6;
+    border-bottom: 1px solid #e6dfd0;
+    page-break-after: always;
+  }
+
+  .slide-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  .slide-eyebrow {
+    font-size: 14px;
+    color: #b08a3e;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+  }
+  .slide-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2c2c2c;
+    letter-spacing: 1px;
+  }
+  .slide-subtitle {
+    font-size: 16px;
+    color: #888;
+    margin-top: 10px;
+  }
+
+  /* ===== 第一张：三主题串联图 ===== */
+  .themes-wrap {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .theme-card {
+    flex: 1;
+    border-radius: 12px;
+    padding: 32px 28px;
+    color: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 460px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .theme-card.sku1 { background: linear-gradient(160deg, #5c6ea3 0%, #3a4c7a 100%); }
+  .theme-card.sku2 { background: linear-gradient(160deg, #a07550 0%, #4d3019 100%); }
+  .theme-card.sku3 {
+    background: linear-gradient(160deg, #f0c75e 0%, #b82a1c 100%);
+    box-shadow: 0 18px 44px rgba(184, 42, 28, 0.40), 0 0 0 4px rgba(240, 199, 94, 0.25);
+    transform: translateY(-16px) scale(1.03);
+    border: 3px solid #f0c75e;
+  }
+
+  .theme-sku-tag {
+    display: inline-block;
+    font-size: 12px;
+    background: rgba(255,255,255,0.25);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+  .theme-name {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 2px;
+  }
+  .theme-period {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 20px;
+    font-family: monospace;
+  }
+  .theme-keyword {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 6px;
+    margin: 10px 0 24px;
+    text-align: center;
+    padding: 16px 0;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+  }
+  .theme-desc {
+    font-size: 14px;
+    line-height: 1.9;
+    opacity: 0.95;
+    margin-bottom: 16px;
+  }
+  .theme-points {
+    list-style: none;
+    margin-top: auto;
+  }
+  .theme-points li {
+    font-size: 13px;
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    opacity: 0.92;
+  }
+  .theme-points li::before {
+    content: "·";
+    position: absolute;
+    left: 4px;
+    font-weight: bold;
+  }
+  .theme-current-badge {
+    position: absolute;
+    top: -14px;
+    right: 20px;
+    background: #2c2c2c;
+    color: #d4a848;
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+
+  .arrow {
+    display: flex;
+    align-items: center;
+    color: #b08a3e;
+    font-size: 28px;
+    padding: 0 4px;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  .transition-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 30px auto 0;
+    width: 100%;
+  }
+  .transition-text {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    color: #8b6a3e;
+    line-height: 1.6;
+    padding: 0 20px;
+    font-style: italic;
+  }
+  .transition-spacer { width: 40px; flex-shrink: 0; }
+
+  /* ===== 第二张：分-合曲线图 ===== */
+  .curve-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .curve-legend {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .stages-bar {
+    display: flex;
+    margin: 0 auto 0;
+    max-width: 1200px;
+    height: 32px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .stage-block {
+    color: #fff;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+  .stage-1 { flex: 3; background: #8b2d2d; }
+  .stage-2 { flex: 2; background: #b58157; }
+  .stage-3 { flex: 4; background: #d4a848; color:#5c3a0e;}
+  .stage-4 { flex: 3; background: #5c6ea3; }
+
+  .curve-summary {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 18px;
+    color: #5c3a0e;
+    letter-spacing: 2px;
+  }
+  .curve-summary strong {
+    color: #8b2d2d;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .curve-summary .seq {
+    margin-top: 14px;
+    font-size: 15px;
+    color: #666;
+    font-family: monospace;
+    letter-spacing: 1px;
+  }
+
+  /* ===== 第三张：难点与应对 ===== */
+  .ca-wrap {
+    display: grid;
+    grid-template-columns: 1fr 60px 1.05fr;
+    gap: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    align-items: stretch;
+  }
+  .ca-col {
+    display: flex;
+    flex-direction: column;
+  }
+  .ca-col-header {
+    text-align: center;
+    padding: 12px 0 24px;
+    margin-bottom: 16px;
+    border-bottom: 2px solid;
+  }
+  .ca-col.challenges .ca-col-header { border-color: #8b2d2d; color: #8b2d2d; }
+  .ca-col.solutions  .ca-col-header { border-color: #b08a3e; color: #8b6a3e; }
+  .ca-col-header .ca-col-eyebrow {
+    font-size: 13px;
+    letter-spacing: 4px;
+    opacity: 0.75;
+    margin-bottom: 6px;
+  }
+  .ca-col-header .ca-col-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .ca-card {
+    display: flex;
+    gap: 16px;
+    padding: 16px 18px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    align-items: flex-start;
+  }
+  .challenges .ca-card {
+    background: #fff;
+    border-left: 4px solid #8b2d2d;
+  }
+  .solutions .ca-card {
+    background: #fffaef;
+    border-left: 4px solid #d4a848;
+  }
+  .ca-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: Georgia, serif;
+  }
+  .challenges .ca-num { background: #8b2d2d; }
+  .solutions  .ca-num { background: #b08a3e; }
+
+  .ca-body { flex: 1; }
+  .ca-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  .challenges .ca-title { color: #5c1818; }
+  .solutions  .ca-title { color: #5c3a0e; }
+  .ca-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #5c5c5c;
+  }
+  .ca-desc strong { color: #2c2c2c; }
+  .ca-eg {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #888;
+    padding: 6px 10px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 4px;
+  }
+  .challenges .ca-eg { color: #8b2d2d; opacity: 0.75; background: rgba(139,45,45,0.06); }
+  .solutions  .ca-eg { color: #8b6a3e; background: rgba(180,138,62,0.08); }
+
+  /* 中间的大箭头列 */
+  .ca-arrow-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 70px;
+  }
+  .ca-arrow-svg {
+    width: 50px;
+    height: 60px;
+  }
+
+  .ca-footer {
+    max-width: 1400px;
+    margin: 30px auto 0;
+    text-align: center;
+    padding: 18px 24px;
+    background: #2c2c2c;
+    color: #d4a848;
+    border-radius: 8px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    line-height: 1.7;
+  }
+  .ca-footer strong { color: #fff; font-weight: 600; }
+
+  @media print {
+    body { background: #fff; }
+    .slide { min-height: auto; padding: 40px 60px; }
+  }
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:9999;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(74,144,217,.2);padding:10px 20px;font-family:-apple-system,BlinkMacSystemFont,\"PingFang SC\",\"Microsoft YaHei\",sans-serif;font-size:14px;"><a href="../../works.html" style="color:#2c5282;text-decoration:none;font-weight:500;">← 返回作品集</a><span style="color:#94a3b8;margin:0 10px;">·</span><span style="color:#64748b;">张秀婷 · Zoey Zhang</span></div>
+
+<!-- ============ 图一：三主题串联图 ============ -->
+<section class="slide">
+  <div class="slide-header">
+    <div class="slide-eyebrow">「上下五千年」系列 · 三主题概览</div>
+    <div class="slide-title">从「华夏晨曦」到「大争之世」，再到「天下一统」</div>
+    <div class="slide-subtitle">一条清晰的递进线 —— 文明的萌芽 → 分裂中的角逐 → 第一个大一统时代</div>
+  </div>
+
+  <div class="themes-wrap">
+
+    <div class="theme-card sku1">
+      <span class="theme-sku-tag">SKU 1</span>
+      <div class="theme-name">史前与夏商周</div>
+      <div class="theme-period">远古 — 公元前 771 年</div>
+      <div class="theme-keyword">华夏晨曦</div>
+      <div class="theme-desc">从神话传说，到夏商周三代更迭，是中国历史的"破晓时分"。</div>
+      <ul class="theme-points">
+        <li>从神性走向人性</li>
+        <li>从传说走向信史</li>
+        <li>从朦胧走向清晰</li>
+        <li>中华民族最初的精神脉搏</li>
+      </ul>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="theme-card sku2">
+      <span class="theme-sku-tag">SKU 2</span>
+      <div class="theme-name">春秋战国</div>
+      <div class="theme-period">前 770 — 前 221 年</div>
+      <div class="theme-keyword">大争之世</div>
+      <div class="theme-desc">周天子权威崩塌，诸侯之间角逐了 550 年的乱世。</div>
+      <ul class="theme-points">
+        <li>春秋"争霸"：尊王攘夷下的秩序重构</li>
+        <li>战国"兼并":七雄并立的生存战</li>
+        <li>礼崩乐坏、社会剧烈动荡</li>
+        <li>所有人都在等待 —— 谁能终结乱世</li>
+      </ul>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="theme-card sku3">
+      <span class="theme-current-badge">本次汇报</span>
+      <span class="theme-sku-tag">SKU 3</span>
+      <div class="theme-name">秦汉时期</div>
+      <div class="theme-period">前 221 — 公元 220 年</div>
+      <div class="theme-keyword">天下一统</div>
+      <div class="theme-desc">中国历史上第一个真正意义上的「大一统时代」。</div>
+      <ul class="theme-points">
+        <li>秦是初创者：把"天下"变成"一国"</li>
+        <li>汉是巩固者：政治、经济、文化全面定型</li>
+        <li>奠定了此后两千年的基本格局</li>
+        <li>"统一是常态" 成为民族最深层的共识</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="transition-row">
+    <div class="transition-text">文明从神话中走出，<br>逐渐有了清晰的样貌</div>
+    <div class="transition-spacer"></div>
+    <div class="transition-text">在 500 多年的战乱中，<br>积蓄统一的力量</div>
+    <div class="transition-spacer"></div>
+    <div class="transition-text">乱世的终点 ——<br>第一个大一统时代登场</div>
+  </div>
+</section>
+
+
+<!-- ============ 图二：分-合曲线图 ============ -->
+<section class="slide">
+  <div class="slide-header">
+    <div class="slide-eyebrow">秦汉时期 · 12 集编排骨架</div>
+    <div class="slide-title">「分 — 合 — 分 — 合」的曲折前进</div>
+    <div class="slide-subtitle">12 集合在一起，呈现出一条完整的"大一统"发展曲线</div>
+  </div>
+
+  <div class="curve-container">
+
+    <div class="curve-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#d4a848"></div>合：天下归一、王朝兴盛</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8b2d2d"></div>分：天下动荡、王朝衰亡</div>
+    </div>
+
+    <!-- 四阶段色带 -->
+    <div class="stages-bar">
+      <div class="stage-block stage-1">阶段一　E1-E3　大一统的确立与速亡</div>
+      <div class="stage-block stage-2">阶段二　E4-E5　分裂格局下的权力争夺</div>
+      <div class="stage-block stage-3">阶段三　E6-E9　大一统的重建与巩固</div>
+      <div class="stage-block stage-4">阶段四　E10-E12　大一统的曲折前进</div>
+    </div>
+
+    <svg viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; display:block;">
+      <!-- 背景区分阶段 -->
+      <rect x="0"    y="50" width="360"  height="280" fill="#8b2d2d" opacity="0.05"/>
+      <rect x="360"  y="50" width="240"  height="280" fill="#b58157" opacity="0.05"/>
+      <rect x="600"  y="50" width="320"  height="280" fill="#d4a848" opacity="0.07"/>
+      <rect x="920"  y="50" width="280"  height="280" fill="#5c6ea3" opacity="0.05"/>
+
+      <!-- 顶部"合"与底部"分"参考线 -->
+      <line x1="60" y1="80"  x2="1180" y2="80"  stroke="#d4a848" stroke-width="1" stroke-dasharray="4 4" opacity="0.5"/>
+      <line x1="60" y1="280" x2="1180" y2="280" stroke="#8b2d2d" stroke-width="1" stroke-dasharray="4 4" opacity="0.5"/>
+      <text x="40" y="84" font-size="14" fill="#b08a3e" text-anchor="end" font-weight="600">合</text>
+      <text x="40" y="284" font-size="14" fill="#8b2d2d" text-anchor="end" font-weight="600">分</text>
+
+      <!-- 主曲线（平滑贝塞尔） -->
+      <path d="
+        M 80 280
+        C 122 280, 122 100, 160 100
+        C 202 100, 202 180, 245 180
+        C 287 180, 287 260, 330 260
+        C 372 260, 372 260, 415 260
+        C 457 260, 457 220, 500 220
+        C 542 220, 542 100, 585 100
+        C 627 100, 627 70, 670 70
+        C 712 70, 712 60, 755 60
+        C 797 60, 797 50, 840 50
+        C 882 50, 882 260, 925 260
+        C 967 260, 967 100, 1010 100
+        C 1052 100, 1052 280, 1095 280
+      "
+      fill="none" stroke="#8b2d2d" stroke-width="3.5" stroke-linecap="round"/>
+
+      <!-- 数据点 -->
+      <!-- 起点：战国分裂 -->
+      <circle cx="80"  cy="280" r="5" fill="#999"/>
+      <text x="80" y="305" font-size="11" fill="#999" text-anchor="middle">战国乱世</text>
+
+      <!-- E1 -->
+      <circle cx="160" cy="100" r="7" fill="#d4a848" stroke="#fff" stroke-width="2"/>
+      <text x="160" y="90"  font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E1 千秋一统</text>
+      <text x="160" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">前 221 年</text>
+
+      <!-- E2 -->
+      <circle cx="245" cy="180" r="6" fill="#b58157" stroke="#fff" stroke-width="2"/>
+      <text x="245" y="170" font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E2 揭竿而起</text>
+      <text x="245" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">前 209 年</text>
+
+      <!-- E3 -->
+      <circle cx="330" cy="260" r="7" fill="#8b2d2d" stroke="#fff" stroke-width="2"/>
+      <text x="330" y="280" font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E3 巨鹿之战</text>
+      <text x="330" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">前 207 年</text>
+
+      <!-- E4 -->
+      <circle cx="415" cy="260" r="6" fill="#8b2d2d" stroke="#fff" stroke-width="2"/>
+      <text x="415" y="280" font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E4 楚汉战争（上）</text>
+      <text x="415" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">前 206 年</text>
+
+      <!-- E5（整体仍是争霸分裂，结尾走向合） -->
+      <circle cx="500" cy="220" r="6" fill="#b58157" stroke="#fff" stroke-width="2"/>
+      <text x="500" y="210" font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E5 楚汉战争（下）</text>
+      <text x="500" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">前 202 年</text>
+
+      <!-- E6 -->
+      <circle cx="585" cy="100" r="6" fill="#d4a848" stroke="#fff" stroke-width="2"/>
+      <text x="585" y="90"  font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E6 文景之治</text>
+      <text x="585" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">前 180 年</text>
+
+      <!-- E7-E9 整体标注：三集共同构成「汉家盛世·大一统全面巩固」 -->
+      <path d="M 635 26 L 635 18 L 875 18 L 875 26"
+            fill="none" stroke="#8b2d2d" stroke-width="2"/>
+      <text x="755" y="14" font-size="14" fill="#8b2d2d" text-anchor="middle" font-weight="700">
+        汉家盛世 · 大一统全面巩固
+      </text>
+
+      <!-- E7（与 E8、E9 共同构成顶峰） -->
+      <circle cx="670" cy="70"  r="7" fill="#d4a848" stroke="#8b2d2d" stroke-width="2.5"/>
+      <text x="670" y="60"  font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E7 武帝大一统</text>
+      <text x="670" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">前 141 年</text>
+
+      <!-- E8 -->
+      <circle cx="755" cy="60"  r="7" fill="#d4a848" stroke="#8b2d2d" stroke-width="2.5"/>
+      <text x="755" y="50"  font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E8 张骞通西域</text>
+      <text x="755" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">前 138 年</text>
+
+      <!-- E9 -->
+      <circle cx="840" cy="50"  r="7" fill="#d4a848" stroke="#8b2d2d" stroke-width="2.5"/>
+      <text x="840" y="40"  font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E9 封狼居胥</text>
+      <text x="840" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">前 119 年</text>
+
+      <!-- E10 -->
+      <circle cx="925" cy="260" r="7" fill="#8b2d2d" stroke="#fff" stroke-width="2"/>
+      <text x="925" y="280" font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E10 王莽代汉</text>
+      <text x="925" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">公元 9 年</text>
+
+      <!-- E11 -->
+      <circle cx="1010" cy="100" r="7" fill="#d4a848" stroke="#fff" stroke-width="2"/>
+      <text x="1010" y="90"  font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E11 光武中兴</text>
+      <text x="1010" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">公元 25 年</text>
+
+      <!-- E12 -->
+      <circle cx="1095" cy="280" r="7" fill="#8b2d2d" stroke="#fff" stroke-width="2"/>
+      <text x="1095" y="300" font-size="12" fill="#5c3a0e" text-anchor="middle" font-weight="600">E12 黄巾起义</text>
+      <text x="1095" y="345" font-size="10" fill="#8b6a3e" text-anchor="middle">公元 184 年</text>
+
+      <!-- 末端延伸虚线，指向"三国" -->
+      <path d="M 1095 280 Q 1140 290, 1170 305" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="4 4"/>
+      <text x="1175" y="310" font-size="11" fill="#999">…三国时代</text>
+    </svg>
+
+    <div class="curve-summary">
+      12 集合在一起看，呈现出一条 <strong>「合-分-合-分-合-分」</strong> 的曲线
+      <div class="seq">秦统一 → 楚汉战争 → 西汉鼎盛 → 王莽乱政 → 光武中兴 → 东汉衰亡</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============ 图三：难点与应对 ============ -->
+<section class="slide">
+  <div class="slide-header">
+    <div class="slide-eyebrow">这一主题难度更大 · 我们想清楚了</div>
+    <div class="slide-title">三个难点，四个应对</div>
+    <div class="slide-subtitle">秦汉这一主题比前两个更难，但我们在大纲层面已经做了充分准备</div>
+  </div>
+
+  <div class="ca-wrap">
+
+    <!-- 左：3 个难点 -->
+    <div class="ca-col challenges">
+      <div class="ca-col-header">
+        <div class="ca-col-eyebrow">CHALLENGES</div>
+        <div class="ca-col-title">难在哪里？</div>
+      </div>
+
+      <div class="ca-card">
+        <div class="ca-num">1</div>
+        <div class="ca-body">
+          <div class="ca-title">知识密度高，单集信息量大</div>
+          <div class="ca-desc">前两个主题，单集多是一个相对独立、情节性强的故事；秦汉很多集要在 <strong>一集里讲清多件大事</strong>，对孩子的消化能力是挑战。</div>
+          <div class="ca-eg">例：E6 文景之治 = 休养生息 + 缇萦救父 + 七国之乱；E7 武帝大一统 = 推恩令 + 独尊儒术 + 盐铁官营</div>
+        </div>
+      </div>
+
+      <div class="ca-card">
+        <div class="ca-num">2</div>
+        <div class="ca-body">
+          <div class="ca-title">制度、政策类内容多，本质抽象</div>
+          <div class="ca-desc">郡县制、推恩令、盐铁官营 …… 这些东西<strong>看不见、摸不着</strong>，远不如打仗、刺杀、英雄相争那么直接好懂。容易讲得枯燥。</div>
+          <div class="ca-eg">"政策报菜名"是大忌 —— 孩子记不住，也不会觉得有意思</div>
+        </div>
+      </div>
+
+      <div class="ca-card">
+        <div class="ca-num">3</div>
+        <div class="ca-body">
+          <div class="ca-title">人物多、关系复杂</div>
+          <div class="ca-desc">全季要孩子认识 20 余位历史人物，很多人物又集中在同一集里登场，<strong>如果不做处理，孩子根本消化不过来</strong>。</div>
+          <div class="ca-eg">例：E4 楚汉战争（上） 一集要出现 刘邦、项羽、张良、樊哙、范增、项庄、项伯 七位人物</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中：箭头 -->
+    <div class="ca-arrow-col">
+      <svg class="ca-arrow-svg" viewBox="0 0 50 60" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 8 25 L 30 25 L 30 15 L 45 30 L 30 45 L 30 35 L 8 35 Z"
+              fill="#b08a3e" opacity="0.8"/>
+      </svg>
+    </div>
+
+    <!-- 右：4 个应对 -->
+    <div class="ca-col solutions">
+      <div class="ca-col-header">
+        <div class="ca-col-eyebrow">SOLUTIONS</div>
+        <div class="ca-col-title">我们怎么解决？</div>
+      </div>
+
+      <div class="ca-card">
+        <div class="ca-num">A</div>
+        <div class="ca-body">
+          <div class="ca-title">每一集都明确"详略节奏"</div>
+          <div class="ca-desc">分集梗概结尾都写了 <strong>"演绎注意"</strong>，明确告诉编剧和导演 —— 哪些情节要展开演、哪些用旁白配画面带过。<strong>有详有略，节奏可控。</strong></div>
+          <div class="ca-eg">例：E7 推恩令、独尊儒术 用朝堂论政展开演；盐铁官营 用旁白配画面带过</div>
+        </div>
+      </div>
+
+      <div class="ca-card">
+        <div class="ca-num">B</div>
+        <div class="ca-body">
+          <div class="ca-title">政策类剧情：三步推进，故事感包裹</div>
+          <div class="ca-desc">不让孩子直接面对一堆政策名词，而是按 <strong>「问题 → 举措 → 效果」</strong> 的故事结构推进，让政策有起因、有过程、有结果。</div>
+          <div class="ca-eg">
+            例 1（E1 统一制度）：六国文字货币各异、交流不便 → 秦始皇推行书同文、车同轨、统一度量衡 → 全国成为一体，便于统一管理<br>
+            例 2（E7 推恩令）：诸侯坐大、威胁中央 → 武帝采纳主父偃建议，实行推恩令 → 诸侯被削弱，中央集权加强
+          </div>
+        </div>
+      </div>
+
+      <div class="ca-card">
+        <div class="ca-num">C</div>
+        <div class="ca-body">
+          <div class="ca-title">人物群像做减法，主次分明</div>
+          <div class="ca-desc">每集明确"主角是谁、次要角色是谁"，<strong>不平均用力</strong>。让孩子看完一集，能在脑子里立住一两个鲜明的人物形象。</div>
+          <div class="ca-eg">例：E4 楚汉战争（上），主角是刘邦和项羽，张良、樊哙、范增、项庄、项伯是次要角色（推动剧情，不抢戏）</div>
+        </div>
+      </div>
+
+      <div class="ca-card">
+        <div class="ca-num">D</div>
+        <div class="ca-body">
+          <div class="ca-title">全季旁白做一条"贯穿引导线"</div>
+          <div class="ca-desc">在王朝更替、分合变化的关键节点，旁白加一句引导语，<strong>帮孩子把每一集和"分合盛衰"的大主线连起来</strong>，建立宏观历史观。</div>
+          <div class="ca-eg">如："天下再度归于一统"、"强盛一时的王朝就这样走到了尽头"</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>

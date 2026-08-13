@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上下五千年项目流程与 SOP / Skill 分享稿</title>
+<style>
+:root {
+  --bg: #f5f7f4;
+  --paper: #ffffff;
+  --ink: #243033;
+  --muted: #647174;
+  --line: #d7dedb;
+  --line-strong: #aebbb8;
+  --accent: #2d7f8f;
+  --accent-dark: #165565;
+  --accent-soft: #e7f3f3;
+  --warm: #a66d2f;
+  --warm-soft: #f7eee3;
+  --code-bg: #eef1ef;
+  --shadow: 0 18px 45px rgba(34, 48, 51, 0.08);
+  --max: 1180px;
+  --toc: 260px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #f8faf7 0%, var(--bg) 100%);
+  color: var(--ink);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.76;
+}
+.layout { display: grid; grid-template-columns: var(--toc) minmax(0, 1fr); min-height: 100vh; }
+.toc {
+  position: sticky; top: 0; height: 100vh; overflow: auto;
+  padding: 34px 20px 40px 28px; border-right: 1px solid var(--line);
+  background: rgba(255,255,255,0.84); backdrop-filter: blur(10px);
+}
+.toc-title { font-size: 13px; color: var(--muted); letter-spacing: .12em; font-weight: 700; margin-bottom: 14px; }
+.toc a { display: block; color: #526063; text-decoration: none; border-left: 3px solid transparent; padding: 5px 8px; border-radius: 6px; margin: 2px 0; }
+.toc a:hover { color: var(--accent-dark); background: var(--accent-soft); border-left-color: var(--accent); }
+.toc-level-3 { padding-left: 22px !important; font-size: 13px; color: #6f7b7d !important; }
+.toc-level-4 { padding-left: 34px !important; font-size: 12.5px; color: #7d888a !important; }
+main { padding: 48px 38px 88px; }
+.article { width: min(100%, var(--max)); margin: 0 auto; background: var(--paper); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 52px 58px 68px; }
+h1 { margin: 0 0 14px; font-size: 34px; line-height: 1.25; color: #172426; }
+h2 { margin: 54px 0 18px; padding-bottom: 10px; border-bottom: 2px solid var(--line-strong); font-size: 25px; line-height: 1.35; color: #1d2c2f; }
+h3 { margin: 36px 0 14px; font-size: 21px; line-height: 1.4; color: var(--accent-dark); }
+h4 { margin: 26px 0 12px; font-size: 18px; color: var(--warm); }
+p { margin: 12px 0; }
+.article p strong, .article li strong { color: #102f36; font-weight: 850; }
+blockquote { margin: 18px 0 28px; padding: 16px 20px; border-left: 5px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; color: #385053; }
+blockquote p { margin: 4px 0; }
+ul, ol { margin: 10px 0 18px; padding-left: 1.5em; }
+li { margin: 4px 0; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 30px 0; }
+code { background: var(--code-bg); color: #2d3b3e; border: 1px solid #dfe5e2; padding: 0.12em 0.34em; border-radius: 5px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.92em; }
+pre { overflow: auto; background: #172326; color: #f0f6f4; border-radius: 12px; padding: 18px; }
+pre code { background: transparent; border: 0; color: inherit; padding: 0; }
+.table-scroll { width: 100%; overflow-x: auto; margin: 18px 0 30px; border: 1px solid var(--line); border-radius: 12px; }
+table { width: 100%; border-collapse: collapse; min-width: 620px; background: white; }
+th, td { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); padding: 13px 15px; vertical-align: top; text-align: left; }
+th:last-child, td:last-child { border-right: 0; }
+tr:last-child td { border-bottom: 0; }
+th { background: #eef4f3; color: #1f3e45; font-weight: 800; }
+tbody tr:nth-child(even) td { background: #fbfcfb; }
+.flow-diagram { margin: 26px auto 20px; padding: 24px; border: 1px solid #d4dfdc; border-radius: 16px; background: linear-gradient(180deg, #fbfdfc 0%, #f0f6f5 100%); box-shadow: 0 12px 30px rgba(32, 73, 81, 0.08); }
+.flow-head { display: grid; grid-template-columns: minmax(180px, 260px) 64px minmax(260px, 1fr); align-items: center; margin-bottom: 8px; color: #516265; font-size: 13px; letter-spacing: .08em; font-weight: 800; }
+.flow-head div:first-child { text-align: center; }
+.flow-row { display: grid; grid-template-columns: minmax(180px, 260px) 64px minmax(260px, 1fr); align-items: center; min-height: 102px; }
+.flow-main { position: relative; min-height: 102px; display: flex; align-items: center; justify-content: center; }
+.flow-main span { min-width: 150px; max-width: 220px; min-height: 50px; padding: 12px 18px; border-radius: 10px; color: #ffffff; font-size: 19px; font-weight: 800; text-align: center; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(24, 51, 57, 0.14); }
+.flow-main.block-brief span { background: #3f7d99; border: 1px solid #2f6a86; }
+.flow-main.block-frame span { background: #5568a5; border: 1px solid #3f5290; }
+.flow-main.block-episode span { background: #4c8f52; border: 1px solid #3a7540; }
+.flow-main.block-quiz span { background: #7c5aa2; border: 1px solid #62448a; }
+.flow-main.block-card span { background: #c76156; border: 1px solid #a94c43; }
+.flow-main.has-next::after { content: ""; position: absolute; left: 50%; top: calc(50% + 27px); height: 48px; border-left: 2px solid #9aa8ac; transform: translateX(-50%); }
+.flow-main.has-next::before { content: ""; position: absolute; left: 50%; bottom: 7px; transform: translateX(-50%); border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 10px solid #7d8a8e; z-index: 2; }
+.flow-line { border-top: 2px dashed #c99a55; height: 0; }
+.flow-line.empty { border-top-color: transparent; }
+.flow-supp { justify-self: start; max-width: 460px; padding: 14px 18px; border-radius: 10px; border: 1px solid #d9b378; background: #fbf3e2; color: #5a3d16; font-size: 15.5px; line-height: 1.55; box-shadow: 0 8px 18px rgba(140, 92, 24, 0.10); }
+.flow-supp strong { display: block; color: #6d3f10; font-weight: 850; font-size: 1.05em; line-height: 1.45; }
+.flow-process { display: block; margin-top: 4px; color: #567075; font-size: 0.82em; line-height: 1.45; font-weight: 500; }
+.flow-supp.empty { display: none; }
+.stage-title { margin: 42px 0 18px; padding: 10px 18px; border-radius: 10px; background: linear-gradient(90deg, var(--accent-soft) 0%, rgba(231,243,243,0) 100%); color: var(--accent-dark); font-size: 20px; font-weight: 800; border-left: 5px solid var(--accent); }
+.node-card { margin: 22px 0 30px; border: 1px solid var(--line); border-radius: 14px; background: #fcfdfc; box-shadow: 0 6px 18px rgba(34, 48, 51, 0.05); overflow: hidden; }
+.node-head { display: flex; align-items: center; gap: 12px; padding: 14px 22px; background: #f2f7f5; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.node-num { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .06em; }
+.node-title { font-size: 19px; font-weight: 800; color: #17303a; margin: 0; flex: 1; min-width: 200px; }
+.node-tag { display: inline-block; padding: 3px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing: .04em; }
+.tag-brief { background: #b8dceb; color: #0f4a5e; }
+.tag-frame { background: #c3d1ec; color: #1e356a; }
+.tag-source { background: #f0d5a1; color: #6d3f10; }
+.tag-episode { background: #b7dcb2; color: #1d5017; }
+.tag-quiz { background: #d4bee9; color: #3a2069; }
+.tag-card { background: #f4c2bc; color: #7a2a22; }
+.tag-review { background: #c8ccc7; color: #3a413c; }
+.color-chip { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 10px; vertical-align: middle; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08); }
+.chip-brief { background: #3f7d99; }
+.chip-frame { background: #5568a5; }
+.chip-source { background: #b8823a; }
+.chip-episode { background: #4c8f52; }
+.chip-quiz { background: #7c5aa2; }
+.chip-card { background: #c76156; }
+.chip-review { background: #7a827c; }
+/* 七大板块表格：整行按板块主题上色 */
+#boards-table tr:has(.chip-brief) td { background: #e6f0f4; }
+#boards-table tr:has(.chip-frame) td { background: #ebeef7; }
+#boards-table tr:has(.chip-episode) td { background: #e9f3ea; }
+#boards-table tr:has(.chip-quiz) td { background: #f2ecf7; }
+#boards-table tr:has(.chip-card) td { background: #fbebe8; }
+#boards-table tr:has(.chip-source) td { background: #faf3e2; }
+#boards-table tr:has(.chip-review) td { background: #eff1ef; }
+/* 阶段标题按主题上色 */
+#stage-1 { background: linear-gradient(90deg, #cbe0e8 0%, rgba(203,224,232,0) 100%); color: #0f4a5e; border-left-color: #3f7d99; }
+#stage-2 { background: linear-gradient(90deg, #d3daed 0%, rgba(211,218,237,0) 100%); color: #1e356a; border-left-color: #5568a5; }
+#stage-3 { background: linear-gradient(90deg, #cee5d0 0%, rgba(206,229,208,0) 100%); color: #1d5017; border-left-color: #4c8f52; }
+#stage-4 { background: linear-gradient(90deg, #ddcfec 0%, rgba(221,207,236,0) 100%); color: #3a2069; border-left-color: #7c5aa2; }
+/* 节点卡片按主题上色（node-head 上色 + 左侧色条） */
+.node-card:has(.tag-brief) { border-left: 4px solid #3f7d99; }
+.node-card:has(.tag-brief) .node-head { background: #e6f0f4; border-bottom: 1px solid #cbe0e8; }
+.node-card:has(.tag-frame) { border-left: 4px solid #5568a5; }
+.node-card:has(.tag-frame) .node-head { background: #ebeef7; border-bottom: 1px solid #d3daed; }
+.node-card:has(.tag-source) { border-left: 4px solid #b8823a; }
+.node-card:has(.tag-source) .node-head { background: #faf3e2; border-bottom: 1px solid #f0dcb1; }
+.node-card:has(.tag-episode) { border-left: 4px solid #4c8f52; }
+.node-card:has(.tag-episode) .node-head { background: #e9f3ea; border-bottom: 1px solid #cee5d0; }
+.node-card:has(.tag-quiz) { border-left: 4px solid #7c5aa2; }
+.node-card:has(.tag-quiz) .node-head { background: #f2ecf7; border-bottom: 1px solid #ddcfec; }
+.node-card:has(.tag-card) { border-left: 4px solid #c76156; }
+.node-card:has(.tag-card) .node-head { background: #fbebe8; border-bottom: 1px solid #f2cec8; }
+.node-card:has(.tag-review) { border-left: 4px solid #7a827c; }
+.node-card:has(.tag-review) .node-head { background: #eff1ef; border-bottom: 1px solid #d7dcd8; }
+.node-body { padding: 18px 24px 22px; }
+.node-meta { display: grid; grid-template-columns: 130px 1fr; gap: 6px 16px; margin: 4px 0 16px; font-size: 15px; }
+.node-meta dt { color: #556868; font-weight: 700; }
+.node-meta dd { margin: 0; color: #253335; }
+.node-desc { border-top: 1px dashed var(--line); padding-top: 14px; }
+.node-desc h5 { margin: 14px 0 6px; font-size: 15.5px; color: var(--accent-dark); font-weight: 800; }
+.node-desc p { margin: 8px 0; }
+.node-desc ul { margin: 6px 0 12px; }
+.appendix-note { margin: 8px 0 14px; color: var(--muted); font-size: 14.5px; }
+.footer-note { margin-top: 54px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-align: right; }
+@media (max-width: 980px) {
+  .layout { display: block; }
+  .toc { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  main { padding: 24px 14px 60px; }
+  .article { padding: 32px 20px 46px; border-radius: 12px; }
+  h1 { font-size: 26px; }
+  .flow-head, .flow-row { grid-template-columns: minmax(120px, 180px) 30px minmax(160px, 1fr); }
+  .flow-main span { min-width: 108px; font-size: 15px; padding: 10px 12px; }
+  .flow-supp { font-size: 13.5px; padding: 12px; }
+  .node-head { padding: 12px 16px; }
+  .node-body { padding: 14px 18px 18px; }
+  .node-meta { grid-template-columns: 92px 1fr; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:9999;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(74,144,217,.2);padding:10px 20px;font-family:-apple-system,BlinkMacSystemFont,\"PingFang SC\",\"Microsoft YaHei\",sans-serif;font-size:14px;"><a href="../../works.html" style="color:#2c5282;text-decoration:none;font-weight:500;">← 返回作品集</a><span style="color:#94a3b8;margin:0 10px;">·</span><span style="color:#64748b;">张秀婷 · Zoey Zhang</span></div>
+<div class="layout">
+  <nav class="toc" aria-label="目录">
+    <div class="toc-title">目录</div>
+    <a class="toc-level-2" href="#sec-1">一、项目全景</a>
+    <a class="toc-level-2" href="#sec-2">二、按时间线走的工作节点</a>
+    <a class="toc-level-3" href="#stage-1">阶段一 · 大纲简案期</a>
+    <a class="toc-level-4" href="#node-1">1. 故事选取</a>
+    <a class="toc-level-4" href="#node-2">2. 大纲简案</a>
+    <a class="toc-level-4" href="#node-3">3. 文献溯源初版 &amp; 前期锁定</a>
+    <a class="toc-level-3" href="#stage-2">阶段二 · 大纲框架期</a>
+    <a class="toc-level-4" href="#node-4">4. 完整大纲框架 0.0</a>
+    <a class="toc-level-4" href="#node-5">5. 完整大纲修订至 2.0</a>
+    <a class="toc-level-4" href="#node-6">6. 文献溯源大纲对照修订 &amp; 中期锁定</a>
+    <a class="toc-level-4" href="#node-7">7. 大纲框架专家审核与终稿</a>
+    <a class="toc-level-3" href="#stage-3">阶段三 · 分集资料期</a>
+    <a class="toc-level-4" href="#node-8">8. 分集资料撰写（3 集/批）</a>
+    <a class="toc-level-4" href="#node-9">9. 单集参考资料</a>
+    <a class="toc-level-4" href="#node-10">10. 分集资料专家审核与终稿</a>
+    <a class="toc-level-3" href="#stage-4">阶段四 · 交互卡片期</a>
+    <a class="toc-level-4" href="#node-11">11. 交互题考查点筛选</a>
+    <a class="toc-level-4" href="#node-12">12. 交互题出题与终稿</a>
+    <a class="toc-level-4" href="#node-13">13. 人物卡 / 典故卡</a>
+    <a class="toc-level-4" href="#node-14">14. 内容版本演进复盘（可选）</a>
+    <a class="toc-level-2" href="#sec-3">三、统一规则底座</a>
+    <a class="toc-level-3" href="#rule-1">1. 项目基础文件</a>
+    <a class="toc-level-3" href="#rule-2">2. 五类核心教研文档</a>
+    <a class="toc-level-3" href="#rule-3">3. 统一版本链</a>
+    <a class="toc-level-3" href="#rule-4">4. 文献溯源与参考资料的边界</a>
+    <a class="toc-level-3" href="#rule-5">5. 交互题的统一底座</a>
+    <a class="toc-level-3" href="#rule-6">6. 卡片与时间轴的统一底座</a>
+    <a class="toc-level-2" href="#sec-appendix">附录 · SOP / Skill 索引</a>
+    <a class="toc-level-2" href="#version-log">版本记录</a>
+  </nav>
+  <main>
+    <article class="article">
+      <h1 id="top">上下五千年项目流程与 SOP / Skill 分享稿</h1>
+      <blockquote>
+        <p><strong>本稿目的：</strong>同步近期整理和新增的 SOP 与 Skill，说明每个节点在做什么、对应哪份 SOP / Skill、上下游怎么衔接。</p>
+        <p><strong>阅读方式：</strong>第一部分看整体流程图；第二部分按时间线逐节点看具体分工；第三部分对齐通用规则；附录留作 SOP / Skill 快速查阅入口。</p>
+      </blockquote>
+      <h2 id="sec-1">一、项目全景</h2>
+      <p>主流程五步 + 一条阶段性辅线（文献溯源）如下。辅线由主流程节点触发，为后续写作提供史料支撑。</p>
+      <section class="flow-diagram" aria-label="项目总体图">
+        <div class="flow-head">
+          <div>主流程</div>
+          <div></div>
+          <div>辅线：文献溯源</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-main block-brief has-next"><span>1. 大纲简案</span></div>
+          <div class="flow-line"></div>
+          <div class="flow-supp"><strong>文献溯源前期锁定版</strong><span class="flow-process">简案定稿后生成初版，教研审核形成</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-main block-frame has-next"><span>2. 大纲框架</span></div>
+          <div class="flow-line"></div>
+          <div class="flow-supp"><strong>文献溯源中期锁定版</strong><span class="flow-process">完整大纲约 2.0 后对照修订形成</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-main block-episode has-next"><span>3. 分集资料</span></div>
+          <div class="flow-line empty"></div>
+          <div class="flow-supp empty"></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-main block-quiz has-next"><span>4. 交互题</span></div>
+          <div class="flow-line empty"></div>
+          <div class="flow-supp empty"></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-main block-card"><span>5. 人物卡 / 典故卡</span></div>
+          <div class="flow-line empty"></div>
+          <div class="flow-supp empty"></div>
+        </div>
+      </section>
+      <p><strong>七大板块与节点的对应关系（每个板块对应下方节点卡片的主题色）：</strong></p>
+      <div class="table-scroll"><table id="boards-table">
+        <thead><tr><th>板块</th><th>覆盖节点</th></tr></thead>
+        <tbody>
+          <tr><td><span class="color-chip chip-brief"></span>大纲简案</td><td>故事选取、大纲简案撰写与定稿</td></tr>
+          <tr><td><span class="color-chip chip-frame"></span>大纲框架</td><td>完整大纲 0.0、修订至 2.0、专家审核与终稿</td></tr>
+          <tr><td><span class="color-chip chip-episode"></span>分集资料</td><td>分集资料撰写、单集参考资料、专家审核与终稿</td></tr>
+          <tr><td><span class="color-chip chip-quiz"></span>交互题</td><td>考查点筛选、出题与终稿</td></tr>
+          <tr><td><span class="color-chip chip-card"></span>人物卡 / 典故卡</td><td>卡片目录、卡片文案</td></tr>
+          <tr><td><span class="color-chip chip-source"></span>文献溯源</td><td>前期锁定、大纲对照修订与中期锁定</td></tr>
+          <tr><td><span class="color-chip chip-review"></span>横向审阅与复盘</td><td>人工审核与过稿、独立审阅工具、版本演进复盘（贯穿全周期）</td></tr>
+        </tbody>
+      </table></div>
+      <h2 id="sec-2">二、按时间线走的工作节点</h2>
+      <p>以下按主流程顺序，把每个节点讲清「什么时候启动、对应哪份 SOP 和 Skill、产出什么、和上下游怎么衔接」。有 Skill 内部有阶段划分的，一并说明。</p>
+
+      <div class="stage-title" id="stage-1">阶段一 · 大纲简案期</div>
+
+      <div class="node-card" id="node-1">
+        <div class="node-head">
+          <span class="node-num">节点 1</span>
+          <h3 class="node-title">故事选取</h3>
+          <span class="node-tag tag-brief">大纲简案</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>新 SKU 立项，确认上一个 SKU 的结束节点、本 SKU 从哪个历史节点开始。</dd>
+            <dt>对应 SOP</dt><dd><code>教研·AI大纲制作SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd><code>select-history-stories（故事选取）</code></dd>
+            <dt>核心产出</dt><dd>故事推荐清单、12 个主选 + 3 个核心备选、时代特征草案。</dd>
+            <dt>关键交叉点</dt><dd>故事方案未确认前，不启动大纲简案、不启动文献溯源。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p><code>教研·AI大纲制作SOP.md</code> 规定选故事在整个流程中的位置：<strong>先选集 → 再简案 → 再文献溯源前置 → 最后完整大纲</strong>。它同时约束一条：故事方案没有确认前，不要提前深化分集梗概。</p>
+            <p><code>select-history-stories</code>（故事选取） 负责这一节点的执行本身，内部分两个阶段：</p>
+            <ul>
+              <li><strong>阶段 A · 独立选材</strong>：Codex 自行读取项目定位、SOP 和秦汉定稿参考，建立故事候选池，产出按一级、二级、三级排列的推荐清单。<strong>这一阶段不读取、不讨论 IMA 结果</strong>，用于保证独立性；完整候选池通常 30–45 个，一级推荐固定 12 主选 + 3 备选。</li>
+              <li><strong>阶段 B · 交叉比较</strong>：独立清单锁定为快照后，再读取 IMA 清单。规范化两份清单的别名和故事颗粒度，比较重合、独有、替换、合并、拆分，产出最终故事方案。</li>
+            </ul>
+            <p><strong>上下游衔接</strong>：无上游 Skill；下游是 <code>write-outline-brief</code>（大纲简案）。故事方案由人工确认后才能进入下一节点。</p>
+          </div>
+        </div>
+      </div>
+      <div class="node-card" id="node-2">
+        <div class="node-head">
+          <span class="node-num">节点 2</span>
+          <h3 class="node-title">大纲简案</h3>
+          <span class="node-tag tag-brief">大纲简案</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>12 集故事方案已经人工确认（选集冻结基线）。</dd>
+            <dt>对应 SOP</dt><dd><code>教研·AI大纲制作SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd><code>write-outline-brief（大纲简案）</code></dd>
+            <dt>核心产出</dt><dd><code>大纲简案 0.0 → 1.0 → 2.0 → 3.0 → 【终稿】</code>（版本链见第三部分）。</dd>
+            <dt>关键交叉点</dt><dd>简案定稿后立即触发<strong>辅线一</strong>——文献溯源初版启动。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>SOP 层规定简案回答的核心问题是「这个 SKU 整体怎么讲」——不是把每集写细，而是建立时代特征、SKU 整体教学目标、编排思路和 12 集简表。</p>
+            <p><code>write-outline-brief</code>（大纲简案） 继承已确认的 12 集故事方案，主要做四件事：</p>
+            <ul>
+              <li>校准时代特征（要求由 12 集共同支撑，不另起脱节主题）；</li>
+              <li>撰写 SKU 整体教学目标（知识、能力、情感与价值观）；</li>
+              <li>撰写编排思路（3–5 段说明 12 集怎么串成因果链）；</li>
+              <li>用简案颗粒度整理 12 集框架表（时期、集数、标题、时间、主要情节——背景/经过/结果三段）。</li>
+            </ul>
+            <p>它<strong>不重新选故事、不展开每集完整梗概</strong>。人物、典故数量在简案阶段做暂定统计（「约 X 位」「X 余位」），不作为选集配额。</p>
+            <p>大纲简案阶段的情感目标从故事的自然落点反推，主要用于确定 SKU 整体的情感目标方向和编排意图，<strong>不要求 12 集每集单独配置情感目标</strong>。</p>
+            <p><strong>上下游衔接</strong>：上游是 <code>select-history-stories</code>（故事选取）；下游同时衔接 <code>write-source-tracing</code>（辅线一的启动）和 <code>write-outline-framework</code>（完整大纲，需等文献溯源前期锁定后启动）。</p>
+          </div>
+        </div>
+      </div>
+      <div class="node-card" id="node-3">
+        <div class="node-head">
+          <span class="node-num">节点 3</span>
+          <h3 class="node-title">文献溯源初版 &amp; 前期锁定</h3>
+          <span class="node-tag tag-source">文献溯源</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>大纲简案定稿后立即启动，作为完整大纲的史料底稿。</dd>
+            <dt>对应 SOP</dt><dd><code>文献溯源协作SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd><code>write-source-tracing（文献溯源初版）</code>；教研审核阶段人工为主。</dd>
+            <dt>核心产出</dt><dd><code>{SKU名}-文献溯源0.0.md</code> + 自查报告 → 教研校准后形成 <code>{SKU名}-文献溯源1.0.md</code>（文内标注「前期锁定版」）。</dd>
+            <dt>关键交叉点</dt><dd>前期锁定版是完整大纲框架 0.0 的<strong>主要史料输入</strong>，未形成前不启动完整大纲。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p><code>文献溯源协作SOP.md</code> 规定文献溯源是 <strong>SKU 整体史料清单</strong>（不是单集参考资料），文献处理分为两个阶段：前置生成、大纲对照修订；另有可选的版本演进复盘。两个阶段共用同一份整体文献溯源文档，逐版升版，不覆盖旧版本。</p>
+            <p><code>write-source-tracing</code>（文献溯源初版） 负责「从无到有生成初版」，内部四步执行：</p>
+            <ul>
+              <li><strong>Step 1 · 事件清单</strong>：把简案 12 集表拆成每集 3–7 个待溯源事件，产出清单稿供教研确认；</li>
+              <li><strong>Step 2 · 文献 list</strong>：在清单基础上补主文献、补充文献、推荐版本和推荐依据；</li>
+              <li><strong>Step 3 · 正文录入</strong>：按 <strong>3 集一批</strong> 录入原文、译文、出处、译文版本，写完一批停下等教研审；</li>
+              <li><strong>Step 4 · 自查</strong>：完成 12 集后生成自查报告，覆盖人名地名、数字、引文起讫、译文版本、误入影视小说传说等风险点。</li>
+            </ul>
+            <p>Skill 只生成 <code>0.0</code> 和自查报告，<strong>不自动生成 1.0</strong>——<code>1.0</code>（前期锁定版）由教研人工审核确认后形成。</p>
+            <p><strong>上下游衔接</strong>：上游是 <code>write-outline-brief</code>（简案定稿）；下游是 <code>write-outline-framework</code>（完整大纲框架）。它不处理完整大纲后的修订，也不负责单集参考资料——这两项交给 <code>revise-source-tracing</code>（文献溯源修订） 和 <code>write-episode-content</code>（分集资料撰写）。</p>
+          </div>
+        </div>
+      </div>
+      <div class="stage-title" id="stage-2">阶段二 · 大纲框架期</div>
+
+      <div class="node-card" id="node-4">
+        <div class="node-head">
+          <span class="node-num">节点 4</span>
+          <h3 class="node-title">完整大纲框架 0.0</h3>
+          <span class="node-tag tag-frame">大纲框架</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>文献溯源前期锁定版已经形成。</dd>
+            <dt>对应 SOP</dt><dd><code>教研·AI大纲制作SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd><code>write-outline-framework（完整大纲框架）</code></dd>
+            <dt>核心产出</dt><dd><code>上下五千年{N}·{SKU名}·大纲框架0.0.md</code></dd>
+            <dt>关键交叉点</dt><dd>完整大纲阶段<strong>不再对整个时期从零大面积检索</strong>，只对缺口、冲突、因果桥梁和高风险事实做定向补查；补查结果暂记入「待同步文献溯源调整项」附录，不直接改文献溯源。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>SOP 层强调完整大纲的两个上位输入必须都到位：<strong>已确认的大纲简案 + 文献溯源前期锁定版</strong>。任何要动简案或锁定版结论的调整，先说明、后确认，不能静默改。</p>
+            <p><code>write-outline-framework</code>（完整大纲框架） 的核心能力：</p>
+            <ul>
+              <li>继承简案前三部分（时代特征、整体教学目标、编排思路），不另起主题；</li>
+              <li>以文献溯源前期锁定版为主，只做定向补查；</li>
+              <li>按秦汉大纲框架格式输出每集内容（<code>## E{N}-{标题}</code> → 教学目标表 → 故事梗概 → <code>【核心情节 N：小标题】</code> → 演绎注意引用块）；</li>
+              <li><strong>实际写作顺序</strong>：先写故事梗概，再从梗概提炼教学目标；最终输出仍按「教学目标→故事梗概→演绎注意」排列；</li>
+              <li><code>0.0</code> 允许比终稿更详细，方便教研后续删减；</li>
+              <li>定向补查产生的新增、删除、修正、调整项记入附录「待同步文献溯源调整项」；</li>
+              <li>完整大纲继续复核故事与整体目标的关系，但不强制每集设置情感目标。</li>
+            </ul>
+            <p><strong>上下游衔接</strong>：上游是 <code>write-outline-brief</code>（大纲简案） 和 <code>write-source-tracing</code>（文献溯源初版） 的锁定版；下游是完整大纲修订（人工为主）与 <code>revise-source-tracing</code>（文献溯源修订）。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="node-card" id="node-5">
+        <div class="node-head">
+          <span class="node-num">节点 5</span>
+          <h3 class="node-title">完整大纲修订至 2.0</h3>
+          <span class="node-tag tag-frame">大纲框架</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>完整大纲 0.0 生成后。</dd>
+            <dt>对应 SOP</dt><dd><code>教研·AI大纲制作SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd>人工为主；审核与过稿由教研人工完成，不调用审阅 Skill。</dd>
+            <dt>核心产出</dt><dd><code>大纲框架 1.0</code>（内部第一次过稿后）→ <code>大纲框架 2.0</code>（内部第二次过稿后，故事基本锁定）。</dd>
+            <dt>关键交叉点</dt><dd>完整大纲修订到约 2.0、每集叙事边界稳定后，才启动文献溯源大纲对照修订。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>SOP 规定这一阶段的动作是「教研通读 0.0，删减冗余、补足断层、调整详略、纠正史实」。所有涉及换故事、调顺序、合并、拆分、改叙事中心的调整都要返回前序阶段处理，不能在完整大纲阶段静默改。新增史料和调整项继续记录在「待同步文献溯源调整项」中。审核、过稿和意见处理均由教研人工完成，不调用审阅 Skill。</p>
+            <p><strong>上下游衔接</strong>：上游是完整大纲 0.0；下游同时接 <code>revise-source-tracing</code>（文献溯源二次修订）和完整大纲专家审核环节。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="node-card" id="node-6">
+        <div class="node-head">
+          <span class="node-num">节点 6</span>
+          <h3 class="node-title">文献溯源大纲对照修订 &amp; 中期锁定</h3>
+          <span class="node-tag tag-source">文献溯源</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>完整大纲修订至约 2.0，故事、核心情节和叙事边界基本稳定。</dd>
+            <dt>对应 SOP</dt><dd><code>文献溯源协作SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd><code>revise-source-tracing（文献溯源修订）</code> 的「完整大纲对照修订」模式。</dd>
+            <dt>核心产出</dt><dd><code>{SKU名}-文献溯源-大纲对照调整清单.md</code> → 教研确认后 → <code>{SKU名}-文献溯源2.0.md</code>（文内标注「中期锁定版」）。</dd>
+            <dt>关键交叉点</dt><dd>Skill <strong>先出清单、后改文档</strong>——教研确认调整范围后，Skill 才写入新版本，不直接覆盖前期锁定版。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>SOP 层强调每次修订都是<strong>清单先行、确认后改</strong>，且清单不是最终交付——教研确认后需要把修订同步进整体文献溯源新版本。</p>
+            <p><code>revise-source-tracing</code>（文献溯源修订）在本节点执行「完整大纲对照修订」模式：</p>
+            <ul>
+              <li>逐集读取完整大纲 2.0 的故事梗概、关键人物、时间、地点、制度、典故和结果；</li>
+              <li>对照前期锁定版文献溯源，判断新增 / 删除 / 替换 / 调整位置 / 待确认五类调整；</li>
+              <li>先产出调整清单供教研确认；</li>
+              <li>教研确认后，Skill 直接写入整体文献溯源新版本，通常形成 <code>2.0</code>（中期锁定版）。</li>
+            </ul>
+            <p><strong>上下游衔接</strong>：上游是完整大纲 2.0 + 文献溯源前期锁定版；下游是完整大纲专家审核和分集资料阶段。</p>
+          </div>
+        </div>
+      </div>
+      <div class="node-card" id="node-7">
+        <div class="node-head">
+          <span class="node-num">节点 7</span>
+          <h3 class="node-title">大纲框架专家审核与终稿</h3>
+          <span class="node-tag tag-frame">大纲框架</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>完整大纲修订到 2.0、文献溯源中期锁定完成后，形成 3.0 发专家。</dd>
+            <dt>对应 SOP</dt><dd><code>教研·AI大纲制作SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd>人工完成，不调用审阅 Skill。</dd>
+            <dt>核心产出</dt><dd><code>大纲框架3.0</code>（发专家版）→ 专家审核后 → <code>大纲框架【终稿】</code>。</dd>
+            <dt>关键交叉点</dt><dd>终稿归入「大纲策划」目录后，触发下一大板块——分集资料。若制作评审后又有较大调整，形成带日期的更新终稿（<code>大纲框架【终稿】{YYYYMMDD}.md</code>），文首写明修改背景和内容。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>SOP 规定这一阶段：3.0 发专家 → 专家意见返回 → 修改为【终稿】 → 生成 HTML 并与石墨、Markdown 一起发出走制作评审 → 无大改则会后微调确认；有较大调整则形成带日期的更新终稿。审核、过稿和专家意见处理均由教研人工完成，不调用审阅 Skill；产生的新史料调整记入文献溯源调整记录。</p>
+            <p><strong>上下游衔接</strong>：上游是完整大纲 2.0 + 文献溯源中期锁定版；下游是分集资料撰写。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-title" id="stage-3">阶段三 · 分集资料期</div>
+      <div class="node-card" id="node-8">
+        <div class="node-head">
+          <span class="node-num">节点 8</span>
+          <h3 class="node-title">分集资料撰写（3 集/批）</h3>
+          <span class="node-tag tag-episode">分集资料</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>SKU 大纲框架终稿完成、对应批次文献溯源已录入。</dd>
+            <dt>对应 SOP</dt><dd><code>教研·分集资料制作SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd><code>write-episode-content（分集资料撰写）</code> 的 Phase 2。</dd>
+            <dt>核心产出</dt><dd><code>{SKU名}·E{N}{标题}·分集资料0.0.md</code>；一周 3 集，按 E1–3 / E4–6 / E7–9 / E10–12 四批推进。</dd>
+            <dt>关键交叉点</dt><dd>分集资料 0.0 / 1.0 / 1.x 阶段，第四节「参考资料」只放占位；进入约 2.0 后才启动配套单集参考资料。<strong>每集分集资料都必须设置情感目标，并明确对应的剧情落点。</strong></dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>SOP 层规定分集资料的生产节奏：<strong>一周写 3 集，AI 生成 0.0 → 人工校准形成 1.0 → 内部第一次过稿后形成 2.0 → 内部第二次过稿并内部确定后形成 3.0 → 3.0 周三发专家 → 专家周五返稿 → 整理后周一将本批终稿一并发编剧、导演</strong>。全 SKU 12 集约 4 周写完 + 2–3 周审校交接。</p>
+            <p><code>write-episode-content</code>（分集资料撰写） 的 Phase 2 负责撰写分集资料，能力包括：</p>
+            <ul>
+              <li>读取大纲框架、文献溯源和相邻集素材；</li>
+              <li>先写故事梗概，再从梗概提炼教学目标；</li>
+              <li>固定四节结构（教学目标 / 故事梗概 / 背景信息-专家提供 / 参考资料）；</li>
+              <li>每集设置情感目标，并把情感目标落到具体情节、人物选择或结果上；</li>
+              <li>故事梗概按「【故事主线】引用块 → 自然段正文 → 演绎注意引用块」版式，正文默认不加阶段性小标题；</li>
+              <li>背景信息保留四列表格空框，人物名替换，其余留空供专家填写；</li>
+              <li>第四节参考资料在 0.0 / 1.x 时只留占位，进入 2.0 后才替换为配套参考资料文档链接。</li>
+            </ul>
+            <p><strong>上下游衔接</strong>：上游是大纲框架终稿 + 文献溯源中期锁定版；下游是节点 9（单集参考资料）和节点 10（专家审核）。</p>
+          </div>
+        </div>
+      </div>
+      <div class="node-card" id="node-9">
+        <div class="node-head">
+          <span class="node-num">节点 9</span>
+          <h3 class="node-title">单集参考资料（分集资料 2.0 后启动）</h3>
+          <span class="node-tag tag-episode">分集资料</span>
+          <span class="node-tag tag-source">文献溯源</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>分集资料进入约 2.0、故事主线和核心情节基本确定后。</dd>
+            <dt>对应 SOP</dt><dd><code>教研·分集资料制作SOP.md</code> + <code>文献溯源协作SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd><code>write-episode-content（分集资料撰写）</code> 的 Phase 3。</dd>
+            <dt>核心产出</dt><dd><code>{SKU名}-E{N}{标题}-参考资料.md</code>（不标版本号）。</dd>
+            <dt>关键交叉点</dt><dd>单集参考资料在分集资料约 2.0 后独立维护，服务于本集史料核对和编剧理解，<strong>不再回写整体文献溯源</strong>。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>分集资料 SOP 规定参考资料在分集资料进入 2.0 后启动；它与整体文献溯源保持来源对应关系，但作为单集配套资料独立维护，不再回写整体文献溯源。</p>
+            <p><code>write-episode-content</code>（分集资料撰写） 的 Phase 3 负责单集参考资料，两个固定部分：</p>
+            <ul>
+              <li><strong>一、史料</strong>：先从整体文献溯源复制本集相关内容，再与当前分集资料 2.0 的教学目标、故事主线和故事梗概逐项对照，判断保留、删除、补充或待确认；保留原文、出处、译文，不用省略号裁剪；正文新增史实必须同步补入权威出处和译文；</li>
+              <li><strong>二、演绎参考</strong>：回收当前 task 中教研已确认、对编剧理解剧情有帮助的追问和细节；每条注明信史 / 后世记载 / 笔记 / 小说 / 戏剧 / 传说 / 演绎参考等资料性质，不混作信史。</li>
+            </ul>
+            <p><strong>上下游衔接</strong>：上游是分集资料 2.0 + 整体文献溯源中期锁定版；下游是节点 10（分集资料审核与终稿）。</p>
+          </div>
+        </div>
+      </div>
+      <div class="node-card" id="node-10">
+        <div class="node-head">
+          <span class="node-num">节点 10</span>
+          <h3 class="node-title">分集资料专家审核与终稿</h3>
+          <span class="node-tag tag-episode">分集资料</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>分集资料 3.0 完成、周三下班前一并发本批 3 集给专家。</dd>
+            <dt>对应 SOP</dt><dd><code>教研·分集资料制作SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd>人工完成，不调用审阅 Skill。</dd>
+            <dt>核心产出</dt><dd><code>{SKU名}·E{N}{标题}·分集资料【终稿】.md</code>（clean 版，发编剧组）；内部工作稿含专家反馈粘贴，留存备查。</dd>
+            <dt>关键交叉点</dt><dd>终稿交编剧导演后触发剧本创作；剧本终稿完成后才启动交互题环节。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>SOP 规定的完整节奏：3.0 周三发专家 → 专家周五下班前返回审核版（含反馈意见 + 专家填写的第三节背景信息） → 内部工作稿粘贴专家反馈并入第三节 → 根据反馈修改 → 搬运至 clean 终稿 → 周一将本批终稿一并发编剧、导演。</p>
+            <p>本节点的审核、过稿和专家意见处理均由教研人工完成，不作为默认流程调用审阅 Skill。<code>review-episode-content</code> 与 <code>review-content</code> 属于可独立使用的审阅工具，必要时可以另行调用，但不改变人工过稿流程。</p>
+            <p><strong>上下游衔接</strong>：上游是分集资料 3.0 + 专家审核版；下游是剧本创作和节点 11（交互题考查点）。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-title" id="stage-4">阶段四 · 交互卡片期</div>
+      <div class="node-card" id="node-11">
+        <div class="node-head">
+          <span class="node-num">节点 11</span>
+          <h3 class="node-title">交互题考查点筛选</h3>
+          <span class="node-tag tag-quiz">交互题</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>分集资料终稿和剧本终稿完成，且 SKU 大纲框架终稿已完成。</dd>
+            <dt>对应 SOP</dt><dd><code>教研·AI交互题出题SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd><code>select-question-points（交互题考查点筛选）</code></dd>
+            <dt>核心产出</dt><dd><code>E[N][标题]-交互考查点0.0.md</code>；经人工校准后升到 1.0 / 2.0 / 3.0 / 【终稿】。</dd>
+            <dt>关键交叉点</dt><dd>本环节发生在分集资料之后，基于分集资料中已经确定的每集情感目标，检查 4 个考查点或反馈语音是否承载对应目标；考查点在本阶段确定后，<code>design-questions</code>（交互题出题） 阶段<strong>不再改考查点</strong>——一个管「考什么」，一个管「怎么考」。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p><code>教研·AI交互题出题SOP.md</code> 把出题流程分四阶段：考查点筛选 → 出题初稿+迭代 → 定稿归档 → 版本演进复盘（可选）。它同时把 SKU1 实战经验（考查点具体化、无包含关系、剧本重点不遗漏、情感目标承载等 6 维度）固化进流程。</p>
+            <p><code>select-question-points</code>（交互题考查点筛选） 是 AI 出题手册第四章「设计流程」的<strong>前两步</strong>执行入口，三步产出：</p>
+            <ul>
+              <li><strong>第一步 · 定位与梳理</strong>：分析剧本呈现方式（重点演绎 / 旁白带过 / 未提及）、教学目标交叉验证、单集定位归纳、建立候选考查点清单（对照考查维度框架逐条筛）；</li>
+              <li><strong>第二步 · 评级与选题</strong>：按 P0 / P1 / P2 和认知层级评级 → 首轮 4 题选择 → 排序 → 情感目标呼应检查；</li>
+              <li><strong>第三步 · 输出</strong>：产出最终 4 个考查点，每个考查点标注答案、考查维度、认知层级、内容重要性、来源、考查目标。</li>
+            </ul>
+            <p>关键判断标准：考查点必须是<strong>一个明确的角度</strong>（如「变化」「方法」「工具」「启发」），不能是含混的整件事。</p>
+            <p><strong>上下游衔接</strong>：上游是剧本终稿 + 分集资料 + 大纲框架；下游是 <code>design-questions</code>（交互题出题）。</p>
+          </div>
+        </div>
+      </div>
+      <div class="node-card" id="node-12">
+        <div class="node-head">
+          <span class="node-num">节点 12</span>
+          <h3 class="node-title">交互题出题与终稿</h3>
+          <span class="node-tag tag-quiz">交互题</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>4 个考查点已经人工确认。</dd>
+            <dt>对应 SOP</dt><dd><code>教研·AI交互题出题SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd><code>design-questions（交互题出题）</code></dd>
+            <dt>核心产出</dt><dd><code>E[N][标题]-交互题0.0.md</code>（4 个考查点 × 每个 2 道题 = 8 道候选）→ 多轮修订 → <code>E[N][标题]-交互题【终稿】.md</code>。</dd>
+            <dt>关键交叉点</dt><dd>交互题终稿后转 HTML 需求文档（<code>上下五千年交互-html需求文档规范.md</code>），当前尚无专属 Skill，由人工执行。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>SOP 规定四阶段推进节奏，并把 SKU1 实战沉淀的 7 类质检维度（内核对齐 / 重点准确性 / 题干语言自然度 / 答案信息位置 / 题型多样性 / 制作可行性 / 文物典籍质感）固化为出题稿的自查清单。</p>
+            <p><code>design-questions</code>（交互题出题） 内部按六阶段执行：</p>
+            <ul>
+              <li><strong>Phase 0 · 对照出题手册自查</strong>：强制步骤，对照手册 9 条原则、题型推荐映射表、不推荐题型、跨场景使用规则、8 种趣味性策略，产出对照自查清单；</li>
+              <li><strong>Phase 1 · 开放思考 + 第一轮出题</strong>：每个考查点先自由发散 2–3 种方向，再回到题型库找最贴合的子题型；每考查点产出 1 推荐 + 1 备选（共 8 道）；</li>
+              <li><strong>Phase 2 · 推荐 / 备选比选</strong>：按 P0（题型合适 + 考查点准确）&gt; P1（题型丰富 + 趣味性高）&gt; P2（避免过于明显的跨集重复）三级优先级复核；</li>
+              <li><strong>Phase 3 · 全局质检</strong>：4 道推荐方案对照出题手册第七章 5 类清单 + P0/P1/P2 框架逐项检查；</li>
+              <li><strong>Phase 3.5 · 表述优化</strong>：逐题逐句朗读题干语音、选项、操作指令、反馈语音，检查操作指令是否符合常理、动词搭配、指代清晰、儿童认知友好、逻辑通顺；</li>
+              <li><strong>Phase 4 · 文档输出</strong>：每考查点 2 道题（推荐在前 / 备选在后），附 5 个附录。</li>
+            </ul>
+            <p><strong>上下游衔接</strong>：上游是考查点终稿 + 剧本终稿 + 分集资料；下游是交互题人工修订、专家审核和 HTML 需求文档。</p>
+          </div>
+        </div>
+      </div>
+      <div class="node-card" id="node-13">
+        <div class="node-head">
+          <span class="node-num">节点 13</span>
+          <h3 class="node-title">人物卡 / 典故卡（每 6 集一批）</h3>
+          <span class="node-tag tag-card">人物卡 / 典故卡</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>每 6 集<strong>剧本终稿</strong>完成后启动一批（E1–E6 一批、E7–E12 一批），不逐集零散做。</dd>
+            <dt>对应 SOP / 规范</dt><dd><code>RULES.md</code> 第七节 + <code>03-工具箱/卡片/卡片环节策划.md</code>（字段、字数、句式、分享海报规范）</dd>
+            <dt>对应 Skill</dt><dd><code>write-card-content（人物卡 / 典故卡文案撰写）</code></dd>
+            <dt>核心产出</dt><dd>卡片目录（阶段 1）+ 卡片文案（阶段 2）。</dd>
+            <dt>关键交叉点</dt><dd>身份等字段以<strong>剧本人名标签</strong>为首要依据（这是按批等剧本定稿的原因）；涉及世系、序数、称谓时仍要与史实核算并与剧本口径对齐。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>规范文档规定卡片是独立于正片的知识沉淀工具：孩子看完课程后解锁，把每集核心人物和典故沉淀成结构化卡片。字段约束、字数、句式、分享海报规范都以 <code>卡片环节策划.md</code> 为准。</p>
+            <p><code>write-card-content</code>（人物卡/典故卡文案撰写） 分两个阶段：</p>
+            <ul>
+              <li><strong>Phase 1 · 卡片目录</strong>：从分集资料知识目标表整理本批各集的人物卡 / 典故卡对象，按设卡原则（人物卡 1–2 张/集、典故卡 1–2 张/集）核对；产出目录后交教研确认；</li>
+              <li><strong>Phase 2 · 卡片文案</strong>：教研确认目录后逐卡撰写字段。人物卡字段：名称（含拼音注音） / 时代 / 身份（以剧本人名标签为准） / 配图 / 主要事迹（≤120 字含标点） / 一句话分享语（≤30 字）。典故卡字段：典故名称（含拼音） / 画面建议 / 出处（统一「出自《书名》」格式） / 典故内容（≤120 字，含故事本身 + 「史称『……』」+ 今义如有） / 一句话分享语。</li>
+            </ul>
+            <p><strong>严谨性铁律</strong>：只采信史料和教研稿，不写剧本的戏剧创编；同一人物的人物卡和典故卡要内容互补（典故卡侧重事件起承转合，人物卡侧重人物独特经历、性格反差、趣味细节）。</p>
+            <p><strong>上下游衔接</strong>：上游是本批 6 集的分集资料终稿 + 剧本终稿；无直接下游 Skill。</p>
+          </div>
+        </div>
+      </div>
+      <div class="node-card" id="node-14">
+        <div class="node-head">
+          <span class="node-num">节点 14</span>
+          <h3 class="node-title">内容版本演进复盘（可选）</h3>
+          <span class="node-tag tag-review">横向审阅与复盘</span>
+        </div>
+        <div class="node-body">
+          <dl class="node-meta">
+            <dt>启动时机</dt><dd>任一 SKU 的大纲、分集资料、交互题等内容产出终稿后，根据判断密度决定是否复盘（不是每次都做）。</dd>
+            <dt>对应 SOP</dt><dd><code>内容版本演进复盘-SOP.md</code></dd>
+            <dt>对应 Skill</dt><dd>无独立 Skill；由 AI 按 SOP 三段式 prompt 执行。</dd>
+            <dt>核心产出</dt><dd><code>{产出标识}-版本演进复盘.md</code> + 对应规范文档新增条目（❌反例 → ✅正例 格式）。</dd>
+            <dt>关键交叉点</dt><dd>复盘的落点是<strong>对应规范文档</strong>——交互题进《AI 出题手册》、分集资料进《分集资料规则补充》、大纲进对应大纲规范，不统一写进「出题手册」。</dd>
+          </dl>
+          <div class="node-desc">
+            <h5>SOP 与 Skill 分工</h5>
+            <p>SOP 规定复盘方法：</p>
+            <ul>
+              <li><strong>日常阶段</strong>：commit 节奏 = 判断节奏（有判断才 commit，微调攒一起）；</li>
+              <li><strong>定稿一刻</strong>：打 tag（<code>{产出标识}-完整版本档案-{YYYYMMDD}</code>）；</li>
+              <li><strong>复盘阶段</strong>：三段式 AI 对话——评估判断密度（挑出 3–4 版核心版本）→ 精细对比（每处修改用「修改 → 教研意图 → 适用场景」三段格式分析）→ 沉淀规律（提炼可加进规范文档的条目）；</li>
+              <li><strong>收口阶段</strong>：生成复盘 md，更新对应规范文档；</li>
+              <li><strong>整理阶段</strong>：终稿归位、过程稿全版本保留、复盘 md 独立目录。</li>
+            </ul>
+            <p>首次落地案例：E5 大禹治水交互题（<code>SKU1-史前与夏商周/交互题/复盘/E5大禹治水-版本演进复盘.md</code>），提炼出 4 条候选手册原则。</p>
+            <p><strong>上下游衔接</strong>：无独立上下游 Skill；作用于所有多轮迭代内容产出的收口环节。</p>
+          </div>
+        </div>
+      </div>
+      <h2 id="sec-3">三、统一规则底座</h2>
+      <p>以下规则近期做过整理，是所有 SOP 和 Skill 的共同底座，请对齐。</p>
+
+      <h3 id="rule-1">1. 项目基础文件</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>文件</th><th>作用</th></tr></thead>
+        <tbody>
+          <tr><td><code>README.md</code></td><td>项目背景、课程定位、工作流程和文件结构总览</td></tr>
+          <tr><td><code>RULES.md</code></td><td>统一命名、版本链、内容创作原则、分集资料规则、交互题和卡片最小衔接规则</td></tr>
+          <tr><td><code>GitLab协作指南.md</code></td><td>团队 GitLab 协作方式</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="rule-2">2. 五类核心教研文档</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>文档类型</th><th>定位</th><th>统一命名</th></tr></thead>
+        <tbody>
+          <tr><td>大纲简案</td><td>确定选什么故事及教学目标方向</td><td><code>上下五千年{N}·{SKU名}·大纲简案{版本}.md</code></td></tr>
+          <tr><td>大纲框架</td><td>确定每集完整梗概及教学目标</td><td><code>上下五千年{N}·{SKU名}·大纲框架{版本}.md</code></td></tr>
+          <tr><td>分集资料</td><td>单集教学目标、故事梗概及专家背景信息</td><td><code>{SKU名}·E{N}{标题}·分集资料{版本}.md</code></td></tr>
+          <tr><td>文献溯源</td><td>一个 SKU 的 12 集整体史料文献清单</td><td><code>{SKU名}-文献溯源{版本}.md</code></td></tr>
+          <tr><td>参考资料</td><td>与分集资料配套的单集史料和演绎参考</td><td><code>{SKU名}-E{N}{标题}-参考资料.md</code></td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>「分集资料」是统一正式名称；「单集教研内容」「大纲资料」只作为历史旧称兼容；</li>
+        <li>已有历史文件不追溯改名；后续新建文件和新版本按统一命名执行。</li>
+      </ul>
+      <h3 id="rule-3">3. 统一版本链</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>版本</th><th>定位</th><th>触发条件</th></tr></thead>
+        <tbody>
+          <tr><td><code>0.0</code></td><td>AI 稿</td><td>AI 基于 Skill 生成</td></tr>
+          <tr><td><code>1.0</code></td><td>初稿</td><td>教研人工校准后，用于内部第一次过稿</td></tr>
+          <tr><td><code>2.0</code></td><td>二稿</td><td>根据一稿意见修改后，用于内部第二次过稿</td></tr>
+          <tr><td><code>3.0</code></td><td>三稿</td><td>根据二稿意见修改、内部确定后，发送专家审核</td></tr>
+          <tr><td><code>【终稿】</code></td><td>最终定稿</td><td>根据专家意见完成修改后的 clean 版本</td></tr>
+        </tbody>
+      </table></div>
+      <p>补充约定：</p>
+      <ul>
+        <li>同一阶段只有细节微调时，使用 <code>1.1 / 1.2</code>、<code>2.1 / 2.2</code> 等点位版本；</li>
+        <li>点位版本不代表新的流程节点，不要为了「补齐版本号」机械升版；</li>
+        <li><code>0.0 → 【终稿】</code> 的所有版本必须完整保留；</li>
+        <li>参考资料一般不标版本号；</li>
+        <li>终稿后再次修改，在 <code>【终稿】</code> 后加日期，不新增 <code>4.0</code>。</li>
+      </ul>
+
+      <h3 id="rule-4">4. 文献溯源与参考资料的边界</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>项目</th><th>文献溯源</th><th>单集参考资料</th></tr></thead>
+        <tbody>
+          <tr><td>文档层级</td><td>SKU 整体</td><td>单集配套</td></tr>
+          <tr><td>内容</td><td>12 集整体核心史料原文和译文</td><td>本集使用史料 + 演绎参考</td></tr>
+          <tr><td>文件名</td><td><code>{SKU名}-文献溯源{版本}.md</code></td><td><code>{SKU名}-E{N}{标题}-参考资料.md</code></td></tr>
+          <tr><td>是否标版本</td><td>标版本</td><td>一般不标版本</td></tr>
+        </tbody>
+      </table></div>
+      <p>关键规则：</p>
+      <ul>
+        <li>分集资料正文的「参考资料」栏目统一只放链接或阶段占位；</li>
+        <li>分集资料 0.0 / 1.0 阶段只放占位；</li>
+        <li>分集资料进入约 2.0 后，才生成单集参考资料；</li>
+        <li>单集参考资料独立维护，不回写整体文献溯源。</li>
+      </ul>
+      <h3 id="rule-5">5. 交互题的统一底座</h3>
+      <p>交互题的完整规范不在 SOP 里，而在两份规范文档 + 两个 Skill + 一个 SOP：</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>文件</th><th>作用</th></tr></thead>
+        <tbody>
+          <tr><td><code>教研·AI交互题出题SOP.md</code></td><td>管流程：何时启动、怎么过稿、怎么归档</td></tr>
+          <tr><td><code>select-question-points</code>（交互题考查点筛选）</td><td>管「考什么」：筛 4 个考查点</td></tr>
+          <tr><td><code>design-questions</code>（交互题出题）</td><td>管「怎么考」：为 4 个考查点设计题目</td></tr>
+          <tr><td><code>AI出题手册</code></td><td>管出题原则、质检标准、产出模板</td></tr>
+          <tr><td><code>百科题型库</code></td><td>管题型编号、技术规格、可用题型</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="rule-6">6. 卡片与时间轴的统一底座</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>模块</th><th>规范文件</th><th>当前 Skill 状态</th></tr></thead>
+        <tbody>
+          <tr><td>人物卡 / 典故卡</td><td><code>卡片环节策划.md</code></td><td>有 <code>write-card-content</code>（人物卡/典故卡文案撰写）</td></tr>
+          <tr><td>时间轴工具</td><td><code>时间轴工具策划.md</code></td><td>当前未见专属 Skill</td></tr>
+        </tbody>
+      </table></div>
+      <p>卡片入口来自分集资料知识目标表；时间轴节点应体现历史大事件和历史节点，而不是具体故事细节。</p>
+
+      <h2 id="sec-appendix">附录 · SOP / Skill 索引</h2>
+      <p class="appendix-note">用作快速查阅入口；每份 SOP / Skill 的详细内容参见对应文档。</p>
+
+      <h3>SOP 索引</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>文件</th><th>定位</th></tr></thead>
+        <tbody>
+          <tr><td><code>教研·AI大纲制作SOP.md</code></td><td>大纲策划总流程：故事选取、简案、文献溯源前置、完整大纲、评审发出</td></tr>
+          <tr><td><code>文献溯源协作SOP.md</code></td><td>文献溯源两阶段流程：前置生成、大纲对照修订；另含可选复盘</td></tr>
+          <tr><td><code>教研·分集资料制作SOP.md</code></td><td>分集资料生产节奏、过稿、专家审核、终稿交接</td></tr>
+          <tr><td><code>教研·AI交互题出题SOP.md</code></td><td>交互题从考查点到终稿的完整协作流程</td></tr>
+          <tr><td><code>内容版本演进复盘-SOP.md</code></td><td>多版本内容复盘、git tag、规则沉淀流程</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Skill 索引</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Skill</th><th>中文名称</th><th>定位</th></tr></thead>
+        <tbody>
+          <tr><td><code>select-history-stories</code></td><td>故事选取</td><td>故事选取、IMA 交叉比较、12 集方案建议</td></tr>
+          <tr><td><code>write-outline-brief</code></td><td>大纲简案</td><td>根据已确认故事方案写大纲简案</td></tr>
+          <tr><td><code>write-source-tracing</code></td><td>文献溯源初版</td><td>大纲简案定稿后生成文献溯源 0.0</td></tr>
+          <tr><td><code>write-outline-framework</code></td><td>完整大纲框架</td><td>根据简案和文献溯源前期锁定版写完整大纲</td></tr>
+          <tr><td><code>revise-source-tracing</code></td><td>文献溯源修订</td><td>根据完整大纲对照修订整体文献溯源</td></tr>
+          <tr><td><code>write-episode-content</code></td><td>分集资料撰写</td><td>写分集资料和单集参考资料</td></tr>
+          <tr><td><code>review-episode-content</code></td><td>分集资料审阅</td><td>可独立调用的分集资料审阅工具，不属于默认人工过稿流程</td></tr>
+          <tr><td><code>select-question-points</code></td><td>交互题考查点筛选</td><td>筛选交互题 4 个考查点</td></tr>
+          <tr><td><code>design-questions</code></td><td>交互题出题</td><td>基于考查点设计交互题推荐 / 备选方案</td></tr>
+          <tr><td><code>write-card-content</code></td><td>人物卡 / 典故卡文案撰写</td><td>撰写人物卡、典故卡目录和文案</td></tr>
+          <tr><td><code>review-content</code></td><td>通用内容审阅</td><td>可独立调用的通用审阅工具，不属于默认人工过稿流程</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="version-log">版本记录</h2>
+      <div class="table-scroll"><table>
+        <thead><tr><th>版本</th><th>日期</th><th>变更说明</th></tr></thead>
+        <tbody>
+          <tr><td>2.1</td><td>2026-07-24</td><td>同步大纲阶段与分集资料阶段的情感目标口径；明确简案、完整大纲和分集资料审核/过稿均由教研人工完成，不作为默认流程调用审阅 Skill；统一文献溯源调整术语；删除分集资料定稿后的整体文献溯源收口流程。</td></tr>
+          <tr><td>2.0</td><td>2026-07-20</td><td>建立项目流程与 SOP / Skill 的整体分享稿，按时间线整理节点、输入、产出、上下游和工具索引。</td></tr>
+        </tbody>
+      </table></div>
+    </article>
+    <div class="footer-note">2026-07-24｜项目流程与 SOP / Skill 分享稿 · 2.1 版</div>
+  </main>
+</div>
+</body>
+</html>
