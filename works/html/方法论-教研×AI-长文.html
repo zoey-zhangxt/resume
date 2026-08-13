@@ -4,7 +4,390 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>教研 × AI：将教研流程改造成 AI 协作系统 · 张秀婷 Zoey Zhang</title>
-<link rel="stylesheet" href="_doc-style.css">
+<style>
+/* ========== 教研稿通用阅读样式（参照大纲框架终稿） ========== */
+:root {
+  --c-bg: #fdfaf3;
+  --c-card: #ffffff;
+  --c-border: #e6dfcf;
+  --c-table-border: #c9b48a;
+  --c-text: #2c2820;
+  --c-muted: #6b6358;
+  --c-accent: #b3201d;
+  --c-accent-soft: #f8e5d8;
+  --c-th: #a8442a;
+  --c-quote-bg: #fbf3ea;
+  --c-quote-border: #d4a373;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--c-text);
+  background: var(--c-bg);
+  letter-spacing: 0;
+  word-spacing: 0;
+}
+main {
+  max-width: 960px;
+  margin: 32px auto;
+  padding: 48px 56px 88px;
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+}
+main.wide { max-width: 1200px; }
+
+/* 顶部返回条 */
+.return-bar {
+  position: sticky; top: 0; z-index: 9999;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(74,144,217,.2);
+  padding: 10px 20px;
+  font-size: 14px;
+}
+.return-bar a { color: #2c5282; text-decoration: none; font-weight: 500; }
+.return-bar .sep { color: #94a3b8; margin: 0 10px; }
+.return-bar .name { color: #64748b; }
+
+/* 标题 */
+h1 {
+  font-size: 1.9em;
+  margin: 1em 0 0.8em;
+  padding-bottom: 0.4em;
+  border-bottom: 3px double var(--c-accent);
+  color: var(--c-accent);
+  letter-spacing: 1px;
+}
+h1:first-of-type { margin-top: 0; }
+h2 {
+  font-size: 1.45em;
+  margin: 1.4em 0 0.6em;
+  padding-left: 14px;
+  border-left: 5px solid var(--c-accent);
+  color: var(--c-th);
+}
+h3 {
+  font-size: 1.2em;
+  margin: 1.3em 0 0.5em;
+  color: var(--c-th);
+}
+
+/* 知识讲解小标题（三国稿：曲折法 / 多智近妖... / 赤壁之战 / 两个赤壁） */
+h3.kp-title {
+  font-size: 1.35em;
+  margin: 1.8em 0 0.6em;
+  padding: 6px 14px;
+  color: var(--c-accent);
+  background: linear-gradient(90deg, var(--c-accent-soft), transparent 80%);
+  border-left: 4px solid var(--c-accent);
+  border-radius: 3px 0 0 3px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+h4 {
+  font-size: 1.05em;
+  margin: 1.1em 0 0.4em;
+  color: var(--c-muted);
+}
+
+/* 段落 */
+p { margin: 0.6em 0; text-align: justify; }
+strong { color: var(--c-accent); font-weight: 700; }
+em { color: var(--c-muted); }
+
+/* 列表 */
+ul, ol { padding-left: 1.4em; margin: 0.6em 0; }
+li { margin: 0.4em 0; }
+li > p { margin: 0.2em 0; }
+
+/* 引用 */
+blockquote {
+  background: var(--c-quote-bg);
+  border-left: 4px solid var(--c-quote-border);
+  padding: 12px 20px;
+  margin: 1.1em 0;
+  color: var(--c-muted);
+  border-radius: 0 6px 6px 0;
+}
+blockquote p { margin: 0.3em 0; }
+
+/* 表格 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.95em;
+}
+th, td {
+  border: 1px solid var(--c-table-border);
+  padding: 8px 12px;
+  vertical-align: top;
+}
+th {
+  background: var(--c-accent-soft);
+  color: var(--c-th);
+  font-weight: 700;
+  text-align: left;
+}
+tr:nth-child(even) td { background: rgba(248, 229, 216, .18); }
+
+/* 图片 */
+figure {
+  margin: 1.4em auto;
+  text-align: center;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 3px 14px rgba(80, 60, 30, .12);
+  border: 1px solid var(--c-border);
+}
+figcaption {
+  color: var(--c-muted);
+  font-size: 0.9em;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* 代码 */
+code {
+  background: rgba(179, 32, 29, .08);
+  color: var(--c-accent);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.92em;
+  font-family: "SF Mono", Consolas, "Courier New", monospace;
+}
+pre {
+  background: #faf7ef;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  padding: 14px 18px;
+  overflow-x: auto;
+}
+pre code { background: none; color: var(--c-text); padding: 0; }
+
+/* 分割线 */
+hr {
+  border: none;
+  border-top: 1px dashed var(--c-border);
+  margin: 2em 0;
+}
+
+/* ========== 字符级颜色（分集资料 · 教研稿） ========== */
+.c-narration { color: #19439C; font-weight: 500; }   /* 蓝 · 关键旁白 */
+.c-core      { color: #BE1A1D; font-weight: 500; }   /* 红 · 核心剧情 */
+.c-noncore   { color: #E67300; font-weight: 500; }   /* 橙 · 非核心剧情 */
+.c-supp      { color: #7B7F83; }                     /* 灰 · 补充剧情 */
+.c-note      { color: #7B7F83; }                     /* 浅灰说明 */
+.c-scene     { color: #4A8FCA; font-weight: 500; }   /* 三国稿 · 画面 */
+
+.b { font-weight: 700; }
+.i { font-style: italic; }
+
+/* 灰色高亮（原 Word 里的刷色） → 淡黄底 */
+.hl {
+  background: #fff3c4;
+  padding: 1px 3px;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* ========== 【故事主线】卡片 ========== */
+.story-line {
+  background: linear-gradient(135deg, #fef4dc, #f9ead0);
+  border-left: 4px solid var(--c-accent);
+  border-radius: 6px;
+  padding: 18px 24px;
+  margin: 1.4em 0 1em;
+  box-shadow: 0 2px 8px rgba(179, 32, 29, .06);
+}
+.story-line .sl-label {
+  color: var(--c-accent);
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+.story-line .sl-body {
+  color: var(--c-text);
+  line-height: 1.85;
+  margin: 0;
+  text-align: justify;
+}
+
+/* ========== 图例小条（关键旁白 / 核心剧情 / 非核心 / 补充） ========== */
+.legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 20px;
+  padding: 14px 20px;
+  margin: 12px 0 20px;
+  background: #faf6ec;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.lg-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.lg-item b { font-weight: 600; }
+.lg-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transform: translateY(-1px);
+}
+.lg-item.c-narration .lg-dot { background: #19439C; }
+.lg-item.c-core      .lg-dot { background: #BE1A1D; }
+.lg-item.c-noncore   .lg-dot { background: #E67300; }
+.lg-item.c-supp      .lg-dot { background: #7B7F83; }
+
+/* ========== 演绎注意 · callout ========== */
+.note-box {
+  background: #f4f7fb;
+  border: 1px solid #d9e2ec;
+  border-left: 3px solid #6b8cae;
+  border-radius: 6px;
+  padding: 16px 22px;
+  margin: 1.6em 0;
+  color: var(--c-muted);
+  font-size: 14.5px;
+}
+.note-box .nb-head {
+  font-weight: 600;
+  color: #4a6a8f;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+.note-box .nb-list {
+  margin: 0;
+  padding-left: 22px;
+}
+.note-box .nb-list li {
+  margin: 6px 0;
+  line-height: 1.75;
+  color: var(--c-muted);
+}
+/* 演绎注意里的 span 颜色也用中性色（避免和正文剧情颜色混淆） */
+.note-box .nb-list li span { color: inherit !important; font-weight: inherit !important; font-style: normal !important; }
+
+/* 移动端 */
+@media (max-width: 720px) {
+  main { padding: 24px 20px 60px; margin: 12px; }
+  .skill-flow { grid-template-columns: 1fr 1fr !important; }
+  .layer-label { font-size: 1.1em !important; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.2em; }
+  body { font-size: 15px; }
+  .legend { grid-template-columns: 1fr; }
+}
+
+/* ========== 方法论专用：三层小标签 ========== */
+.layer-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2em 0 0.8em;
+  font-size: 1.25em;
+  color: var(--c-th);
+  font-weight: 700;
+}
+.layer-tag {
+  display: inline-block;
+  padding: 4px 14px;
+  background: var(--c-accent);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+
+/* 例子加粗标红 */
+.c-example {
+  color: var(--c-accent);
+  font-weight: 700;
+  background: linear-gradient(180deg, transparent 55%, rgba(179, 32, 29, .12) 55%);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* SKILL 分节标题（比 h4 更醒目） */
+.skill-section-h {
+  font-size: 1.18em;
+  color: var(--c-th);
+  margin: 1.4em 0 0.5em;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* 5 步骤 SKILL 清单 */
+.skill-flow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin: 14px 0 22px;
+  padding: 20px 18px;
+  background: linear-gradient(135deg, #fef4dc, #faf0d8);
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+}
+.skill-step {
+  padding: 12px 10px;
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  text-align: center;
+  position: relative;
+}
+.skill-step .n {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--c-accent);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+.skill-step .code {
+  font-family: "SF Mono", Consolas, "Courier New", monospace;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--c-accent);
+  margin-bottom: 4px;
+  word-break: break-all;
+  line-height: 1.35;
+}
+.skill-step .desc {
+  font-size: 12px;
+  color: var(--c-muted);
+  line-height: 1.5;
+}
+.skill-step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -9px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--c-accent);
+  font-weight: 700;
+  z-index: 2;
+}
+</style>
 </head>
 <body>
 <div class="return-bar">
@@ -14,7 +397,23 @@
 </div>
 <main class="">
 <h1>教研 × AI：将教研流程改造成 AI 协作系统</h1>
-<h2>一、教研工作里最"贵"的部分，往往是看不见的</h2><p>作为一名教育工作者，我做了 6 年内容教研，从公考申论到初高中语文，再到现在的文史动画课程。教研这份工作有一个反直觉的规律：<span class="b">真正决定内容质量的，不是"写"这一步，而是"判断"这一步</span>。</p><p>判断"这个故事该不该选给孩子听"，判断"这个知识点讲到什么深度合适"，判断"这个考查点是不是能命中主线剧情"，判断"专家的这条修改意见要不要接受"。这些判断散落在教研的每一次改稿里，长在每一位有经验的教研脑子里，很难写下来，也很难传递。</p><p>结果就是几个典型痛点：</p><p><span class="b">新人上手慢。</span> 一份内容规范手册解决不了"如何判断"这件事，新人只能跟着老教研摸索半年一年。</p><p><span class="b">多人协作难对齐。</span> 同一个"儿童友好"的原则，每个人执行出来是不一样的。</p><p><span class="b">AI 用得浅。</span> 大部分教研用 AI，就是把 ChatGPT / Claude 当作"更强的搜索引擎"或者"文字润色工具"，本质上还是套壳式使用，没有触及流程本身。</p><p><span class="b">一次性劳动。</span> 每次修改背后的教研判断都留在个人经验里，下一份内容还得重新踩一遍坑。</p><p>近两年，AI飞速迭代发展，AI协作成为各行业探索的主流。我入职猿辅导后接手的第一件系统性工作，就是回答一个问题：<span class="b">能不能让 AI 从"辅助的工具"变成"协作的系统"？</span></p><h2>二、让人和 AI 在同一套规则下工作</h2><p>我做的这套系统，服务于「上下五千年」这个面向 5 到 9 岁儿童的文史动画课程。项目规模不小：<span class="b">8 个历史时期 SKU、96 集动画视频、5 类核心教研文档</span>，需要多人长期协作。</p><p>一开始我也走过弯路，试图给 AI 写越来越复杂的 Prompt，试图让 AI 一次生成越来越完美的内容。走了一圈发现这个方向的天花板很低。</p><p>真正让整个流程跑起来的，是一个更朴素的判断：</p><p><span class="b">AI 化的关键，不是让 AI 替代人，而是让人和 AI 在同一套规则下工作。</span></p><p><span class="b">规则如果只在教研脑子里，AI 就永远只是外部工具。规则如果被显性地写出来，AI 就能作为一个"读得懂规则的协作方"参与到流程中来。</span></p><p>围绕这个判断，我搭了三层结构。</p><h2>三、三层结构：SOP / SKILL / 版本链</h2><p>第一层：把工作流拆成 SOP，让流程可见</p><p>SOP 处理"人和 AI 怎么协作"这件事。它不讲 AI 具体怎么做，只讲：一个教研节点从上游拿什么、出什么、给下游什么、每一步谁负责、什么时候切换到下一步。</p><p>我给「上下五千年」写了 <span class="b">6 份 SOP</span>：</p><table><tbody><tr class="odd"><td><p>SOP</p></td><td><p>定位</p></td></tr><tr class="even"><td><p>教研·AI 大纲制作 SOP</p></td><td><p>从「故事选取」到「大纲终稿」的完整流程</p></td></tr><tr class="odd"><td><p>教研·分集资料制作 SOP</p></td><td><p>一批 3 集、四周写完的节奏化生产</p></td></tr><tr class="even"><td><p>教研·AI 交互题出题 SOP</p></td><td><p>考查点筛选 → 出题 → 定稿归档</p></td></tr><tr class="odd"><td><p>文献溯源协作 SOP</p></td><td><p>SKU 整体文献史料的三阶段推进</p></td></tr><tr class="even"><td><p>内容版本演进复盘 SOP</p></td><td><p>把每次修改判断变成可沉淀的规则条目</p></td></tr><tr class="odd"><td><p>项目流程与 SOP-Skill 概览</p></td><td><p>全流程串联，新人入项目的入口</p></td></tr></tbody></table><p>以<span class="b">「大纲制作 SOP」为例</span>，它把大纲工作切成四个阶段十一个步骤：<span class="b">大纲简案期 → 大纲框架期 → 审核定稿与交付 → 复盘（可选）</span>。每一步都明确了 AI 在做什么、教研在做什么、上下游节点如何衔接。</p><p>再举一个"节奏化生产"的例子：「<span class="b">教研·分集资料制作 SOP」</span>。它面对的挑战不是"这一集怎么写"，而是"96 集怎么在多人协作下持续按节奏产出"。核心设计是把节奏时间盒化：</p><p><span class="b">撰写节奏</span>：一周写 3 集（E1-3 → E4-6 → E7-9 → E10-12）</p><p><span class="b">过稿节奏</span>：AI 生成 0.0 → 教研校准 1.0 → 内部过稿2.0 3.0 → 发专家</p><p><span class="b">专家节奏</span>：周三下班前发本批 3 集给专家，周五下班前返稿</p><p><span class="b">交接节奏</span>：周五返稿后教研整理反馈 → 周一将本批终稿一并发编剧、 导演</p><p>一个 SKU 12 集完整周期是"4 周写完 + 2-3 周审校交接"，每个时间点都对应明确的交付物与责任人。</p><p>当规模从"一集"跨越到"96 集"，个人经验驱动的节奏一定会崩；只有把节奏做成 SOP，多人协作才可能持续跑起来。<span class="b">SOP 不只让流程可见，还让节奏可管理。</span></p><p>这一层的价值在于：<span class="b">教研的隐性节奏被外显化了</span>。新人不再需要花半年时间琢磨"什么时候该动大纲、什么时候该联系专家"，他们可以直接读 SOP 上手。</p><p>第二层：把 AI 的操作固化成 SKILL，让执行可复用</p><p><span class="b">SOP 是流程手册，SKILL 是 AI 在这个节点的操作手册，</span>处理"AI 在每个节点具体怎么做"这件事。</p><p>我写了 <span class="b">11 个 AI SKILL</span>，覆盖教研主流程的每一个节点：</p><p><span class="b">主流程 5 步：</span></p><p>举个例子，write-episode-content （分集资料教研稿撰写）这个 SKILL 里明确写了：<span class="b">"史实可靠、主线清楚、儿童友好、方便演绎"</span>这四个核心目标，以及分集资料应该分成<span class="b">"教学目标、故事梗概、背景信息、参考资料"</span>四节的写作规范。AI 每一次生成分集资料，都是在这份规则下工作。</p><p>再举一个"判断密度"更高的例子：design-questions（单集交互题出题）。它要在 4 道题里同时满足题型合适、题型多样、趣味性、跨集不重复等多重约束。这个 SKILL 最核心的设计不是生成模板，而是一份<span class="b">三级优先级 框架</span>：</p><p><span class="b">P0 最高优先级</span>：题型必须能 embody 考查点核心，考查点不能跑偏</p><p><span class="b">P1 硬指标</span>：4 道题至少覆盖 2 个题型大类、不得重复子题型、趣味性不靠动效凑</p><p><span class="b">P2 软约束</span>：避免"位置×题型相同"或"题型组合反复"</p><p>框架里带真实反例。比如 E5《大禹治水》Q1，3.0 版用连线题（鲧↔堵、禹↔疏），P0 合适但趣味不够，且连线只能表达静态对应，承载不了"鲧失败→禹改方法→成功"的因果转折。4.0 改成分步拖拽，让孩子亲历两步切换。这条"❌反例→✅正例"就被写进了 SKILL 本身，下一次 AI 出题时会自动避开同样的坑。</p><p><span class="b">SOP 决定"人和 AI 怎么走"，SKILL 决定"AI 走的时候踩在哪里"。两者相互支撑，缺一不可。</span></p><p>第三层：用版本链和复盘沉淀判断，让判断可积累</p><p>有了 SOP 和 SKILL，流程和操作都可复用了。但还有一件事没解决：<span class="b">教研的判断本身，如何积累？</span></p><p>我们的做法是给所有教研产出加一条<span class="b">统一版本链</span>：</p><p><span class="b">0.0（AI 稿）→ 1.0（初稿）→ 2.0（二稿）→ 3.0（三稿，发专家）→ 4.0（终稿）</span></p><p>每一个版本都完整保留在 git 里，每一次修改都对应一次 commit。这样每一份内容的"演进轨迹"都是可追溯的。</p><p>然后我写了一份最特别的 SOP —— <span class="b">内容版本演进复盘 SOP</span>。它的核心动作是：</p><p>用 git diff + AI 对话，把两个版本之间的修改<span class="b">逆向拆出"教研为什么这么改</span>"，沉淀成"❌反例 → ✅正例"格式的规则条目，写入对应的规范文档。 </p><p>首次落地是在 SKU1 的《大禹治水》交互题上。我们从 0.0 到终稿的多次迭代里，提炼出了 20 多条可复用的出题规律，直接写进了《AI 出题手册》。下一次别人再出交互题，AI 会读这份手册，同样的错就不会再犯第二次。</p><p><span class="b">这一层，把教研的隐性判断变成了"团队资产"。它是这个系统最独特、也是最有生命力的部分。</span></p><h2>四、这套系统跑起来之后</h2><p>「上下五千年」项目目前完成了 SKU1 到 SKU4 的部分推进：SKU2 春秋战国 12 集分集资料已定稿，SKU1 的 E1、E6 剧本与交互题 demo 也已产出。</p><p>从个人体感上，这套系统带来了几个明显的变化：</p><p><span class="b">新人上手门槛显著降低。</span> 我的同事新接手 SKU 时，读一遍 SOP 和 SKILL 大纲，就能开始动手，不再需要长时间的手把手带教。</p><p><span class="b">AI 用得更深。</span> AI 不再是"帮我润色一下""帮我查一下"这种碎片式使用，而是能承担从故事选取到大纲、分集资料、交互题、卡片的完整节点。教研的精力从"生成"回到了"判断"。</p><p><span class="b">内容质量有了下限保障。</span> 因为规则显性化了，即使不同人执行，产出的下限稳定。上限依然由教研的专业判断决定。</p><p><span class="b">教研经验开始复利。</span> 每一次改稿都不再是"个人技能提升"，而是"团队资产积累"。半年前学会的判断，半年后新人可以直接读到。</p><h2>五、教研 × AI 的本质</h2><p>做完这套系统，我对"教研 × AI"有几个越来越清晰的判断。</p><p><span class="b">第一，AI 不会替代教研，但不会用 AI 的教研会被替代。</span> 教研的核心价值是判断"教什么、怎么教、教到什么程度"，这件事 AI 做不了 —— 因为它需要教育经验、需要感知孩子的理解水平、需要对内容的伦理判断。但如果教研继续用 5 年前的方式工作，把大量时间花在"查资料、写初稿、格式规范"这些 AI 能做的事上，被替代只是时间问题。</p><p><span class="b">第二，AI 化的关键不在工具，在于流程。</span> 换更强的 AI 模型能提升 5% 的效率，把工作流改造成 AI 可协作的系统能提升 50%。前者是买设备，后者是修铁路。</p><p><span class="b">第三，教育内容生产可以工业化，但底层依然是匠心。</span> SOP 和 SKILL 让工业化成为可能，让 96 集课程的品控有稳定下限。但让课程真正好看好听、让孩子愿意继续学下去，依然依赖教研一次次的"我觉得这里不对"的直觉判断。工业化解决的是下限，匠心决定上限。</p><p><span class="b">这套系统还在迭代中。</span> 8 个 SKU 完成了前 4 个的推进，SOP 从 3 份长到 6 份，SKILL 从 5 个长到 11 个。短期目标是把所有教研节点都跑通标准化流程；长期，我更好奇的是：当教育内容生产可以像软件工程一样被系统化组织，它会打开哪些今天想不到的可能性。</p><p>—— 这个问题，值得再花五年去回答。</p>
+<h2>一、教研工作里最"贵"的部分，往往是看不见的</h2><p>作为一名教育工作者，我做了 6 年内容教研，从公考申论到初高中语文，再到现在的文史动画课程。教研这份工作有一个反直觉的规律：<span class="b">真正决定内容质量的，不是"写"这一步，而是"判断"这一步</span>。</p><p>判断"这个故事该不该选给孩子听"，判断"这个知识点讲到什么深度合适"，判断"这个考查点是不是能命中主线剧情"，判断"专家的这条修改意见要不要接受"。这些判断散落在教研的每一次改稿里，长在每一位有经验的教研脑子里，很难写下来，也很难传递。</p><p>结果就是几个典型痛点：</p><p><span class="b">新人上手慢。</span> 一份内容规范手册解决不了"如何判断"这件事，新人只能跟着老教研摸索半年一年。</p><p><span class="b">多人协作难对齐。</span> 同一个"儿童友好"的原则，每个人执行出来是不一样的。</p><p><span class="b">AI 用得浅。</span> 大部分教研用 AI，就是把 ChatGPT / Claude 当作"更强的搜索引擎"或者"文字润色工具"，本质上还是套壳式使用，没有触及流程本身。</p><p><span class="b">一次性劳动。</span> 每次修改背后的教研判断都留在个人经验里，下一份内容还得重新踩一遍坑。</p><p>近两年，AI飞速迭代发展，AI协作成为各行业探索的主流。我入职猿辅导后接手的第一件系统性工作，就是回答一个问题：<span class="b">能不能让 AI 从"辅助的工具"变成"协作的系统"？</span></p><h2>二、让人和 AI 在同一套规则下工作</h2><p>我做的这套系统，服务于「上下五千年」这个面向 5 到 9 岁儿童的文史动画课程。项目规模不小：<span class="b">8 个历史时期 SKU、96 集动画视频、5 类核心教研文档</span>，需要多人长期协作。</p><p>一开始我也走过弯路，试图给 AI 写越来越复杂的 Prompt，试图让 AI 一次生成越来越完美的内容。走了一圈发现这个方向的天花板很低。</p><p>真正让整个流程跑起来的，是一个更朴素的判断：</p><p><span class="b">AI 化的关键，不是让 AI 替代人，而是让人和 AI 在同一套规则下工作。</span></p><p><span class="b">规则如果只在教研脑子里，AI 就永远只是外部工具。规则如果被显性地写出来，AI 就能作为一个"读得懂规则的协作方"参与到流程中来。</span></p><p>围绕这个判断，我搭了三层结构。</p><h2>三、三层结构：SOP / SKILL / 版本链</h2><div class="layer-label"><span class="layer-tag">第一层</span>把工作流拆成 SOP，让流程可见</div><p>SOP 处理"人和 AI 怎么协作"这件事。它不讲 AI 具体怎么做，只讲：一个教研节点从上游拿什么、出什么、给下游什么、每一步谁负责、什么时候切换到下一步。</p><p>我给「上下五千年」写了 <span class="b">6 份 SOP</span>：</p><table><tbody><tr class="odd"><td><p>SOP</p></td><td><p>定位</p></td></tr><tr class="even"><td><p>教研·AI 大纲制作 SOP</p></td><td><p>从「故事选取」到「大纲终稿」的完整流程</p></td></tr><tr class="odd"><td><p>教研·分集资料制作 SOP</p></td><td><p>一批 3 集、四周写完的节奏化生产</p></td></tr><tr class="even"><td><p>教研·AI 交互题出题 SOP</p></td><td><p>考查点筛选 → 出题 → 定稿归档</p></td></tr><tr class="odd"><td><p>文献溯源协作 SOP</p></td><td><p>SKU 整体文献史料的三阶段推进</p></td></tr><tr class="even"><td><p>内容版本演进复盘 SOP</p></td><td><p>把每次修改判断变成可沉淀的规则条目</p></td></tr><tr class="odd"><td><p>项目流程与 SOP-Skill 概览</p></td><td><p>全流程串联，新人入项目的入口</p></td></tr></tbody></table><p>以<span class="b c-example">「大纲制作 SOP」</span>为例，它把大纲工作切成四个阶段十一个步骤：<span class="b">大纲简案期 → 大纲框架期 → 审核定稿与交付 → 复盘（可选）</span>。每一步都明确了 AI 在做什么、教研在做什么、上下游节点如何衔接。</p><p>再举一个"节奏化生产"的例子：<span class="b c-example">「教研·分集资料制作 SOP」</span>。它面对的挑战不是"这一集怎么写"，而是"96 集怎么在多人协作下持续按节奏产出"。核心设计是把节奏时间盒化：</p><p><span class="b">撰写节奏</span>：一周写 3 集（E1-3 → E4-6 → E7-9 → E10-12）</p><p><span class="b">过稿节奏</span>：AI 生成 0.0 → 教研校准 1.0 → 内部过稿2.0 3.0 → 发专家</p><p><span class="b">专家节奏</span>：周三下班前发本批 3 集给专家，周五下班前返稿</p><p><span class="b">交接节奏</span>：周五返稿后教研整理反馈 → 周一将本批终稿一并发编剧、 导演</p><p>一个 SKU 12 集完整周期是"4 周写完 + 2-3 周审校交接"，每个时间点都对应明确的交付物与责任人。</p><p>当规模从"一集"跨越到"96 集"，个人经验驱动的节奏一定会崩；只有把节奏做成 SOP，多人协作才可能持续跑起来。<span class="b">SOP 不只让流程可见，还让节奏可管理。</span></p><p>这一层的价值在于：<span class="b">教研的隐性节奏被外显化了</span>。新人不再需要花半年时间琢磨"什么时候该动大纲、什么时候该联系专家"，他们可以直接读 SOP 上手。</p><div class="layer-label"><span class="layer-tag">第二层</span>把 AI 的操作固化成 SKILL，让执行可复用</div><p><span class="b">SOP 是流程手册，SKILL 是 AI 在这个节点的操作手册，</span>处理"AI 在每个节点具体怎么做"这件事。</p><p>我写了 <span class="b">11 个 AI SKILL</span>，覆盖教研主流程的每一个节点：</p><h4 class="skill-section-h">主流程 5 步：</h4>
+<table><tbody>
+  <tr class="odd"><td><p><span class="c-example">select-history-stories</span></p></td><td><p>故事选取，AI 先出 20 到 25 个候选清单，教研筛选</p></td></tr>
+  <tr class="even"><td><p><span class="c-example">write-outline-brief</span></p></td><td><p>大纲简案生成</p></td></tr>
+  <tr class="odd"><td><p><span class="c-example">write-outline-framework</span></p></td><td><p>大纲框架生成</p></td></tr>
+  <tr class="even"><td><p><span class="c-example">write-episode-content</span></p></td><td><p>分集资料生成</p></td></tr>
+  <tr class="odd"><td><p><span class="c-example">design-questions</span> + <span class="c-example">select-question-points</span></p></td><td><p>交互题考查点筛选与出题</p></td></tr>
+  <tr class="even"><td><p><span class="c-example">write-card-content</span></p></td><td><p>人物卡 / 典故卡文案</p></td></tr>
+</tbody></table>
+
+<h4 class="skill-section-h">辅助与审阅：</h4>
+<table><tbody>
+  <tr class="odd"><td><p><span class="c-example">write-source-tracing</span> / <span class="c-example">revise-source-tracing</span></p></td><td><p>文献溯源生成与修订</p></td></tr>
+  <tr class="even"><td><p><span class="c-example">review-content</span> / <span class="c-example">review-episode-content</span></p></td><td><p>通用审阅 + 分集资料专项审阅</p></td></tr>
+</tbody></table>
+
+<p>举个例子，<span class="c-example">write-episode-content</span>（分集资料教研稿撰写）这个 SKILL 里明确写了：<span class="b">"史实可靠、主线清楚、儿童友好、方便演绎"</span>这四个核心目标，以及分集资料应该分成<span class="b">"教学目标、故事梗概、背景信息、参考资料"</span>四节的写作规范。AI 每一次生成分集资料，都是在这份规则下工作。</p><p>再举一个"判断密度"更高的例子：<span class="c-example">design-questions</span>（单集交互题出题）。它要在 4 道题里同时满足题型合适、题型多样、趣味性、跨集不重复等多重约束。这个 SKILL 最核心的设计不是生成模板，而是一份<span class="b">三级优先级 框架</span>：</p><p><span class="b">P0 最高优先级</span>：题型必须能 embody 考查点核心，考查点不能跑偏</p><p><span class="b">P1 硬指标</span>：4 道题至少覆盖 2 个题型大类、不得重复子题型、趣味性不靠动效凑</p><p><span class="b">P2 软约束</span>：避免"位置×题型相同"或"题型组合反复"</p><p>框架里带真实反例。比如 E5《大禹治水》Q1，3.0 版用连线题（鲧↔堵、禹↔疏），P0 合适但趣味不够，且连线只能表达静态对应，承载不了"鲧失败→禹改方法→成功"的因果转折。4.0 改成分步拖拽，让孩子亲历两步切换。这条"❌反例→✅正例"就被写进了 SKILL 本身，下一次 AI 出题时会自动避开同样的坑。</p><p><span class="b">SOP 决定"人和 AI 怎么走"，SKILL 决定"AI 走的时候踩在哪里"。两者相互支撑，缺一不可。</span></p><div class="layer-label"><span class="layer-tag">第三层</span>用版本链和复盘沉淀判断，让判断可积累</div><p>有了 SOP 和 SKILL，流程和操作都可复用了。但还有一件事没解决：<span class="b">教研的判断本身，如何积累？</span></p><p>我们的做法是给所有教研产出加一条<span class="b">统一版本链</span>：</p><p><span class="b">0.0（AI 稿）→ 1.0（初稿）→ 2.0（二稿）→ 3.0（三稿，发专家）→ 4.0（终稿）</span></p><p>每一个版本都完整保留在 git 里，每一次修改都对应一次 commit。这样每一份内容的"演进轨迹"都是可追溯的。</p><p>然后我写了一份最特别的 SOP —— <span class="b">内容版本演进复盘 SOP</span>。它的核心动作是：</p><p>用 git diff + AI 对话，把两个版本之间的修改<span class="b">逆向拆出"教研为什么这么改</span>"，沉淀成"❌反例 → ✅正例"格式的规则条目，写入对应的规范文档。 </p><p>首次落地是在 SKU1 的《大禹治水》交互题上。我们从 0.0 到终稿的多次迭代里，提炼出了 20 多条可复用的出题规律，直接写进了《AI 出题手册》。下一次别人再出交互题，AI 会读这份手册，同样的错就不会再犯第二次。</p><p><span class="b">这一层，把教研的隐性判断变成了"团队资产"。它是这个系统最独特、也是最有生命力的部分。</span></p><h2>四、这套系统跑起来之后</h2><p>「上下五千年」项目目前完成了 SKU1 到 SKU4 的部分推进：SKU2 春秋战国 12 集分集资料已定稿，SKU1 的 E1、E6 剧本与交互题 demo 也已产出。</p><p>从个人体感上，这套系统带来了几个明显的变化：</p><p><span class="b">新人上手门槛显著降低。</span> 我的同事新接手 SKU 时，读一遍 SOP 和 SKILL 大纲，就能开始动手，不再需要长时间的手把手带教。</p><p><span class="b">AI 用得更深。</span> AI 不再是"帮我润色一下""帮我查一下"这种碎片式使用，而是能承担从故事选取到大纲、分集资料、交互题、卡片的完整节点。教研的精力从"生成"回到了"判断"。</p><p><span class="b">内容质量有了下限保障。</span> 因为规则显性化了，即使不同人执行，产出的下限稳定。上限依然由教研的专业判断决定。</p><p><span class="b">教研经验开始复利。</span> 每一次改稿都不再是"个人技能提升"，而是"团队资产积累"。半年前学会的判断，半年后新人可以直接读到。</p><h2>五、教研 × AI 的本质</h2><p>做完这套系统，我对"教研 × AI"有几个越来越清晰的判断。</p><p><span class="b">第一，AI 不会替代教研，但不会用 AI 的教研会被替代。</span> 教研的核心价值是判断"教什么、怎么教、教到什么程度"，这件事 AI 做不了 —— 因为它需要教育经验、需要感知孩子的理解水平、需要对内容的伦理判断。但如果教研继续用 5 年前的方式工作，把大量时间花在"查资料、写初稿、格式规范"这些 AI 能做的事上，被替代只是时间问题。</p><p><span class="b">第二，AI 化的关键不在工具，在于流程。</span> 换更强的 AI 模型能提升 5% 的效率，把工作流改造成 AI 可协作的系统能提升 50%。前者是买设备，后者是修铁路。</p><p><span class="b">第三，教育内容生产可以工业化，但底层依然是匠心。</span> SOP 和 SKILL 让工业化成为可能，让 96 集课程的品控有稳定下限。但让课程真正好看好听、让孩子愿意继续学下去，依然依赖教研一次次的"我觉得这里不对"的直觉判断。工业化解决的是下限，匠心决定上限。</p><p><span class="b">这套系统还在迭代中。</span> 8 个 SKU 完成了前 4 个的推进，SOP 从 3 份长到 6 份，SKILL 从 5 个长到 11 个。短期目标是把所有教研节点都跑通标准化流程；长期，我更好奇的是：当教育内容生产可以像软件工程一样被系统化组织，它会打开哪些今天想不到的可能性。</p><p>—— 这个问题，值得再花五年去回答。</p>
 </main>
 </body>
 </html>

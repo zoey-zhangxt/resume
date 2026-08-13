@@ -4,7 +4,297 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>《上下五千年》· E3 巨鹿之战 · 分集资料 · 张秀婷 Zoey Zhang</title>
-<link rel="stylesheet" href="_doc-style.css">
+<style>
+/* ========== 教研稿通用阅读样式（参照大纲框架终稿） ========== */
+:root {
+  --c-bg: #fdfaf3;
+  --c-card: #ffffff;
+  --c-border: #e6dfcf;
+  --c-table-border: #c9b48a;
+  --c-text: #2c2820;
+  --c-muted: #6b6358;
+  --c-accent: #b3201d;
+  --c-accent-soft: #f8e5d8;
+  --c-th: #a8442a;
+  --c-quote-bg: #fbf3ea;
+  --c-quote-border: #d4a373;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--c-text);
+  background: var(--c-bg);
+  letter-spacing: 0;
+  word-spacing: 0;
+}
+main {
+  max-width: 960px;
+  margin: 32px auto;
+  padding: 48px 56px 88px;
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+}
+main.wide { max-width: 1200px; }
+
+/* 顶部返回条 */
+.return-bar {
+  position: sticky; top: 0; z-index: 9999;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(74,144,217,.2);
+  padding: 10px 20px;
+  font-size: 14px;
+}
+.return-bar a { color: #2c5282; text-decoration: none; font-weight: 500; }
+.return-bar .sep { color: #94a3b8; margin: 0 10px; }
+.return-bar .name { color: #64748b; }
+
+/* 标题 */
+h1 {
+  font-size: 1.9em;
+  margin: 1em 0 0.8em;
+  padding-bottom: 0.4em;
+  border-bottom: 3px double var(--c-accent);
+  color: var(--c-accent);
+  letter-spacing: 1px;
+}
+h1:first-of-type { margin-top: 0; }
+h2 {
+  font-size: 1.45em;
+  margin: 1.4em 0 0.6em;
+  padding-left: 14px;
+  border-left: 5px solid var(--c-accent);
+  color: var(--c-th);
+}
+h3 {
+  font-size: 1.2em;
+  margin: 1.3em 0 0.5em;
+  color: var(--c-th);
+}
+
+/* 知识讲解小标题（三国稿：曲折法 / 多智近妖... / 赤壁之战 / 两个赤壁） */
+h3.kp-title {
+  font-size: 1.35em;
+  margin: 1.8em 0 0.6em;
+  padding: 6px 14px;
+  color: var(--c-accent);
+  background: linear-gradient(90deg, var(--c-accent-soft), transparent 80%);
+  border-left: 4px solid var(--c-accent);
+  border-radius: 3px 0 0 3px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+h4 {
+  font-size: 1.05em;
+  margin: 1.1em 0 0.4em;
+  color: var(--c-muted);
+}
+
+/* 段落 */
+p { margin: 0.6em 0; text-align: justify; }
+strong { color: var(--c-accent); font-weight: 700; }
+em { color: var(--c-muted); }
+
+/* 列表 */
+ul, ol { padding-left: 1.4em; margin: 0.6em 0; }
+li { margin: 0.4em 0; }
+li > p { margin: 0.2em 0; }
+
+/* 引用 */
+blockquote {
+  background: var(--c-quote-bg);
+  border-left: 4px solid var(--c-quote-border);
+  padding: 12px 20px;
+  margin: 1.1em 0;
+  color: var(--c-muted);
+  border-radius: 0 6px 6px 0;
+}
+blockquote p { margin: 0.3em 0; }
+
+/* 表格 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.95em;
+}
+th, td {
+  border: 1px solid var(--c-table-border);
+  padding: 8px 12px;
+  vertical-align: top;
+}
+th {
+  background: var(--c-accent-soft);
+  color: var(--c-th);
+  font-weight: 700;
+  text-align: left;
+}
+tr:nth-child(even) td { background: rgba(248, 229, 216, .18); }
+
+/* 图片 */
+figure {
+  margin: 1.4em auto;
+  text-align: center;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 3px 14px rgba(80, 60, 30, .12);
+  border: 1px solid var(--c-border);
+}
+figcaption {
+  color: var(--c-muted);
+  font-size: 0.9em;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* 代码 */
+code {
+  background: rgba(179, 32, 29, .08);
+  color: var(--c-accent);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.92em;
+  font-family: "SF Mono", Consolas, "Courier New", monospace;
+}
+pre {
+  background: #faf7ef;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  padding: 14px 18px;
+  overflow-x: auto;
+}
+pre code { background: none; color: var(--c-text); padding: 0; }
+
+/* 分割线 */
+hr {
+  border: none;
+  border-top: 1px dashed var(--c-border);
+  margin: 2em 0;
+}
+
+/* ========== 字符级颜色（分集资料 · 教研稿） ========== */
+.c-narration { color: #19439C; font-weight: 500; }   /* 蓝 · 关键旁白 */
+.c-core      { color: #BE1A1D; font-weight: 500; }   /* 红 · 核心剧情 */
+.c-noncore   { color: #E67300; font-weight: 500; }   /* 橙 · 非核心剧情 */
+.c-supp      { color: #7B7F83; }                     /* 灰 · 补充剧情 */
+.c-note      { color: #7B7F83; }                     /* 浅灰说明 */
+.c-scene     { color: #4A8FCA; font-weight: 500; }   /* 三国稿 · 画面 */
+
+.b { font-weight: 700; }
+.i { font-style: italic; }
+
+/* 灰色高亮（原 Word 里的刷色） → 淡黄底 */
+.hl {
+  background: #fff3c4;
+  padding: 1px 3px;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* ========== 【故事主线】卡片 ========== */
+.story-line {
+  background: linear-gradient(135deg, #fef4dc, #f9ead0);
+  border-left: 4px solid var(--c-accent);
+  border-radius: 6px;
+  padding: 18px 24px;
+  margin: 1.4em 0 1em;
+  box-shadow: 0 2px 8px rgba(179, 32, 29, .06);
+}
+.story-line .sl-label {
+  color: var(--c-accent);
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+.story-line .sl-body {
+  color: var(--c-text);
+  line-height: 1.85;
+  margin: 0;
+  text-align: justify;
+}
+
+/* ========== 图例小条（关键旁白 / 核心剧情 / 非核心 / 补充） ========== */
+.legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 20px;
+  padding: 14px 20px;
+  margin: 12px 0 20px;
+  background: #faf6ec;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.lg-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.lg-item b { font-weight: 600; }
+.lg-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transform: translateY(-1px);
+}
+.lg-item.c-narration .lg-dot { background: #19439C; }
+.lg-item.c-core      .lg-dot { background: #BE1A1D; }
+.lg-item.c-noncore   .lg-dot { background: #E67300; }
+.lg-item.c-supp      .lg-dot { background: #7B7F83; }
+
+/* ========== 演绎注意 · callout ========== */
+.note-box {
+  background: #f4f7fb;
+  border: 1px solid #d9e2ec;
+  border-left: 3px solid #6b8cae;
+  border-radius: 6px;
+  padding: 16px 22px;
+  margin: 1.6em 0;
+  color: var(--c-muted);
+  font-size: 14.5px;
+}
+.note-box .nb-head {
+  font-weight: 600;
+  color: #4a6a8f;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+.note-box .nb-list {
+  margin: 0;
+  padding-left: 22px;
+}
+.note-box .nb-list li {
+  margin: 6px 0;
+  line-height: 1.75;
+  color: var(--c-muted);
+}
+/* 演绎注意里的 span 颜色也用中性色（避免和正文剧情颜色混淆） */
+.note-box .nb-list li span { color: inherit !important; font-weight: inherit !important; font-style: normal !important; }
+
+/* 移动端 */
+@media (max-width: 720px) {
+  main { padding: 24px 20px 60px; margin: 12px; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.2em; }
+  body { font-size: 15px; }
+  .legend { grid-template-columns: 1fr; }
+}
+
+</style>
 </head>
 <body>
 <div class="return-bar">
